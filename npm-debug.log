@@ -1,0 +1,70 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/iojs',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'gradle' ]
+2 info using npm@2.7.5
+3 info using node@v1.6.4
+4 silly cache add args [ 'gradle', null ]
+5 verbose cache add spec gradle
+6 silly cache add parsed spec { raw: 'gradle',
+6 silly cache add   scope: null,
+6 silly cache add   name: 'gradle',
+6 silly cache add   rawSpec: '',
+6 silly cache add   spec: '*',
+6 silly cache add   type: 'range' }
+7 verbose addNamed gradle@*
+8 silly addNamed semver.valid null
+9 silly addNamed semver.validRange *
+10 silly addNameRange { name: 'gradle', range: '*', hasData: false }
+11 silly mapToRegistry name gradle
+12 silly mapToRegistry using default registry
+13 silly mapToRegistry registry http://registry.cnpmjs.org/
+14 silly mapToRegistry uri http://registry.cnpmjs.org/gradle
+15 verbose addNameRange registry:http://registry.cnpmjs.org/gradle not in flight; fetching
+16 verbose request uri http://registry.cnpmjs.org/gradle
+17 verbose request no auth needed
+18 info attempt registry request try #1 at 15:36:58
+19 verbose request id 2df8e80f2475e5eb
+20 http request GET http://registry.cnpmjs.org/gradle
+21 http 404 http://registry.cnpmjs.org/gradle
+22 verbose headers { server: 'nginx/1.4.6 (Ubuntu)',
+22 verbose headers   date: 'Fri, 15 May 2015 07:36:36 GMT',
+22 verbose headers   'content-type': 'application/json; charset=utf-8',
+22 verbose headers   'transfer-encoding': 'chunked',
+22 verbose headers   connection: 'keep-alive',
+22 verbose headers   'x-readtime': '8',
+22 verbose headers   'content-encoding': 'gzip' }
+23 silly get cb [ 404,
+23 silly get   { server: 'nginx/1.4.6 (Ubuntu)',
+23 silly get     date: 'Fri, 15 May 2015 07:36:36 GMT',
+23 silly get     'content-type': 'application/json; charset=utf-8',
+23 silly get     'transfer-encoding': 'chunked',
+23 silly get     connection: 'keep-alive',
+23 silly get     'x-readtime': '8',
+23 silly get     'content-encoding': 'gzip' } ]
+24 verbose stack Error: 404 Not Found: gradle
+24 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:245:14)
+24 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:176:7
+24 verbose stack     at Gunzip.onEnd (zlib.js:206:5)
+24 verbose stack     at emitNone (events.js:72:20)
+24 verbose stack     at Gunzip.emit (events.js:163:7)
+24 verbose stack     at _stream_readable.js:891:16
+24 verbose stack     at process._tickCallback (node.js:340:13)
+25 verbose statusCode 404
+26 verbose pkgid gradle
+27 verbose cwd /Users/FEI/Downloads/demo
+28 error Darwin 14.4.0
+29 error argv "/usr/local/bin/iojs" "/usr/local/bin/npm" "install" "-g" "gradle"
+30 error node v1.6.4
+31 error npm  v2.7.5
+32 error code E404
+33 error 404 Not Found: gradle
+33 error 404
+33 error 404 'gradle' is not in the npm registry.
+33 error 404 You should bug the author to publish it (or use the name yourself!)
+33 error 404
+33 error 404 Note that you can also install from a
+33 error 404 tarball, folder, http url, or git url.
+34 verbose exit [ 1, true ]

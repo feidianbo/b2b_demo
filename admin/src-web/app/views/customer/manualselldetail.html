@@ -1,0 +1,80 @@
+<div class="clearfix">
+ <h3 ng-show="manualsell.type==true">委托人工找货</h3>
+  <h3 ng-show="manualsell.type==false">委托人工销售</h3>
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">美酒种类:</div>
+    <div class="col-md-4" style="color:#317ee6;">{{manualsell.coalType}}</div>
+  </div>
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">酒精度数:</div>
+    <div class="col-md-4" style="color:#317ee6;">{{manualsell.lowcalorificvalue}}kcal/kg</div>
+  </div>
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">含糖量:</div>
+    <div class="col-md-8" style="color:#317ee6;">{{manualsell.receivebasissulfur}}%</div>
+  </div>
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4"> 酒类指标2:</div>
+    <div class="col-md-8" style="color:#317ee6;">{{manualsell.airdrybasisvolatile}}%</div>
+  </div>
+<!--委托人工找货-->
+  <div ng-show="manualsell.type==true">
+    <div class="col-md-6" style="line-height:60px;">
+      <div class="col-md-4">提货地点:</div>
+      <div ng-show="manualsell.deliveryAddr!='其它'"   class="col-md-8" style="color:#317ee6;">{{manualsell.deliveryProvince}}{{manualsell.deliveryAddr}}</div>
+      <div ng-show="manualsell.deliveryAddr=='其它'" class="col-md-8" style="color:#317ee6;">{{manualsell.deliveryProvince}}{{manualsell.deliveryOtherPlace}}</div>
+    </div>
+    <div class="col-md-6" style="line-height:60px;">
+      <div class="col-md-4">需求数量:</div>
+      <div class="col-md-8" style="color:#317ee6;">{{manualsell.demandAmount}}瓶</div>
+    </div>
+    <div class="col-md-6" style="line-height:60px;">
+      <div class="col-md-4">提货方式:</div>
+      <div class="col-md-8" style="color:#317ee6;">{{manualsell.deliveryMode}}</div>
+    </div>
+    <div class="col-md-6" style="line-height:60px;">
+      <div class="col-md-4">提货时间:</div>
+      <div class="col-md-8" style="color:#317ee6;">{{manualsell.deliveryStartDate}}</div>
+    </div>
+  </div>
+  <!--委托人工销售-->
+  <div ng-show="manualsell.type==false">
+      <div class="col-md-6" style="line-height:60px;">
+        <div class="col-md-4">交货地点:</div>
+        <div ng-show="manualsell.deliveryAddr!='其它'"   class="col-md-8" style="color:#317ee6;">{{manualsell.deliveryProvince}}{{manualsell.deliveryAddr}}</div>
+        <div ng-show="manualsell.deliveryAddr=='其它'" class="col-md-8" style="color:#317ee6;">{{manualsell.deliveryProvince}}{{manualsell.deliveryOtherPlace}}</div>
+      </div>
+      <div class="col-md-6" style="line-height:60px;">
+        <div class="col-md-4">供货数量:</div>
+        <div class="col-md-8" style="color:#317ee6;">{{manualsell.demandAmount}}瓶</div>
+      </div>
+      <div class="col-md-6" style="line-height:60px;">
+        <div class="col-md-4">交货方式:</div>
+        <div class="col-md-8" style="color:#317ee6;">{{manualsell.deliveryMode}}</div>
+      </div>
+      <div class="col-md-6" style="line-height:60px;">
+        <div class="col-md-4">交货时间:</div>
+        <div class="col-md-8" style="color:#317ee6;">{{manualsell.deliveryStartDate}}</div>
+      </div>
+  </div>
+  <div class="col-md-6" style="line-height:60px;">
+  <div class="col-md-4">公司名称:</div>
+  <div class="col-md-8" style="color:#317ee6;">{{manualsell.companyName}}</div>
+  </div>
+  <div class="col-md-6" style="line-height:60px;">
+  <div class="col-md-4">联系人:</div>
+  <div class="col-md-8" style="color:#317ee6;">{{manualsell.contactName}}</div>
+  </div>
+  <div class="col-md-6" style="line-height:60px;">
+  <div class="col-md-4">手机号:</div>
+  <div class="col-md-8" style="color:#317ee6;">{{manualsell.phone}}</div>
+  </div>
+
+  <div class="col-md-offset-10 col-md-2">
+    <input type="button" onclick="javascript:history.go(-1)" class="btn btn-block" value="返回">
+  </div>
+</div>
+
+
+
+

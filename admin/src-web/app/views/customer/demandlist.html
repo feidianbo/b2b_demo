@@ -1,0 +1,48 @@
+<div class="clearfix">
+  <h3>需求信息列表</h3>
+  <a href="javascript:void(0)" ng-click="searchUncheck()">待审核</a>
+  <a href="javascript:void(0)" ng-click="searchUnpass()">审核未通过</a>
+  <a href="javascript:void(0)" ng-click="searchInQuote()">报价中</a>
+  <a href="javascript:void(0)" ng-click="searchInMatch()">匹配中</a>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>序号</th>
+        <th>需求编号</th>
+        <th>发布时间</th>
+        <th>报价截止时间</th>
+        <th>审核时间</th>
+        <th>需求瓶数</th>
+        <th>匹配进度</th>
+        <th>报价情况</th>
+        <th>状态</th>
+        <th>交易员</th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <td colspan="10" style="text-align:right">
+          <pagination total-items="totalCount" ng-model="pageNum" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+        </td>
+      </tr>
+      </tfoot>
+      <tbody>
+      <tr ng-repeat="item in demandlist">
+        <td>{{$index+1}}</td>
+        <td>{{item.demandcode}}</td>
+        <td>{{item.releasetime}}</td>
+        <td>{{item.quoteenddate}}</td>
+        <td>{{item.checktime}}</td>
+        <td>{{item.demandamount}}</td>
+        <td><a href="#/customer/bidquote?demandcode={{item.demandcode}}">已采购{{item.purchasednum}}瓶</a></td>
+        <td><a href="#/customer/quotedeatil?demandcode={{item.demandcode}}">已有{{item.quotenum}}家报价</a></td>
+        <td>{{item.checkstatus}}</td>
+        <td>{{item.dealername}}</td>
+      </tr>
+      <tr ng-show="totalCount == 0"><td colspan='10' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的需求信息。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+

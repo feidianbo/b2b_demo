@@ -1,0 +1,38 @@
+<div class="clearfix">
+  <h2>我的客户</h2>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>编号</th>
+        <th>用户名</th>
+        <th>公司名称</th>
+        <th>联系人</th>
+        <th>联系电话</th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <td colspan="10" style="text-align:right">
+          <pagination total-items="totalCount" ng-model="pageNum" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+        </td>
+      </tr>
+      </tfoot>
+      <tbody>
+
+      <tr ng-repeat="item in customerList" ng-click="showCustomerlist(item.id)">
+        <td>{{$index+1}}</td>
+        <td>{{item.nickname}}</td>
+        <td>{{item.companyName}}</td>
+        <td>{{item.contact}}</td>
+        <td>{{item.phone}}</td>
+      </tr>
+      <tr ng-show="totalCount == 0"><td colspan='5' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的客户信息。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+
+
+

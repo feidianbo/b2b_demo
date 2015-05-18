@@ -1,0 +1,39 @@
+<div class="clearfix">
+  <h3>团购订单列表</h3>
+  <a href="javascript:void(0)" ng-click="searchIn()">进行中的团购</a>
+  <a href="javascript:void(0)" ng-click="searchFinish()">已结束的团购</a>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>团购编号</th>
+      <th>团购价格(元)</th>
+      <th>团购数量(瓶)</th>
+      <th>截止日期</th>
+      <th>团购资格编号</th>
+      <th>公司名称</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td colspan="10" style="text-align:right">
+        <pagination total-items="totalCount" ng-model="pageNum" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+      </td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <tr ng-repeat="item in teamorderlist">
+      <td><a href="#/customer/teamorderdetail?supplyCode={{item.groupbuysupplycode}}&qualificationcode={{item.qualificationcode}}&volume={{item.volume}}&userid={{item.userid}}&performancecode={{item.performancecode}}">{{item.groupbuysupplycode}}</a></td>
+      <td>{{item.groupbuyprice}}</td>
+      <td>{{item.volume}}</td>
+      <td>{{item.groupbuyenddate}}</td>
+      <td>{{item.qualificationcode}}</td>
+      <td>{{item.companyname}}</td>
+    </tr>
+    <tr ng-show="totalCount == 0"><td colspan='8' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的供应信息。</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+

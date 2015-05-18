@@ -1,0 +1,54 @@
+<div class="clearfix">
+  <h2>团购列表-已结束</h2>
+  <label id="info" style="margin-left: 20%;"></label>
+</div>
+<br>
+<div class="box">
+  <form class="form-inline">
+    <input id="providerinfoid" type="hidden"/>
+    <input id="groupbuyid" type="hidden"/>
+    <!--<a href="#/addGroupBuy" role="button" style="margin-left: 3%;" class="btn btn-default btn-lg">发布团购</a>-->
+    <button type="submit" style="margin-left:3%;" class="btn btn-default" ng-click="addGroupBuy()">发布团购</button>
+  </form>
+</div>
+<div style="margin-top: 2%;margin-left: 3%;font-size: 16px;">
+  <span><a href="javascript:void(0);" ng-click="groupbuying()">进行中</a></span>
+  <span style="margin-left: 30px;">已结束</span>
+</div>
+<table class="table table-hover" style="margin-top: 1%;">
+  <thead>
+  <tr>
+    <th>团购编号</th>
+    <th>团购量(瓶)</th>
+    <th>交货地</th>
+    <th>提货时间</th>
+    <th>团购价(元/瓶)</th>
+    <th>团购时间</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td colspan="10" style="text-align:right">
+      <pagination total-items="groupbuy.count" ng-model="groupbuy.page" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+    </td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <tr ng-repeat="item in groupbuy.list">
+    <td>{{item.groupbuysupplycode}}</td>
+    <td>{{item.supplyamount}}</td>
+    <td ng-show="item.port != '其它'">{{item.deliveryprovince}}{{item.port}}</td>
+    <td ng-show="item.port == '其它'">{{item.deliveryprovince}}{{item.deliveryplace}}</td>
+    <td>{{item.deliverydatestart}}--{{item.deliverydateend}}</td>
+    <td>{{item.groupbuyprice}}</td>
+    <td>{{item.groupbuybegindate}}--{{item.groupbuyenddate}}</td>
+    <td><a href="#/viewGroupBuyOver?id={{item.id}}&providerinfoid={{item.providerinfoid}}">查看</a></td>
+  </tr>
+  <tr ng-show="groupbuy.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的信息。</td></tr>
+  </tbody>
+</table>
+
+
+
+

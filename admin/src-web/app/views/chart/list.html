@@ -1,0 +1,298 @@
+<style type="text/css" xmlns="http://www.w3.org/1999/html">
+  tr th {
+    text-align: center;
+  }
+  tr  td{
+    text-align: center;
+  }
+</style>
+<div class="clearfix">
+  <h2>图表数据列表<span id="theme"></span></h2>
+  <label id="info" style="margin-left: 20%;"></label>
+</div>
+<br>
+<div class="box">
+  <form class="form-inline">
+    <button type="submit" style="margin-left:3%;" class="btn btn-default" ng-click="addChart()">新增数据</button>
+    <button type="submit" style="margin-left:3%;" class="btn btn-default" ng-click="modifyChartConfine()">修改上下限参数</button>
+    <!--<button type="submit" style="margin-left:3%;" class="btn btn-default" ng-click="batchAdd()">批量添加</button>-->
+  </form>
+</div>
+<table class="table table-hover" >
+  <thead>
+  <tr>
+    <th>图表类型</th>
+    <th>交易日</th>
+    <th>平均价格</th>
+    <th>创建日期</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <!--BSPI-->
+  <tfoot ng-show="BSPI.count>0">
+  <tr>
+    <td colspan="10" style="text-align:right">
+      <pagination total-items="BSPI.count" ng-model="BSPI.page" ng-change="pageToBSPI()" max-size="20" boundary-links="true"></pagination>
+    </td>
+  </tr>
+  </tfoot>
+  <tbody ng-show="BSPI.count>=0">
+  <tr ng-repeat="item in BSPI.list">
+    <td>{{item.type}}</td>
+    <td>{{item.tradedate}}</td>
+    <td>{{item.averageprice}}</td>
+    <td>{{item.createtime}}</td>
+    <td>
+      <a href="javascript:void(0);" style="margin-left:2%;" ng-click="deleteOne(item.id)">删除</a>
+    </td>
+  </tr>
+  <tr ng-show="BSPI.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的信息。</td></tr>
+  </tbody>
+
+  <!--API8-->
+  <tfoot ng-show="API8.count>0">
+  <tr>
+    <td colspan="10" style="text-align:right">
+      <pagination total-items="API8.count" ng-model="API8.page" ng-change="pageToAPI8()" max-size="20" boundary-links="true"></pagination>
+    </td>
+  </tr>
+  </tfoot>
+  <tbody ng-show="API8.count>=0">
+  <tr ng-repeat="item in API8.list">
+    <td>{{item.type}}</td>
+    <td>{{item.tradedate}}</td>
+    <td>{{item.averageprice}}</td>
+    <td>{{item.createtime}}</td>
+    <td>
+      <a href="javascript:void(0);" style="margin-left:2%;" ng-click="deleteOne(item.id)">删除</a>
+    </td>
+  </tr>
+  <tr ng-show="API8.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的信息。</td></tr>
+  </tbody>
+
+  <!--TC1505-->
+  <tfoot ng-show="TC1505.count>0">
+  <tr>
+    <td colspan="10" style="text-align:right">
+      <pagination total-items="TC1505.count" ng-model="TC1505.page" ng-change="pageToTC1505()" max-size="20" boundary-links="true"></pagination>
+    </td>
+  </tr>
+  </tfoot>
+  <tbody ng-show="TC1505.count>=0">
+  <tr ng-repeat="item in TC1505.list">
+    <td>{{item.type}}</td>
+    <td>{{item.tradedate}}</td>
+    <td>{{item.averageprice}}</td>
+    <td>{{item.createtime}}</td>
+    <td>
+      <a href="javascript:void(0);" style="margin-left:2%;" ng-click="deleteOne(item.id)">删除</a>
+    </td>
+  </tr>
+  <tr ng-show="TC1505.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的信息。</td></tr>
+  </tbody>
+</table>
+
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="AddChartDialog">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:650px;height:300px;">
+      <div class="modal-header">
+        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">添加图表数据</h4>
+      </div>
+
+      <form class="form-horizontal" id="chart_form" action="" style="margin-top:30px;">
+        <input type="hidden" id="type" name="type" ng-model="Chart.type">
+
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>交易日:</label>
+          <div class="col-xs-4">
+            <div class="input-group date" id="datetimepicker">
+              <input class="form-control" type="text" data-date-format="YYYY-MM-DD" readonly="readonly" id="tradedate" name="tradedate" ng-model="Chart.tradedate">
+                  <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+                </span>
+            </div>
+          </div>
+          <div class="col-xs-3 col-md-3">
+            <span id="tradedateError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>平均价格:</label>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control" maxlength="7" style="width:180px;" type="text" id="averageprice" name="averageprice" ng-model="Chart.averageprice">
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <span id="averagepriceError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-md-12" style="top:10px;">
+          <button type="button" class="col-xs-3 btn btn-primary col-md-offset-2 col-md-4" ng-click="addChartClick()">
+            确认添加
+          </button>
+          <button type="button" class="col-xs-offset-2 btn btn-default col-md-offset-2" data-dismiss="modal">
+            取消
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+  <input type="hidden" id="chartid">
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false"  id="deleteOneConfirmDialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          删除确认
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要删除此条数据吗?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="deleteOneClick()">
+          确认
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--修改上下限参数-->
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="modifyLimitDialog">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:650px;height:300px;">
+      <div class="modal-header">
+        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">修改上下限参数</h4>
+      </div>
+
+      <form class="form-horizontal" id="chartConfine_form" action="" style="margin-top:30px;">
+        <input type="hidden" id="limitType" name="type" ng-model="ChartConfine.type">
+
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>上限:</label>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control" maxlength="6" style="width:180px;" type="text" id="highlimit" name="highlimit" ng-model="ChartConfine.highlimit">
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <span id="highlimitError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>下限:</label>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control" maxlength="6" style="width:180px;" type="text" id="lowlimit" name="lowlimit" ng-model="ChartConfine.lowlimit">
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <span id="lowlimitError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-md-12" style="top:10px;">
+          <button type="button" class="col-xs-3 btn btn-primary col-md-offset-2 col-md-4" ng-click="modifyLimitClick()">
+            确认修改
+          </button>
+          <button type="button" class="col-xs-offset-2 btn btn-default col-md-offset-2" data-dismiss="modal">
+            取消
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+  <!--批量添加数据-->
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="batchAddDialog">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:700px;height:auto;">
+      <div class="modal-header">
+        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">批量添加</h4>
+      </div>
+
+      <div style="margin-left: 40%;margin-top:10px;">
+         <a href="javascript:void(0);" ng-click="addRow()"><p class="glyphicon glyphicon-plus-sign"></p></a>
+         <a href="javascript:void(0);" ng-click="cutRow()" style="margin-left: 30px;"><p class="glyphicon glyphicon-minus-sign"></p></a>
+      </div>
+      <form class="form-horizontal" id="batch_form" action="" style="margin-top:20px;">
+        <input type="hidden" id="type_0" name="chartList[0].type">
+
+        <table>
+          <thead>
+          <tr>
+          <td style="padding-left: 60px;">*交易日</td>
+          <td style="padding-left: 20px;">*平均价格</td>
+          </tr>
+          </thead>
+          <tbody  id="chart_tbody">
+          <tr>
+            <td style="padding-left: 60px;padding-top: 10px;">
+            <span class="input-group date" id="datetimepicker_0">
+              <input class="form-control" type="text" data-date-format="YYYY-MM-DD" readonly="readonly" id="tradedate_0" name="chartList[0].tradedate">
+                  <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+                </span>
+            </span>
+            </td>
+          <td style="padding-left: 30px;padding-top: 10px;"><input style="width:200px;" class="form-control" maxlength="7" style="width:180px;" type="text" id="averageprice_0" name="chartList[0].averageprice"></td>
+          <td><span id="error_0" style="margin-left:20px;line-height: 40px;"></span></td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <td style="padding-top: 3%;padding-left: 100px;padding-bottom: 20px;">
+          <button type="button" style="width:180px;" class="btn btn-primary" ng-click="batchAddClick()">
+            确认添加
+          </button>
+            </td>
+            <td style="padding-top: 3%;padding-bottom: 20px;">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            取消
+          </button>
+            </td>
+            </tr>
+          </tfoot>
+        </table>
+
+       <!-- <div class="col-xs-12 col-md-12" style="top:30px;">
+          <button type="button" class="col-xs-3 btn btn-primary col-md-offset-2 col-md-4" ng-click="batchAddClick()">
+            确认添加
+          </button>
+          <button type="button" class="col-xs-offset-2 btn btn-default col-md-offset-2" data-dismiss="modal">
+            取消
+          </button>
+        </div>-->
+      </form>
+
+      <!--新增模板-->
+      <!--<div style="display: none;">
+      <tr id="batch_add_template">
+        <td style="padding-left: 60px;padding-top: 10px;">
+            <span class="input-group date" id="datetimepicker[#index#]">
+              <input class="form-control" type="text" data-date-format="YYYY-MM-DD" readonly="readonly" id="tradedate[#index#]" name="chartList[#index#].tradedate">
+                  <span class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+                </span>
+            </span>
+        </td>
+        <td style="padding-left: 30px;padding-top: 10px;"><input style="width:200px;" class="form-control" maxlength="7" style="width:180px;" type="text" id="averageprice[#index#]" name="chartList[#index#].averageprice"></td>
+      </tr>
+      </div>-->
+      <!--新增模板-->
+
+    </div>
+  </div>
+</div>
+

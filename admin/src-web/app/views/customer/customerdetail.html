@@ -1,0 +1,40 @@
+<div class="clearfix">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>交易总量(瓶)</th>
+        <th>商城采购量(瓶)</th>
+        <th>撮合采购量(瓶)</th>
+        <th>总发布需求量</th>
+        <th>需求总匹配瓶数</th>
+        <th>总发布供应量</th>
+        <th>供应总匹配瓶数</th>
+        <th>总报价个数</th>
+        <th>有效报价个数</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>{{customer.demandMatchCount+customer.shopOrderCount+customer.unShopOrderCount}}</td>
+        <td>{{customer.shopOrderCount}}</td>
+        <td>{{customer.unShopOrderCount}}</td>
+        <td>{{customer.releaseDemandCount}}</td>
+        <td>{{customer.demandMatchCount}}</td>
+        <td>{{customer.supplyCount}}</td>
+        <td>{{customer.matchSupplyCount}}</td>
+        <td>{{customer.quoteCount}}</td>
+        <td>{{customer.validQuoteCount}}</td>
+      </tr>
+      </tbody>
+    </table>
+  <div class="col-md-offset-4 col-md-3" style="margin-top:50px;">
+  <input type="button" class="btn btn-primary btn-block" value="返回" ng-click="back()">
+  </div>
+  </div>
+
+
+
+
+
+
+

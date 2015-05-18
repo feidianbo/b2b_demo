@@ -1,0 +1,173 @@
+<html>
+<head>
+  <script style="text/javascript">
+    $(function(){
+      $(".subNav").click(function(){
+        // 修改数字控制速度， slideUp(500)控制卷起速度
+        $(this).next(".navContent").slideToggle(500).siblings(".navContent").slideUp(500);
+      })
+    })
+  </script>
+  <style type="text/css">
+    .subNav:hover{color:#277fc2;}
+    .navContent{display: none;border-bottom:solid 1px #e5e3da;}
+    .secondMenu{}
+    .inline-block-list li {
+      margin-left: -4px;
+    }
+    .modalinfo{
+      font-size: 14px;
+      color: green;
+    }
+    .modaltable{
+      margin-left: 20px;
+      margin-right: 10px;
+    }
+    .modaltabletdleft{
+      width: 100px;;
+    }
+    .modaltabletdmiddle{
+      width: 220px;
+      height: 30px;
+    }
+  </style>
+</head>
+<body>
+
+
+<div style="width: 100%; margin-left:6%; margin-right:6%; font-size:18px;">
+  <div style="width: auto;">
+    <span style="font-size:30px; font-family:微软雅黑; font-weight:900;">菜单列表</span>
+    <button type="submit" class="btn btn-default"  ng-click="addMenu()" style="margin-left: 300px; " >添加菜单</button>
+  </div>
+  <hr />
+  <div id="allMenus" >
+    <div style="display: block; border-bottom: #c0c0c0 solid 1px;">
+      <span style="width: 10%; float: left; text-align: left;">序号</span>
+      <span style="width: 20%; float: left;">名称</span>
+      <span style="width: 30%; float: left;">URL</span>
+      <span style="width: 10%; float: left;">顺序</span>
+      <span style="width: 20%; float: left;">操作</span>
+      <br />
+    </div>
+    <div ng-repeat="frame in frameList" style="border-bottom: #c0c0c0 solid 1px; padding-top: 5px; padding-bottom: 5px;">
+      <div style="display: block; margin-bottom:5px; ">
+        <span style="width: 10%; float: left; padding-left: 10px;">{{$index+1}}</span>
+        <span style="width: 20%; float: left;"><a href="javascript:void(0);" ng-click="showMenus(frame.menu.id)">{{frame.menu.menuname}}</a></span>
+        <span style="width: 30%; float: left;">{{frame.menu.url}}</span>
+        <span style="width: 10%; float: left;">
+          <input type="text" id="first_sequence" ng-blur="changeSequence(frame.menu)" ng-model="frame.menu.sequence" style="width: 36px; text-align: center;"/>
+        </span>
+        <span style="width: 20%; float: left;">
+          <a href="javascript:void(0);" ng-click="updateMenu(frame.menu.id)">编辑</a>
+          <a href="javascript:void(0);" ng-click="deleteMenu(frame.menu.id)">删除</a>
+        </span>
+      </div>
+      <br />
+      <span id="sub{{frame.menu.id}}" class="secondMenu" style="display: none; margin-left: 10%; margin-top:5px; background-color: #b5d592;">
+        <p ng-repeat="menu in frame.menusList" >
+          <span style="width: 22.2%; float: left;">{{menu.menuname}}</span>
+          <span style="width: 33.3%; float: left;">{{menu.url}}</span>
+          <span style="width: 11.1%; float: left;">
+            <input type="text" id="second_sequence" ng-blur="changeSequence(menu)" ng-model="menu.sequence" style="width: 36px; text-align: center;"/>
+          </span>
+          <span style="width: 22.2%; float: left;">
+            <a href="javascript:void(0);" ng-click="updateMenu(menu.id)">编辑</a>
+            <a href="javascript:void(0);" ng-click="deleteMenu(menu.id)">删除</a>
+          </span>
+          <br />
+        </p>
+      </span>
+  </div>
+</div>
+
+
+<div class="modal dialog_Menu" id="AddMenuDialog" data-backdrop="false">
+  <div class="modal-dialog">
+    <div id="dialog_InfoContent" class="modal-content" style="width:550px;height:350px; font-size: 16px;">
+      <div class="modal-header">
+        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title dialog_Header"></h3>
+      </div>
+      <table class="modaltable">
+        <tr>
+          <td class="modaltabletdleft control-label">菜单名称:</td>
+          <td class="modaltabletdmiddle"><input type="text"  class="form-control" id="menuname" ng-model="newmenu.menuname" style="width:200px;" /></td>
+          <td class="modalinfo" id="menunameerror">菜单名称在2-20个字符之间，不能为空！</td>
+        </tr>
+        <tr>
+          <td class="modaltabletdleft control-label">菜单等级:</td>
+          <td class="modaltabletdmiddle">
+            <select id="menulevel" ng-model="menulevel" class="form-control" style="width:200px; ">
+              <option selected value="1" style="font-size: 18px;">一级菜单</option>
+              <option value="2" style="font-size: 18px;">二级菜单</option>
+            </select>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="modaltabletdleft control-label">父菜单:</td>
+          <td class="modaltabletdmiddle">
+            <select id="parentid" ng-model="newmenu.parentid" class="form-control" style="width:200px;" >
+            </select>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="modaltabletdleft control-label">菜单地址:</td>
+          <td class="modaltabletdmiddle">
+            <input type="text" id="url" class="form-control" ng-model="newmenu.url" style="width: 200px;" />
+          </td>
+          <td class="modalinfo" id="urlerror">长度在不能超过50个字符，不能为空</td>
+        </tr>
+        <tr>
+          <td class="modaltabletdleft control-label">菜单顺序:</td>
+          <td class="modaltabletdmiddle">
+            <input type="text" id="sequence" class="form-control" ng-model="newmenu.sequence" style="width: 50px; text-align: center;" />
+          </td>
+          <td class="modalinfo" id="sequenceerror">只能写1-100之间的整数</td>
+        </tr>
+      </table>
+      <input type="hidden" ng-model="menuid"/>
+      <div class="col-xs-12 col-md-12" style="top:10px; font-size: 20px; color: #ff0000;">
+        <span id="errorInfo" class="col-md-offset-2"></span>
+      </div>
+      <div class="col-xs-12 col-md-12" style="top:10px;">
+        <button type="button" class="col-xs-3 btn btn-primary col-md-offset-2 col-md-4 dialog_btn" ng-click="addUpdateMenu()">
+          确定
+        </button>
+        <button type="button" class="col-xs-offset-2 btn btn-default col-md-offset-2" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="modal dialog_Common" data-backdrop="false">
+    <div class="modal-dialog">
+      <div class="modal-content" style="width:350px;height:280px; font-size: 16px;">
+        <div class="modal-header">
+          <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3 class="modal-title dialog_CommonHeader"></h3>
+        </div>
+        <div class="modal-body">
+          <label class="modal-body dialog_CommonBody"></label>
+          <span id="commonErrorInfo" class="col-md-offset-2"></span>
+        </div>
+        <div class="col-xs-12 col-md-12" style="top:10px;">
+          <button type="button" class="col-xs-3 btn btn-primary col-md-offset-2 col-md-4 dialog_confirmbtn">
+          </button>
+          <button type="button" class="col-xs-offset-2 btn btn-default col-md-offset-2" data-dismiss="modal">
+            取消
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
+
+

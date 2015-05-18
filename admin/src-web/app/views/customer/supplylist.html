@@ -1,0 +1,49 @@
+<div class="clearfix">
+  <h3>供应信息</h3>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>序号</th>
+        <th>供应编号</th>
+        <th>发布时间</th>
+        <th>审核时间</th>
+        <th>供应数量</th>
+        <th>匹配进度</th>
+        <th>状态</th>
+        <th>交易员</th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <td colspan="10" style="text-align:right">
+          <pagination total-items="totalCount" ng-model="pageNum" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+        </td>
+      </tr>
+      </tfoot>
+      <tbody>
+      <tr ng-repeat="item in supplylist">
+        <td>{{$index+1}}</td>
+        <td>{{item.pid}}</td>
+        <td>{{item.createtime}}</td>
+        <td>{{item.verifytime}}</td>
+        <td>{{item.supplyquantity}}瓶</td>
+        <td>已匹配{{item.soldquantity}}瓶</td>
+        <td ng-show="item.status=='VerifyPass'">审核通过</td>
+        <td ng-show="item.status=='Deleted'">已删除</td>
+        <td ng-show="item.status=='Canceled'">已取消</td>
+        <td ng-show="item.status=='WaitConfirmed'">待确认</td>
+        <td ng-show="item.status=='VerifyNotPass'">审核未通过</td>
+        <td ng-show="item.status=='SellOut'">匹配完成</td>
+        <td ng-show="item.status=='OutOfDate'">已过期</td>
+        <td ng-show="item.status=='OutOfStack'">已下架</td>
+        <td ng-show="item.status=='WaitVerify'">待审核</td>
+        <td>{{item.dealername}}</td>
+      </tr>
+      <tr ng-show="totalCount == 0"><td colspan='8' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的供应信息。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+

@@ -1,0 +1,458 @@
+<style type="text/css">
+  .required{
+    color: #ff0000;
+    margin-right: 6px;
+    vertical-align: middle;
+    font-size: large;
+  }
+</style>
+<div class="clear-level">
+  <div class="container">
+    <div id="body-head">
+      <div style="border-left:4px solid red;"><h5>&nbsp;&nbsp;发布供应信息</h5></div>
+      <hr>
+    </div>
+    <div>
+      <form class="form-horizontal" id="supply-form" action="/addSupplyInfo">
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>酒类:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-6 col-md-6">
+              <select class="form-control" ng-model="pnames" name="pname">
+                <option value="">-- 请选择 --</option>
+                <option value="动力煤">红酒类</option>
+                <option value="喷吹煤">白酒类</option>
+                <option value="焦煤">果酒类</option>
+                <option value="无烟煤">鸡尾酒</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>酒精度数:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" id="NCV" placeholder="请输入3000-7000之间的值" name="NCV">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label"></label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>产地:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" id="originplace" placeholder="请输入产地" name="originplace" maxlength="100">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label"></label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label">酒类指标1:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" id="ADS" name="ADS" ng-model="ADS" placeholder="请输入0-10之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">%</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>含糖量:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" id="RS" ng-model="RS" name="RS" placeholder="请输入0-10之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">%</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>酒类指标4:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control"  type="text" id="TM" name="TM" ng-model="TM" placeholder="请输入0-50之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">%</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label">酒类指标5:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" id="IM" name="IM" ng-model="IM" placeholder="请输入0-50之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">%</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>酒类指标2:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" name="ADV" ng-model="ADV" placeholder="请输入0-50之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">%</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label">酒类指标3:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" name="RV" ng-model="RV" placeholder="请输入0-50之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">%</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label">酒类指标7:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" name="AFT" ng-model="AFT" placeholder="请输入900-1600之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">℃</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label">酒类指标6:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text"  name="ASH" ng-model="ASH" placeholder="请输入0-50之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">%</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label">酒类指标8:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" name="HGI"  ng-model="HGI" placeholder="请输入0-100之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label"></label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>交货方式:</label>
+          <div class="col-xs-5 col-md-5">
+            <div class="col-xs-6 col-md-6">
+              <select class="form-control" id="deliverymode" ng-model="deliverymode" name="deliverymode">
+                <option value="">-- 请选择 --</option>
+                <option value="场地自提">场地自提</option>
+                <option value="港口平仓">港口平仓</option>
+                <option value="到岸仓底">到岸仓底</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>交货地点:</label>
+          <div class="col-xs-7 col-md-7" id="way">
+            <div class="col-xs-3 col-md-3">
+              <select class="form-control" id="deliveryprovience" ng-model="deliveryprovience" name="deliveryprovience">
+                <option value="" id="pleaseSel2">-- 请选择 --</option>
+                <option ng-repeat="item in deliveryproviences" value="{{item.id}}">{{item.name}}</option>
+              </select>
+            </div>
+            <div class="col-xs-3 col-md-3">
+              <select class="form-control" id="deliveryplace" ng-model="deliveryplace" name="deliveryplace">
+                <option value="" id="pleaseSel3">-- 请选择 --</option>
+                <option ng-repeat="item in deliveryplaces" value="{{item.id}}">{{item.name}}</option>
+              </select>
+            </div>
+            <div class="col-xs-3 col-md-3">
+              <div id ="otherplaceDisplay" style="display: none;">
+                <input type="text" class="form-control" id="otherharbour" name="otherharbour" ng-model="otherharbour" maxlength="20">
+              </div>
+            </div>
+            <span id="wrongInfo" style="height:34px;line-height: 34px; color:red;"></span>
+          </div>
+          <div class="col-xs-2 col-md-2">
+            <span id="otherplaceError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>配置交易员:</label>
+          <div class="col-xs-5 col-md-5">
+          <div class="col-xs-6 col-md-6">
+          <select class="form-control" id="dealerSel" ng-show="dealerLength>0"  ng-model="dealerId" name="dealerSel">
+              <option value="" selected>-- 请选择 --</option>
+              <option ng-repeat="item in dealerList" value="{{item.id}}">{{item.dealername}}---{{item.dealerphone}}</option>
+          </select>
+           <a href="#/port/portdeatil?portId={{portId}}" ng-show="dealerLength==0">添加<span style="color:red;">{{portName}}</span>交易员</a>
+          </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>交货时间:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-5 col-md-5"  id="datetimepicker1" >
+              <div class="input-group date">
+                <input type="text" class="form-control" readonly data-date-format="YYYY-MM-DD" name="deliverytime1" id="deliverydate" readonly placeholder="请填写供货时间">
+                  <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </span>
+              </div>
+            </div>
+            <label class="col-xs-2 col-md-2" style="height:34px;line-height: 34px;">至</label>
+            <div class="col-xs-5 col-md-5"  id="datetimepicker2" >
+              <div class="input-group date" ng-show="supply.deliverytime2!=''">
+                <input type="text" class="form-control" data-date-format="YYYY-MM-DD" readonly="readonly" id="deliverydate2" name="deliverytime2" placeholder="请填写供货时间">
+                  <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </span>
+              </div>
+            </div>
+          </div>
+            <span id="errorInfo" style="height:34px;line-height: 34px;"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>供货数量:</label>
+          <div class="col-xs-3 col-md-3">
+            <div class="col-xs-10 col-md-10">
+              <input class="form-control" type="text" id="supplyNumber1" name="supplyquantity" ng-model="supplyquantity" placeholder="请填写供货瓶数">
+            </div>
+            <label class="col-xs-2 col-md-2 control-label">瓶</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>检验机构:</label>
+          <div class="col-xs-8 col-md-8">
+            <div class="col-xs-5 col-md-5">
+              <select class="form-control" id="inspectorg" name="inspectorg" ng-model="inspectorg">
+                <option value="">无</option>
+                <option ng-repeat="item in inspectorgs" value="{{item.name}}">{{item.name}}</option>
+              </select>
+            </div>
+            <div class="col-xs-4 col-md-4">
+              <div class="input-group date" style="display: none;" id="otherorgDisplay">
+                <input type="text" class="form-control" id="otherinspectorg" ng-model="otherinspectorg" maxlength="20" name="otherinspectorg">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2 col-md-2">
+            <span id="otherorgError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>产品类型:</label>
+          <div class="col-xs-7 col-md-7">
+            <div class="col-xs-6 col-md-6">
+              <select class="form-control" id="producttype" name="producttype" ng-model="producttype">
+                <option value="">--请选择--</option>
+                <option value="Common">普通</option>
+                <option value="Recommend">推荐</option>
+              </select>
+            </div>
+            </div>
+          </div>
+        <div class="form-group" id="fixDiv">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>定价方式:</label>
+          <div class="col-xs-7 col-md-7">
+            <label class="col-xs-2 checkbox-inline col-md-2">
+              <input type="radio" ng-checked="true"  ng-model="optionsRadiosinline" value="1" class="radioItem" name="optionsRadiosinline"  id="optionsRadiosFixedPrice"> 一口价:
+            </label>
+            <div class="col-xs-5 col-md-5">
+              <div class="col-xs-6 col-md-6">
+                <input class="form-control" type="text" ng-model="ykj" name="ykj" value="0" placeholder="填写价格" id="ykj2">
+              </div>
+              <div class="col-xs-5 col-md-5">
+                <label class="control-label">元/瓶</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" id="stepDiv">
+          <div class="col-xs-2 col-md-offset-2 col-md-2">
+            <label class="col-xs-12 checkbox-inline col-md-12">
+              <input type="radio" ng-model="optionsRadiosinline" name="optionsRadiosinline" class="radioItem"   id="optionsRadiosStepPrice" value="2"> 阶梯价:
+            </label>
+          </div>
+          <div class="col-xs-6 col-md-6" id="stepDiv1" style="margin-left: -59px;">
+            <div class="col-xs-7 col-md-7">
+              <div class="col-xs-4 col-md-4">
+                <input type="text" readonly class="form-control" ng-model="amount11" value="50" id="smallest">
+              </div>
+              <div class="col-xs-3 col-md-3">
+                <label class="control-label">M≤</label>
+                <label class="col-xs-1 control-label col-md-1" style="margin-left: -8px;"><</label>
+              </div>
+              <div class="col-xs-4 ol-md-4">
+                <input type="text" class="form-control" ng-model="amount12" name="amount12" id="small" maxlength="6"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+              </div>
+              <div>
+                <label class="col-xs-1 control-label col-md-1" style="margin-left: -20px;">瓶</label>
+              </div>
+            </div>
+            <div class="col-xs-3 col-md-3">
+              <input class="form-control" type="text" ng-model="jtj01" name="jtj01" placeholder="填写价格" id="jtj012">
+            </div>
+            <div>
+              <label class="control-label">元/瓶</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" id="stepDiv2">
+          <div class="col-xs-2 col-md-offset-2 col-md-2"></div>
+          <div class="col-xs-6 col-md-6" style="margin-left: -59px;">
+            <div class="col-xs-7 col-md-7">
+              <div class="col-xs-4 col-md-4">
+                <input type="text" readonly class="form-control" ng-model="amount21" name="amount21" id="more">
+              </div>
+              <div class="col-xs-3 col-md-3">
+                <label class="control-label">M≤</label>
+                <label class="col-xs-1 control-label col-md-1" style="margin-left: -8px;"><</label>
+              </div>
+              <div class="col-xs-4 col-md-4">
+                <input type="text" class="form-control" ng-model="amount22" name="amount22" id="middle" maxlength="6"  onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+              </div>
+              <div>
+                <label class="col-xs-1 control-label col-md-1" style="margin-left: -20px;">瓶</label>
+              </div>
+            </div>
+            <div class="col-xs-3 col-md-3">
+              <input class="form-control" type="text" ng-model="jtj02" placeholder="填写价格" name="jtj02" id="jtj022">
+            </div>
+            <div>
+              <label class="control-label">元/瓶</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" id="stepDiv3" style="display: none;">
+          <div class="col-xs-2 col-md-offset-2 col-md-2"></div>
+          <div class="col-xs-6 col-md-6" style="margin-left: -59px;">
+            <div class="col-xs-7 col-md-7">
+              <div class="col-xs-4 col-md-4">
+                <input type="text" readonly class="form-control" ng-model="amount31" name="amount31" id="large">
+              </div>
+              <div class="col-xs-3 col-md-3">
+                <label class="control-label">M≤</label>
+                <label class="col-xs-1 control-label col-md-1" style="margin-left: -8px;"><</label>
+              </div>
+              <div class="col-xs-4 col-md-4">
+                <input type="text" class="form-control" ng-model="amount32" name="amount32" id="larger" maxlength="6" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+              </div>
+              <div>
+                <label class="col-xs-1 control-label col-md-1" style="margin-left: -20px;">瓶</label>
+              </div>
+            </div>
+            <div class="col-xs-3 col-md-3">
+              <input class="form-control" type="text" ng-model="jtj03" name="jtj03" placeholder="填写价格" id="jtj032">
+            </div>
+            <div>
+              <label class="control-label">元/瓶<span style="color:blue;" id="reduceZero">(-)</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" id="stepDiv4" style="display: none;">
+          <div class="col-xs-2 col-md-offset-2 col-md-2"></div>
+          <div class="col-xs-6 col-md-6" style="margin-left: -59px;">
+            <div class="col-xs-7 col-md-7">
+              <div class="col-xs-4 col-md-4">
+                <input type="text" readonly class="form-control" ng-model="amount41" name="amount41" id="big">
+              </div>
+              <div class="col-xs-3 col-md-3">
+                <label class="control-label">M≤</label>
+                <label class="col-xs-1 control-label col-md-1" style="margin-left: -8px;"><</label>
+              </div>
+              <div class="col-xs-4 col-md-4">
+                <input type="text" class="form-control" ng-model="amount42" name="amount42" id="bigger" maxlength="6" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+              </div>
+              <div>
+                <label class="col-xs-1 control-label col-md-1" style="margin-left: -20px;">瓶</label>
+              </div>
+            </div>
+            <div class="col-xs-3 col-md-3">
+              <input class="form-control" type="text" ng-model="jtj04" name="jtj04" placeholder="填写价格" id="jtj042">
+            </div>
+            <div>
+              <label class="control-label">元/瓶<span style="color:blue;" id="reduceFirst">(-)</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" id="stepDiv5" style="display: none;">
+          <div class="col-xs-2 col-md-offset-2 col-md-2"></div>
+          <div class="col-xs-6 col-md-6" style="margin-left: -59px;">
+            <div class="col-xs-7 col-md-7">
+              <div class="col-xs-4 col-md-4">
+                <input type="text" readonly class="form-control" ng-model="amount51" name="amount51" id="littleBig">
+              </div>
+              <div class="col-xs-3 col-md-3">
+                <label class="control-label">M≤</label>
+                <label class="col-xs-1 control-label col-md-1" style="margin-left: -8px;"><</label>
+              </div>
+              <div class="col-xs-4 col-md-4">
+                <input type="text" class="form-control" ng-model="amount52" name="amount52" id="biggest" maxlength="6" onKeyUp="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+              </div>
+              <div>
+                <label class="col-xs-1 control-label col-md-1" style="margin-left: -20px;">瓶</label>
+              </div>
+            </div>
+            <div class="col-xs-3 col-md-3">
+              <input class="form-control" type="text"  ng-model="jtj05" name="jtj05" placeholder="填写价格" id="jtj052">
+            </div>
+            <div>
+              <label class="control-label">元/瓶<span style="color:blue;" id="reduceSecond">(-)</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-offset-10 col-md-offset-10" id="addDiv">
+          <label style="color:red;" id="add">(+)</label>
+        </div>
+        <div class="col-xs-offset-4 col-md-offset-4" style="padding-bottom: 20px;">
+          <span id="error"></span>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label">备注:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <textarea class="form-control" rows="4"  style="width:500px;" id="releaseremarks" placeholder="请输入备注" name="releaseremarks" maxlength="200"></textarea>
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label"></label>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-offset-3 col-md-offset-3">
+          <span id="commonError"></span>
+        </div>
+        <div class="form-group" style="margin-top: 5%;">
+          <div class="col-xs-2 col-sm-offset-2 col-md-2">
+            <button type="button" ng-click="confirmSupply()" class="btn btn-primary btn-block">确认发布</button>
+          </div>
+          <div class="col-xs-2 col-md-2">
+            <button type="button" ng-click="cancelSupply()" class="btn btn-block">取消</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+

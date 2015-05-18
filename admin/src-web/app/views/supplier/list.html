@@ -1,0 +1,151 @@
+<div class="clearfix">
+  <h2>团购供应商列表</h2>
+  <label id="info" style="margin-left: 20%;"></label>
+</div>
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="deleteSupplierConfirmDialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          删除确认
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要删除此供应商?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="deleteSupplier()">
+          确认
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="AddSupplierDialog">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:650px;height:500px;">
+      <div class="modal-header">
+        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">添加供应商</h4>
+      </div>
+
+      <form class="form-horizontal" id="supplier_form" action="" style="margin-top:30px;">
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>供应商名称:</label>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control" maxlength="50" style="width:200px;" type="text" id="providername" name="providername" ng-model="ProviderInfo.providername">
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <span id="providernameError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>联系人:</label>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control" maxlength="30" style="width:200px;" type="text" id="contacter" name="contacter" ng-model="ProviderInfo.contacter">
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <span id="contacterError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>联系电话:</label>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control" maxlength="20" style="width:200px;" type="text" id="contactphone" name="contactphone" ng-model="ProviderInfo.contactphone">
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <span id="contactphoneError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>注册资本:</label>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control" maxlength="10" style="width:200px;" type="text" id="registeredcapital" name="registeredcapital" ng-model="ProviderInfo.registeredcapital">
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <span id="registeredcapitalError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>企业性质:</label>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control" maxlength="30" style="width:200px;" type="text" id="enterpriseproperty" name="enterpriseproperty" ng-model="ProviderInfo.enterpriseproperty">
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <span id="enterprisepropertyError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>企业地址:</label>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control" maxlength="100" style="width:200px;" type="text" id="enterpriseaddress" name="enterpriseaddress" ng-model="ProviderInfo.enterpriseaddress">
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <span id="enterpriseaddressError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-md-12" style="top:10px;">
+          <button type="button" class="col-xs-3 btn btn-primary col-md-offset-2 col-md-4" ng-click="addSupplierClick()">
+            确认添加
+          </button>
+          <button type="button" class="col-xs-offset-2 btn btn-default col-md-offset-2" data-dismiss="modal">
+            取消
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<br>
+<div class="box">
+  <form class="form-inline">
+    <button type="submit" style="margin-left:3%;" class="btn btn-default" ng-click="addSupplier()" id="supplier-add">新增供应商</button>
+  </form>
+</div>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>供应商名称</th>
+    <th>联系人</th>
+    <th>联系电话</th>
+    <th>企业性质</th>
+    <th>企业地址</th>
+    <th>注册资本</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td colspan="10" style="text-align:right">
+      <pagination total-items="supplier.count" ng-model="supplier.page" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+    </td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <tr ng-repeat="item in supplier.list">
+    <td>{{item.providername}}</td>
+    <td>{{item.contacter}}</td>
+    <td>{{item.contactphone}}</td>
+    <td>{{item.enterpriseproperty}}</td>
+    <td>{{item.enterpriseaddress}}</td>
+    <td>{{item.registeredcapital}}</td>
+    <td ng-show="item.status == 'PROVIDER_ACTIVE'"><a href="#/groupBuy/getGroupBuySupplyList?id={{item.id}}">查看团购</a>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" ng-click="deleteSupplierClick(item.id)" name="supplier-delete">删除</a></td></td>
+    <td ng-show="item.status != 'PROVIDER_ACTIVE'"><a href="#/groupBuy/getGroupBuySupplyList?id={{item.id}}">查看团购</a></td>
+
+  </tr>
+  </tbody>
+</table>
+<input id="providerinfoid" type="hidden"/>
+

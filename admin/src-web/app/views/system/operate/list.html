@@ -1,0 +1,137 @@
+<div class="clearfix">
+  <h2>操作权限列表</h2>
+  <label id="info" style="margin-left: 20%;"></label>
+</div>
+<br>
+<div class="box">
+  <form class="form-inline">
+    <button type="submit" style="margin-left:3%;" class="btn btn-default" ng-click="addOperate()">添加操作事件</button>
+  </form>
+</div>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>序号</th>
+    <th>所属菜单</th>
+    <th>操作名称</th>
+    <th>操作代码</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td colspan="10" style="text-align:right">
+      <pagination total-items="operateauth.count" ng-model="operateauth.page" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+    </td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <tr ng-repeat="item in operateauth.list">
+    <td>{{$index+1}}</td>
+    <td>{{item.menuname}}</td>
+    <td>{{item.operatename}}</td>
+    <td>{{item.operatecode}}</td>
+    <td>
+      <a href="javascript:void(0);" style="margin-left:2%;" ng-click="deleteOperate(item.id)">删除</a>
+    </td>
+  </tr>
+  <tr ng-show="operateauth.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的信息。</td></tr>
+  </tbody>
+</table>
+
+  <!--删除 -->
+  <input type="hidden" id="operateauthId">
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false"  id="deleteOperateConfirmDialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          删除确认
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要删除此条数据吗?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="deleteOperateClick()">
+          确认
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- 添加数据-->
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="addOperateauthDialog">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:650px;height:400px;">
+      <div class="modal-header">
+        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">添加操作事件</h4>
+      </div>
+
+      <form class="form-horizontal" id="operate-form" action="" style="margin-top:30px;">
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>所属菜单(一级):</label>
+          <div class="col-xs-4 col-md-4">
+            <select class="form-control" style="width:180px;" type="text" id="pMenuid" ng-model="pmenusList.id" name="menuid" ng-change="getChildMenus()">
+              <!--<option ng-repeat="pitem in pmenusList" value="{{pitem.id}}">{{pitem.menuname}}</option>-->
+            </select>
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <span id="pMenuidError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label">所属菜单(二级):</label>
+          <div class="col-xs-4 col-md-4">
+            <select class="form-control" style="width:180px;" type="text" id="cMenuid" name="menuid" ng-model="cmenusList.id">
+              <!--<option ng-repeat="citem in cmenusList" value="{{citem.id}}">{{citem.menuname}}</option>-->
+            </select>
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <span id="cMenuidError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>操作名称:</label>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control" maxlength="50" style="width:180px;" type="text" id="operatename" name="operatename">
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <span id="operatenameError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>操作代码:</label>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control" maxlength="50" style="width:180px;" type="text" id="operatecode" name="operatecode">
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <span id="operatecodeError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-md-12" style="top:10px;">
+          <button type="button" class="col-xs-3 btn btn-primary col-md-offset-2 col-md-4" ng-click="addOperateClick()">
+            确认添加
+          </button>
+          <button type="button" class="col-xs-offset-2 btn btn-default col-md-offset-2" data-dismiss="modal">
+            取消
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+

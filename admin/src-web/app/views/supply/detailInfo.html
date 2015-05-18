@@ -1,0 +1,366 @@
+<style type="text/css">
+  .div-margin{
+    margin-bottom: 2%;
+  }
+  .attr-color{
+    color:#317ee6;
+  }
+  .unit-price{
+    margin-left: 10%;
+  }
+</style>
+  <div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">产品编号:</label>
+      <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.pid}}</label>
+    </div>
+    <div class="col-xs-6 col-md-6 div-margin" ng-show="supply.seller != '自营'">
+      <label class="col-xs-4 col-md-4 control-label">供应方:</label>
+      <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.seller}}</label>
+    </div>
+    <div ng-show="supply.seller == '自营'">
+      <label class="col-xs-4 col-md-4 control-label"></label>
+      <label class="col-xs-8 col-md-8 control-label attr-color"></label>
+    </div>
+  </div>
+  <div>
+    <div class="col-xs-6 col-md-6 div-margin" ng-show="supply.NCV!=0">
+      <label class="col-xs-6 col-md-4 control-label">酒精度数:</label>
+      <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.NCV}}kcal/kg</label>
+    </div>
+    <div class="col-xs-6 col-md-6 div-margin" ng-show="supply.NCV==0">
+      <label class="col-xs-4 col-md-4 control-label">酒精度数:</label>
+      <label class="col-xs-8 col-md-8 control-label attr-color">--</label>
+    </div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">酒类指标1:</label>
+      <div ng-show="supply.ADS != 0">
+        <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.ADS}}%</label>
+      </div>
+      <div ng-show="supply.ADS == 0">
+        <label class="col-xs-8 col-md-8 control-label attr-color">--</label>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">含糖量:</label>
+      <div ng-show="supply.RS != 0">
+        <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.RS}}%</label>
+      </div>
+      <div ng-show="supply.RS == 0">
+        <label class="col-xs-8 col-md-8 control-label attr-color">--</label>
+      </div>
+    </div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">酒类指标4:</label>
+      <div ng-show="supply.TM != 0">
+        <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.TM}}%</label>
+      </div>
+      <div ng-show="supply.TM == 0">
+        <label class="col-xs-8 col-md-8 control-label attr-color">--</label>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">酒类指标5:</label>
+      <div ng-show="supply.IM !=0  ">
+        <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.IM}}%</label>
+      </div>
+      <div ng-show="supply.IM ==0 ">
+        <label class="col-xs-8 col-md-8 control-label attr-color">--</label>
+      </div>
+    </div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">酒类指标2:</label>
+      <div ng-show="supply.ADV != 0">
+        <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.ADV}}%</label>
+      </div>
+      <div ng-show="supply.ADV == 0">
+        <label class="col-xs-8 col-md-8 control-label attr-color">--</label>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">酒类指标3:</label>
+      <div ng-show="supply.RV != 0">
+        <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.RV}}%</label>
+      </div>
+      <div ng-show="supply.RV == 0">
+        <label class="col-xs-8 col-md-8 control-label attr-color">--</label>
+      </div>
+    </div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">酒类指标7:</label>
+      <div ng-show="supply.AFT != 0">
+        <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.AFT}}℃</label>
+      </div>
+      <div ng-show="supply.AFT == 0">
+        <label class="col-xs-8 col-md-8 control-label attr-color">--</label>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">酒类指标6:</label>
+      <div ng-show="supply.ASH != 0">
+        <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.ASH}}%</label>
+      </div>
+      <div ng-show="supply.ASH == 0">
+        <label class="col-xs-8 col-md-8 control-label attr-color">--</label>
+      </div>
+    </div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">酒类指标8:</label>
+      <div ng-show="supply.HGI != 0">
+        <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.HGI}}</label>
+      </div>
+      <div ng-show="supply.HGI == 0">
+        <label class="col-xs-8 col-md-8 control-label attr-color">--</label>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">提货地点:</label>
+      <div ng-show="supply.deliveryplace != '其它'">
+      <label class="col-xs-4 col-md-4 control-label attr-color">{{supply.deliveryprovince}}{{supply.deliveryplace}}</label>
+      </div>
+      <div ng-show="supply.deliveryplace == '其它'">
+        <label class="col-xs-4 col-md-4 control-label attr-color">{{supply.deliveryprovince}}{{supply.otherharbour}}</label>
+      </div>
+    </div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">提货方式:</label>
+      <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.deliverymode}}</label>
+    </div>
+  </div>
+  <div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">提货时间:</label>
+      <label class="control-label attr-color" style="margin-left: 3%;">{{supply.deliverytime1|date:"yyyy-MM-dd"}}</label> -
+      <label class="control-label attr-color">{{supply.deliverytime2|date:"yyyy-MM-dd"}}</label>
+    </div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">供货数量:</label>
+      <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.supplyquantity}}瓶</label>
+    </div>
+  </div>
+  <div ng-show="supply.ykj!=0">
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">检验机构:</label>
+      <div ng-show="supply.inspectorg != '无'">
+        <div ng-show="supply.inspectorg != '其它'">
+          <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.inspectorg}}</label>
+        </div>
+      </div>
+      <div ng-show="supply.inspectorg == '其它'">
+        <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.otherinspectorg}}</label>
+      </div>
+      <div ng-show="supply.inspectorg == '无'">
+        <label class="col-xs-8 col-md-8 control-label attr-color">无</label>
+      </div>
+    </div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">一口价:</label>
+      <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.ykj}}元/瓶</label>
+    </div>
+  </div>
+
+  <div id="stepDiv" ng-show="supply.ykj==0">
+    <div>
+      <div class="col-xs-6 col-md-6 div-margin">
+        <label class="col-xs-4 col-md-4 control-label">检验机构:</label>
+        <div ng-show="supply.inspectorg != '无'">
+          <div ng-show="supply.inspectorg != '其它'">
+            <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.inspectorg}}</label>
+          </div>
+          <div ng-show="supply.inspectorg == '其它'">
+            <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.otherinspectorg}}</label>
+          </div>
+        </div>
+        <div ng-show="supply.inspectorg=='无'">
+          <label class="col-xs-8 col-md-8 control-label attr-color">--</label>
+        </div>
+      </div>
+      <div class="col-xs-6 col-md-6">
+        <label class="col-xs-4 col-md-4 control-label"></label>
+        <span class="col-xs-3 col-md-3 control-label attr-color"></span>
+      </div>
+      <div class="col-xs-6 col-md-6">
+        <label class="col-xs-4 col-md-4 control-label">阶梯定价:</label>
+        <label class="col-xs-3 col-md-3 control-label">{{jtj01Obj.amount1}}＜M≤{{jtj01Obj.amount2}}瓶</label>
+        <label class="attr-color" style="margin-left: 8%;">{{jtj01Obj.price}}</label>
+        <label style="margin-left:2%;" class="unit-price">元/瓶</label></label>
+      </div>
+  </div>
+    <div class="col-xs-12 col-md-12 div-margin">
+      <div class="col-xs-6 col-md-6">
+        <label class="col-xs-4 col-md-4 control-label"></label>
+        <span class="col-xs-3 col-md-3 control-label attr-color"></span>
+      </div>
+      <div class="col-xs-6 col-md-6">
+        <label class="col-xs-4 col-md-4 control-label"></label>
+        <label class="col-xs-4 col-md-4 control-label">{{jtj02Obj.amount1}}＜M≤{{jtj02Obj.amount2}}瓶</label>
+        <label class="attr-color" style="margin-left: 2%;">{{jtj02Obj.price}}</label>
+        <label class="unit-price" style="margin-left:2%;">元/瓶</label></label>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-12 div-margin">
+      <div class="col-xs-6 col-md-6">
+        <label class="col-xs-4 col-md-4 control-label"></label>
+        <label class="col-xs-3 col-md-3 control-label attr-color"></label>
+      </div>
+      <div class="col-xs-6 col-md-6">
+        <label class="col-xs-4 col-md-4 control-label"></label>
+        <label class="col-xs-4 col-md-4 control-label">{{jtj03Obj.amount1}}＜M≤{{jtj03Obj.amount2}}瓶</label>
+        <label class="attr-color" style="margin-left: 2%;">{{jtj03Obj.price}}</label>
+        <label class="unit-price" style="margin-left:2%;">元/瓶</label></label>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-12 div-margin" ng-show="jtj04Obj != null">
+      <div class="col-xs-6 col-md-6">
+        <label class="col-xs-4 col-md-4 control-label"></label>
+        <label class="col-xs-3 col-md-3 control-label attr-color"></label>
+      </div>
+      <div class="col-xs-6 col-md-6">
+        <label class="col-xs-4 col-md-4 control-label"></label>
+        <label class="col-xs-4 col-md-4 control-label">{{jtj04Obj.amount1}}＜M≤{{jtj04Obj.amount2}}瓶</label>
+        <label class="attr-color" style="margin-left: 2%;">{{jtj04Obj.price}}</label>
+        <label class="unit-price" style="margin-left:2%;">元/瓶</label></label>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-12 div-margin" ng-show="jtj05Obj != null">
+      <div class="col-xs-6 col-md-6">
+        <label class="col-xs-4 col-md-4 control-label"></label>
+        <label class="col-xs-3 col-md-3 control-label attr-color"></label>
+      </div>
+      <div class="col-xs-6 col-md-6">
+        <label class="col-xs-4 col-md-4 control-label"></label>
+        <label class="col-xs-4 col-md-4 control-label">{{jtj05Obj.amount1}}＜M≤{{jtj05Obj.amount2}}瓶</label>
+        <label class="attr-color" style="margin-left: 2%;">{{jtj05Obj.price}}</label>
+        <label class="unit-price" style="margin-left:2%;">元/瓶</label></label>
+      </div>
+    </div>
+  </div>
+
+<div>
+  <div class="col-xs-6 col-md-6 div-margin">
+    <label class="col-xs-4 col-md-4 control-label">产地:</label>
+    <div>
+      <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.originplace}}</label>
+    </div>
+  </div>
+  <div class="col-xs-6 col-md-6 div-margin">
+    <label class="col-xs-4 col-md-4 control-label">付款方式:</label>
+    <div>
+      <label class="col-xs-8 col-md-8 control-label attr-color" ng-show="supply.paymode == 1">现汇</label>
+      <label class="col-xs-8 col-md-8 control-label attr-color" ng-show="supply.paymode == 2">账期{{supply.payperiod}}个月</label>
+      <label class="col-xs-8 col-md-8 control-label attr-color" ng-show="supply.paymode == 3">银行承兑汇票</label>
+      <label class="col-xs-8 col-md-8 control-label attr-color" ng-show="supply.paymode == 4">现汇+银行承兑汇票</label>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div ng-show="type=='WaitVerify'" class="col-xs-6 col-md-6 div-margin">
+    <label class="col-xs-4 col-md-4 control-label">分配交易员:</label>
+    <div class="col-xs-8 col-md-8">
+      <select ng-show="dealerCount!=0" class="form-control"  id="selectDealer" ng-model="dealerId">
+        <option value="">请分配交易员</option>
+        <option ng-repeat="item in dealerList" value="{{item.id}}">{{item.dealername}}---{{item.dealerphone}}</option>
+      </select>
+      <a href="#/port/portdeatil?portId={{supply.portId}}" ng-show="dealerCount==0">点击添加<span style="color:red">{{supply.deliveryplace}}</span>港交易员</a>
+    </div>
+  </div>
+  <div ng-show="type=='VerifyPass'" class="col-xs-6 col-md-6 div-margin">
+    <label class="col-xs-4 col-md-4 control-label">交易员:</label>
+    <div class="col-xs-8 col-md-8">
+      {{dealer.dealername}}
+    </div>
+  </div>
+</div>
+<div>
+  <div class="col-xs-6 col-md-6 div-margin">
+    <label class="col-xs-4 col-md-4 control-label">备注:</label>
+    <div>
+      <label class="col-xs-8 col-md-8 control-label attr-color">{{supply.releaseremarks}}</label>
+    </div>
+  </div>
+</div>
+
+  <div ng-show="supply.status=='WaitVerify'">
+    <div class="col-xs-12 col-md-12 div-margin">
+      <label class="col-xs-2 col-md-2 control-label">审核结果:</label>
+      <div class="col-xs-4 col-md-4">
+        <label class="checkbox-inline">
+          <input class="radioItem" value="0" ng-checked="true" name="checkResult" type="radio">审核通过
+        </label>
+      </div>
+      <div class="col-xs-4 col-md-4">
+        <label class="checkbox-inline ">
+          <input class="radioItem" value="1"  name="checkResult" type="radio">审核未通过
+        </label>
+      </div>
+    </div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">备注:</label>
+      <textarea class="form-control" style="background: #fafafa;" placeholder="审核未通过时，请填写不通过具体原因" rows="3" id="comment" ng-maxlength="50"  ng-model="supply.remarks" cols="50"></textarea>
+    </div>
+    </div>
+  </div>
+
+  <div ng-show="supply.status!='WaitVerify'">
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">审核结果:</label>
+      <div class="col-xs-4 col-md-4">
+        <label class="checkbox-inline" style="padding-left: 0px;" ng-show="supply.status=='VerifyPass'" >
+          审核通过
+        </label>
+        <label class="checkbox-inline" style="padding-left: 0px;" ng-show="supply.status=='VerifyNotPass'" >
+          审核未通过
+        </label>
+      </div>
+    </div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">备注:</label>
+      <div class="col-xs-6 col-md-6">
+        <label class="checkbox-inline " style="padding-left: 0px;">
+          {{supply.remarks}}
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-6 col-md-6" style="margin-top: 25px;">
+    <div class="alert alert-danger" role="alert" id="alert" style="display: none">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <button class="close" id="closeBtn" ng-click="closeAlert()">×</button>
+      <span></span>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-md-12" ng-show="supply.status=='WaitVerify'">
+    <div class="col-xs-4 col-md-4 div-margin">
+      <span id="errorInfo"></span>
+    </div>
+    <div class="col-xs-4 col-md-offset-1 col-md-4">
+      <div class="col-xs-6 col-md-6">
+        <button type="submit" ng-click="checkSupplyInfo(supply.id, supply.version)" class="btn btn-primary btn-block" id="supply-wait-check">确定</button>
+      </div>
+      <div class="col-xs-6 col-md-6">
+        <button type="button" ng-click="back(supply.seller,type)" class="btn btn-primary btn-block" value="返回">返回</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-12">
+    <div class="col-xs-4 col-md-offset-1 col-md-4" ng-show="supply.status!='WaitVerify'">
+      <div class="col-xs-6 col-md-6">
+        <button type="button" ng-click="back(supply.seller,type)" class="btn btn-primary btn-block" value="返回">返回</button>
+      </div>
+    </div>
+  </div>
+</div>
+

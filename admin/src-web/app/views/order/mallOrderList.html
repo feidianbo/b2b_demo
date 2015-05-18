@@ -1,0 +1,626 @@
+<div class="clearfix">
+  <h3>商城订单</h3>
+</div>
+<br>
+<div class="alert alert-danger" role="alert" id="alert" style="display: none">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <button class="close" id="closeBtn" ng-click="closeAlert()">×</button>
+  <span></span>
+</div>
+<!--进行中订单-->
+<div ng-show="type=='underway'">
+  <h2>进行中订单</h2>
+  <div class="box">
+    <form class="form-inline" id="searchForm">
+      <div class="form-group">
+        <label class="control-label">订单编号:</label>
+        <input type="text" class="form-control"  ng-model="orderid" placeholder="订单编号查询..." aria-describedby="sizing-addon1">
+        <label class="control-label">产品编号:</label>
+        <input type="text" class="form-control"  ng-model="pid" placeholder="产品编号查询..." aria-describedby="sizing-addon1">
+      </div>
+      <div class="form-group">
+        <label class="control-label" style="margin-left:20px;">日期选择:</label>
+        <div class="input-group date" id="date1">
+          <input class="form-control" type="text"  style="width:130px;" readonly="true" id="createtime1" ng-model="createtime1"  placeholder="请选择时间">
+          <span class="input-group-addon" ng-click="clearDate1()"><i class="glyphicon glyphicon-remove"></i></span>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> </span>
+        </div>
+        <div class="input-group date" style="margin-left:30px;" id="date2" >
+          <input class="form-control" type="text" style="width:130px;"  readonly="true" data-date-format="YYYY-MM-DD"  ng-model="createtime2"  id="createtime2"  placeholder="请选择时间">
+          <span class="input-group-addon" ng-click="clearDate2()"><i class="glyphicon glyphicon-remove"></i></span>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> </span>
+        </div>
+      </div>
+      <div style="height:20px;"></div>
+      <div class="form-group">
+          <label class="control-label">区域:</label>
+          <select class="form-control" id="deliveryRegion_underway" name="deliveryRegion" ng-model="deliveryRegion">
+            <option value="0">全部</option>
+            <option ng-repeat="item in deliveryRegions" ng-selected="{{deliveryRegion}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+          </select>
+          <label class="control-label">省份:</label>
+          <select class="form-control" id="deliveryProvince_underway" name="deliveryProvince" ng-model="deliveryProvince">
+            <option value="0">全部</option>
+            <option ng-repeat="item in deliveryProvinces" ng-selected="{{deliveryProvince}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+          </select>
+          <label class="control-label">港口:</label>
+          <select class="form-control" id="deliveryHarbour" name="deliveryHarbour" ng-model="deliveryHarbour">
+            <option value="0">全部</option>
+            <option ng-repeat="item in deliveryHarbours" ng-selected="{{deliveryHarbour}}=={{item.id}}"  value="{{item.id}}">{{item.name}}</option>
+          </select>
+        </div>
+
+      <div class="form-group" style="margin-left:50px;">
+        <button type="submit"  class="btn btn-primary" ng-click="searchUnderWayMallOrder()">搜索</button>
+        <button type="submit" class="btn btn-primary" ng-click="exportExcel()">导出</button>
+      </div>
+    </form>
+  </div>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>编号</th>
+      <th>订单编号</th>
+      <th>产品编号</th>
+      <th>交易员</th>
+      <th>提货地(市/港)</th>
+      <th>下单时间</th>
+      <th>订单状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td colspan="10" style="text-align:right">
+        <pagination total-items="orderList.count" ng-model="orderList.page" ng-change="pageToMallUnderWay()" max-size="20" boundary-links="true"></pagination>
+      </td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <tr ng-repeat="item in orderList.list">
+      <td>{{$index+1}}</td>
+      <td><a href="#/order/detail?id={{item.id}}">{{item.orderid}}</a></td>
+      <td>{{item.pid}}</td>
+      <td>{{item.dealername}}</td>
+      <td>{{item.deliveryprovince}}{{item.deliveryplace}}</td>
+      <td>{{item.createtime}}</td>
+      <td>
+        <span ng-show="item.status=='WaitVerify'">待审核</span>
+        <span ng-show="item.status=='WaitSignContract'">待签合同</span>
+        <span ng-show="item.status=='WaitPayment'">待付款</span>
+        <span ng-show="item.status=='VerifyPass' && item.sellerstatus!='VerifyNotPass'">审核通过</span>
+        <span ng-show="item.status=='VerifyPass' && item.sellerstatus=='VerifyNotPass'">复审未通过</span>
+        <span ng-show="item.status=='WaitBalancePayment'">待付尾款</span>
+        <span ng-show="item.status=='VerifyNotPass'">审核未通过</span>
+      </td>
+      <td>
+        <a  href="#/order/detail?id={{item.id}}" >查看</a>
+        <a  href="javascript:void(0);" ng-show="item.status=='VerifyPass'" ng-click="applyFinished(item.id)" name="mall-order-apply-complete">申请完成</a>
+      </td>
+    </tr>
+    <tr ng-show="orderList.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的订单信息。</td></tr>
+    </tbody>
+  </table>
+</div>
+<!--待复审-->
+<div ng-show="type=='waitReview'">
+  <h2>待复审订单</h2>
+  <div class="box">
+    <form class="form-inline" >
+      <div class="form-group">
+        <label class="control-label">订单编号:</label>
+        <input type="text" class="form-control"  ng-model="orderid" placeholder="订单编号查询..." aria-describedby="sizing-addon1">
+        <label class="control-label">产品编号:</label>
+        <input type="text" class="form-control"  ng-model="pid" placeholder="产品编号查询..." aria-describedby="sizing-addon1">
+      </div>
+      <div class="form-group">
+          <label class="control-label">区域:</label>
+          <select class="form-control" id="deliveryRegion_waitReviewed" name="deliveryRegion" ng-model="deliveryRegion">
+            <option value="0">全部</option>
+            <option ng-repeat="item in deliveryRegions" ng-selected="{{deliveryRegion}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+          </select>
+          <label class="control-label">省份:</label>
+          <select class="form-control" id="deliveryProvince_waitReviewed" name="deliveryProvince" ng-model="deliveryProvince">
+            <option value="0">全部</option>
+            <option ng-repeat="item in deliveryProvinces" ng-selected="{{deliveryProvince}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+          </select>
+          <label class="control-label">港口:</label>
+          <select class="form-control"  name="deliveryHarbour" ng-model="deliveryHarbour">
+            <option value="0">全部</option>
+            <option ng-repeat="item in deliveryHarbours" ng-selected="{{deliveryHarbour}}=={{item.id}}"  value="{{item.id}}">{{item.name}}</option>
+          </select>
+      </div>
+      <div class="form-group">
+      <button type="submit" class="btn btn-primary" style="margin-left: 30%;" ng-click="searchWaitReviewOrder()">搜索</button>
+      </div>
+    </form>
+  </div>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>编号</th>
+      <th>订单编号</th>
+      <th>产品编号</th>
+      <th>交易员</th>
+      <th>提货地(市/港)</th>
+      <th>下单时间</th>
+      <th>订单状态</th>
+      <th>进度</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td colspan="10" style="text-align:right">
+        <pagination total-items="orderList.count" ng-model="orderList.page" ng-change="pageToWaitReview()" max-size="20" boundary-links="true"></pagination>
+      </td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <tr ng-repeat="item in orderList.list">
+      <td>{{$index+1}}</td>
+      <td><a href="#/order/detail?id={{item.id}}">{{item.orderid}}</a></td>
+      <td>{{item.pid}}</td>
+      <td>{{item.dealername}}</td>
+      <td>{{item.deliveryprovince}}{{item.deliveryplace}}</td>
+      <td>{{item.createtime}}</td>
+      <td>
+        <span ng-show="item.status=='ReturnGoods'">退货中</span>
+        <span ng-show="item.status=='VerifyPass'">审核通过</span>
+      </td>
+      <td>
+        <span ng-show="item.sellerstatus=='Completed'">申请完成</span>
+        <span ng-show="item.sellerstatus=='ReturnCompleted'">提报退货申请</span>
+      </td>
+      <td>
+        <a href="#/order/detail?id={{item.id}}" >查看</a>
+        <a href="javascript:void(0);" ng-show="item.sellerstatus=='Completed'" ng-click="confirmCompleted(item.id);" name="mall-order-sure-complete">确认完成</a>
+        <a href="javascript:void(0);" ng-show="item.sellerstatus=='ReturnCompleted'" ng-click="confirmReturn(item.id);" name="mall-order-sure-return">确认退货</a>
+        <a href="javascript:void(0);" ng-click="verifyNotPass(item.id);" name="mall-order-fail">未通过</a>
+      </td>
+    </tr>
+    <tr ng-show="mallOrderList.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的订单信息。</td></tr>
+    </tbody>
+  </table>
+</div>
+<!--退货中订单-->
+<div ng-show="type=='returning'">
+  <h2>退货中订单</h2>
+  <div class="box">
+    <form class="form-inline">
+      <div class="form-group">
+        <label class="control-label">订单编号:</label>
+        <input type="text" class="form-control"  ng-model="orderid" placeholder="订单编号查询..." aria-describedby="sizing-addon1">
+        <label class="control-label">产品编号:</label>
+        <input type="text" class="form-control"  ng-model="pid" placeholder="产品编号查询..." aria-describedby="sizing-addon1">
+      </div>
+
+      <div class="form-group">
+        <label class="control-label" style="margin-left:20px;">日期选择:</label>
+        <div class="input-group date" id="date3">
+          <input class="form-control" type="text"  style="width:130px;" readonly="true" ng-model="createtime3"  id="createtime3"   placeholder="请选择时间">
+          <span class="input-group-addon" ng-click="clearDate1()"><i class="glyphicon glyphicon-remove"></i></span>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> </span>
+        </div>
+        <div class="input-group date" style="margin-left:30px;" id="date4" >
+          <input class="form-control" type="text" style="width:130px;"  data-date-format="YYYY-MM-DD" ng-model="createtime4" readonly="true"  id="createtime4"  placeholder="请选择时间">
+          <span class="input-group-addon" ng-click="clearDate2()"><i class="glyphicon glyphicon-remove"></i></span>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> </span>
+        </div>
+      </div>
+      <div style="height: 20px;"></div>
+      <div class="form-group">
+        <label class="control-label">区域:</label>
+        <select class="form-control" id="deliveryRegion_returning" name="deliveryRegion" ng-model="deliveryRegion">
+          <option value="0">全部</option>
+          <option ng-repeat="item in deliveryRegions" ng-selected="{{deliveryRegion}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+        </select>
+        <label class="control-label">省份:</label>
+        <select class="form-control" id="deliveryProvince_returning" name="deliveryProvince" ng-model="deliveryProvince">
+          <option value="0">全部</option>
+          <option ng-repeat="item in deliveryProvinces" ng-selected="{{deliveryProvince}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+        </select>
+        <label class="control-label">港口:</label>
+        <select class="form-control" name="deliveryHarbour" ng-model="deliveryHarbour">
+          <option value="0">全部</option>
+          <option ng-repeat="item in deliveryHarbours" ng-selected="{{deliveryHarbour}}=={{item.id}}"  value="{{item.id}}">{{item.name}}</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-left:50px;">
+        <button type="submit"  class="btn btn-primary" ng-click="searchReturningOrder()">搜索</button>
+        <button type="submit" class="btn btn-primary" ng-click="exportExcel()">导出</button>
+      </div>
+    </form>
+    </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>编号</th>
+          <th>订单编号</th>
+          <th>产品编号</th>
+          <th>交易员</th>
+          <th>提货地(市/港)</th>
+          <th>下单时间</th>
+          <th>订单状态</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+    <tfoot>
+      <tr>
+        <td colspan="10" style="text-align:right">
+        <pagination total-items="orderList.count" ng-model="orderList.page" ng-change="pageToReturning()" max-size="20" boundary-links="true"></pagination>
+        </td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <tr ng-repeat="item in orderList.list">
+        <td>{{$index+1}}</td>
+        <td><a href="#/order/detail?id={{item.id}}">{{item.orderid}}</a></td>
+          <td>{{item.pid}}</td>
+        <td>{{item.dealername}}</td>
+        <td>{{item.deliveryprovince}}{{item.deliveryplace}}</td>
+        <td>{{item.createtime}}</td>
+        <td>退货中</td>
+        <td>
+        <a  href="#/order/detail?id={{item.id}}" >查看</a>
+          <a  href="javascript:void(0);" ng-show="item.status=='ReturnGoods'" ng-click="reportReturnApply(item.id)" name="mall-order-return-report">提报退货申请</a>
+        </td>
+      </tr>
+      <tr ng-show="orderList.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的订单信息。</td></tr>
+    </tbody>
+  </table>
+</div>
+<!--已完成订单-->
+<div ng-show="type=='finished'">
+   <h2>已完成订单</h2>
+  <div class="box">
+    <form class="form-inline">
+      <div class="form-group">
+        <label class="control-label">订单编号:</label>
+        <input type="text" class="form-control"  ng-model="orderid" placeholder="订单编号查询..." aria-describedby="sizing-addon1">
+        <label class="control-label">产品编号:</label>
+        <input type="text" class="form-control"  ng-model="pid" placeholder="产品编号查询..." aria-describedby="sizing-addon1">
+      </div>
+      <div class="form-group">
+        <label class="control-label" style="margin-left:20px;">日期选择:</label>
+        <div class="input-group date" id="date5">
+          <input class="form-control" type="text"  style="width:130px;" readonly="true" ng-model="createtime5"   id="createtime5"   placeholder="请选择时间">
+          <span class="input-group-addon" ng-click="clearDate1()"><i class="glyphicon glyphicon-remove"></i></span>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> </span>
+        </div>
+        <div class="input-group date" style="margin-left:30px;" id="date6" >
+          <input class="form-control" type="text" style="width:130px;"  data-date-format="YYYY-MM-DD" readonly="true" ng-model="createtime6"  id="createtime6"  placeholder="请选择时间">
+          <span class="input-group-addon" ng-click="clearDate2()"><i class="glyphicon glyphicon-remove"></i></span>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> </span>
+        </div>
+      </div>
+      <div style="height: 20px;"></div>
+      <div class="form-group">
+        <label class="control-label">区域:</label>
+        <select class="form-control" id="deliveryRegion_finished" name="deliveryRegion" ng-model="deliveryRegion">
+          <option value="0">全部</option>
+          <option ng-repeat="item in deliveryRegions" ng-selected="{{deliveryRegion}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+        </select>
+        <label class="control-label">省份:</label>
+        <select class="form-control" id="deliveryProvince_finished" name="deliveryProvince" ng-model="deliveryProvince">
+          <option value="0">全部</option>
+          <option ng-repeat="item in deliveryProvinces" ng-selected="{{deliveryProvince}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+        </select>
+        <label class="control-label">港口:</label>
+        <select class="form-control" name="deliveryHarbour" ng-model="deliveryHarbour">
+          <option value="0">全部</option>
+          <option ng-repeat="item in deliveryHarbours" ng-selected="{{deliveryHarbour}}=={{item.id}}"  value="{{item.id}}">{{item.name}}</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-left:50px;">
+        <button type="submit"  class="btn btn-primary" ng-click="searchFinishedOrder()">搜索</button>
+        <button type="submit" class="btn btn-primary" ng-click="exportExcel()">导出</button>
+      </div>
+    </form>
+  </div>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>编号</th>
+      <th>订单编号</th>
+      <th>产品编号</th>
+      <th>交易员</th>
+      <th>提货地(市/港)</th>
+      <th>下单时间</th>
+      <th>订单状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td colspan="10" style="text-align:right">
+        <pagination total-items="orderList.count" ng-model="orderList.page" ng-change="pageToFinished()" max-size="20" boundary-links="true"></pagination>
+      </td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <tr ng-repeat="item in orderList.list">
+      <td>{{$index+1}}</td>
+      <td><a href="#/order/detail?id={{item.id}}">{{item.orderid}}</a></td>
+      <td>{{item.pid}}</td>
+      <td>{{item.dealername}}</td>
+      <td>{{item.deliveryprovince}}{{item.deliveryplace}}</td>
+      <td>{{item.createtime}}</td>
+      <td>
+        <span ng-show="item.status == 'Completed'">已完成</span>
+        <span ng-show="item.status == 'ReturnCompleted'">退货完成</span>
+        <span ng-show="item.status == 'Deleted'">已删除(客户)</span>
+      </td>
+      <td>
+        <a  href="#/order/detail?id={{item.id}}" >查看</a>
+        <a  href="javascript:void(0);" ng-click="deleteFinishedOrder(item.id)">删除</a>
+      </td>
+    </tr>
+    <tr ng-show="orderList.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的订单信息。</td></tr>
+    </tbody>
+  </table>
+</div>
+<!--已取消订单-->
+<div ng-show="type=='canceled'">
+  <h2>已取消订单</h2>
+  <div class="box">
+    <form class="form-inline">
+      <div class="form-group">
+        <label class="control-label">订单编号:</label>
+        <input type="text" class="form-control"  ng-model="orderid" placeholder="订单编号查询..." aria-describedby="sizing-addon1">
+        <label class="control-label">产品编号:</label>
+        <input type="text" class="form-control"  ng-model="pid" placeholder="产品编号查询..." aria-describedby="sizing-addon1">
+      </div>
+      <div class="form-group">
+          <label class="control-label">区域:</label>
+          <select class="form-control" id="deliveryRegion_canceled" name="deliveryRegion" ng-model="deliveryRegion">
+            <option value="0">全部</option>
+            <option ng-repeat="item in deliveryRegions" ng-selected="{{deliveryRegion}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+          </select>
+          <label class="control-label">省份:</label>
+          <select class="form-control" id="deliveryProvince_canceled" name="deliveryProvince" ng-model="deliveryProvince">
+            <option value="0">全部</option>
+            <option ng-repeat="item in deliveryProvinces" ng-selected="{{deliveryProvince}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+          </select>
+          <label class="control-label">港口:</label>
+          <select class="form-control" name="deliveryHarbour" ng-model="deliveryHarbour">
+            <option value="0">全部</option>
+            <option ng-repeat="item in deliveryHarbours" ng-selected="{{deliveryHarbour}}=={{item.id}}"  value="{{item.id}}">{{item.name}}</option>
+          </select>
+      </div>
+      <div class="form-group">
+      <button type="submit" class="btn btn-primary" style="margin-left: 30%;" ng-click="searchCanceledOrder()">搜索</button>
+      </div>
+    </form>
+  </div>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>编号</th>
+      <th>订单编号</th>
+      <th>产品编号</th>
+      <th>交易员</th>
+      <th>提货地(市/港)</th>
+      <th>下单时间</th>
+      <th>订单状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td colspan="10" style="text-align:right">
+        <pagination total-items="orderList.count" ng-model="orderList.page" ng-change="pageToCanceled()" max-size="20" boundary-links="true"></pagination>
+      </td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <tr ng-repeat="item in orderList.list">
+      <td>{{$index+1}}</td>
+      <td><a href="#/order/detail?id={{item.id}}">{{item.orderid}}</a></td>
+      <td>{{item.pid}}</td>
+      <td>{{item.dealername}}</td>
+      <td>{{item.deliveryprovince}}{{item.deliveryplace}}</td>
+      <td>{{item.createtime}}</td>
+      <td>已取消</td>
+      <td>
+        <a  href="#/order/detail?id={{item.id}}" >查看</a>
+        <a  href="javascript:void(0);" ng-click="deleteCanceledOrder(item.id)">删除</a>
+      </td>
+    </tr>
+    <tr ng-show="orderCanceled.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的订单信息。</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<input type="hidden" id="orderId"/>
+
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="cancelOrderDialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          确认取消订单
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要取消该订单吗？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="cancelOrderClick()">
+          确认
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="DeleteOrderDialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          确认删除订单
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要删除该订单吗？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="deleteOrderClick()">
+          确认
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="applyReturnDialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          退货申请
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要申请退掉该订单吗？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="confirmApplyReturn()">
+          确认
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="confirmWaitReviewedDialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          确认完成
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要完成该订单吗？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="confirmWaitReviewed()">
+          确认
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="confirmReturnDialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          确认退货
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要退货吗？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="confirmReturnGoods()">
+          确认
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="finishOrderDialog" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          确认完成
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要申请完成该订单吗？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="confirmApplyFinished()">
+          确认
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="verifyNotPassDialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          复审不通过
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定该订单复审不能通过吗？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="confirmVerifyNotPass()">
+          确认
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

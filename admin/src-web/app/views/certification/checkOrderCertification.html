@@ -1,0 +1,198 @@
+<style type="text/css">
+  .div-margin{
+    margin-bottom: 2%;
+  }
+  .attr-color{
+    color:#317ee6;
+  }
+  div img,div input{ vertical-align:middle}
+  .modal{
+    width: 100%;
+    position: fixed;
+    text-align: center;
+    margin: 0px auto;
+    top: 0px; left: 0px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 1050;
+  }
+  .modal_wrapper{
+    display: table;
+    overflow: auto;
+    overflow-y: scroll;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+    text-align: center;
+    margin: 0px auto; }
+  .modal-dialog{
+    margin-top: 0px;
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0px 20px;
+  }
+</style>
+<div style="margin-top: 10%;">
+  <div class="col-xs-6 col-md-6 div-margin">
+    <label class="col-xs-4 col-md-4 control-label">订单编号:</label>
+    <label class="col-xs-8 col-md-8 control-label attr-color">{{order.orderid}}</label>
+  </div>
+  <div class="col-xs-6 col-md-6 div-margin">
+    <label class="col-xs-4 col-md-4 control-label">订单生成时间:</label>
+    <label class="col-xs-8 col-md-8 control-label attr-color">{{order.createtime|date:"yyyy-MM-dd"}}</label>
+  </div>
+</div>
+<div>
+  <div class="col-xs-6 col-md-6 div-margin">
+    <label class="col-xs-4 col-md-4 control-label">订单状态:</label>
+    <label class="col-xs-8 col-md-8 control-label attr-color">
+      <span ng-show="order.status == 'WaitVerify'">待审核</span>
+      <span ng-show="order.status == 'WaitBalancePayment'">待付尾款</span>
+      <span ng-show="order.status == 'VerifyPass'">审核通过</span>
+      <span ng-show="order.status == 'VerifyNotPass'">审核未通过</span>
+    </label>
+  </div>
+  <div class="col-xs-6 col-md-6 div-margin">
+    <label class="col-xs-4 col-md-4 control-label">&nbsp;</label>
+    <label class="col-xs-8 col-md-8 control-label attr-color">&nbsp;</label>
+  </div>
+</div>
+<div>
+  <div class="col-xs-6 col-md-6 div-margin">
+    <label class="col-xs-4 col-md-4 control-label">买家电话:</label>
+    <label class="col-xs-8 col-md-8 control-label attr-color">{{order.linkmanphone}}</label>
+  </div>
+  <div class="col-xs-6 col-md-6 div-margin">
+    <label class="col-xs-4 col-md-4 control-label">交易员电话:</label>
+    <label class="col-xs-8 col-md-8 control-label attr-color">{{order.dealerphone}}</label>
+  </div>
+</div>
+<div>
+  <div ng-show="order.status == 'WaitVerify'">
+    <div ng-show="payment1!=null">
+      <div class="col-xs-6 col-md-6 div-margin">
+        <label class="col-xs-4 col-md-4 control-label">支付凭证一:</label>
+        <label class="col-xs-8 col-md-8 control-label attr-color"><label>审核后确认金额有:<input type="text" id="money1" name="money1" ng-model="money1" maxlength="13" ng-focus="clearErrorFirst()" onkeyup="tran(this);"/>元</label>
+          <br /><br />
+          <span id="errorFirst"></span>
+        </label>
+      </div>
+      <div class="gallery">
+        <img ng-src="{{payment1.pictureurl}}"  width="300px;" height="300px;" ng-model="payment1"/>
+        <button type="button" class="btn btn-success" style="margin-top: 22%;" id="downloadCertificationFirst" ng-click="downloadCertification(payment1.pictureurl);" name="downloadCertificationFirst">下载</button>
+      </div>
+      <div class="clear"></div>
+    </div>
+
+    <div ng-show="payment2!=null">
+      <div class="col-xs-6 col-md-6 div-margin">
+        <label class="col-xs-4 col-md-4 control-label">支付凭证二:</label>
+        <label class="col-xs-8 col-md-8 control-label attr-color"><label>审核后确认金额有:<input type="text" id="money2" ng-focus="clearErrorSecond()" maxlength="13" onkeyup="tran(this);"  ng-model="money2"/>元</label>
+          <br /><br />
+          <span id="errorSecond"></span>
+        </label>
+      </div>
+        <img ng-src="{{payment2.pictureurl}}"  width="300px;" height="300px;" ng-model="payment2"/>
+      <button type="button" class="btn btn-success" style="margin-top: 22%;" id="downloadCertificationSecond" ng-click="downloadCertification(payment2.pictureurl);" name="downloadCertificationSecond">下载</button>
+    </div>
+
+    <div ng-show="payment3!=null">
+      <div class="col-xs-6 col-md-6 div-margin">
+        <label class="col-xs-4 col-md-4 control-label">支付凭证三:</label>
+        <label class="col-xs-8 col-md-8 control-label attr-color"><label>审核后确认金额有:<input type="text" id="money3" ng-model="money3" maxlength="13" onkeyup="tran(this);" ng-focus="clearErrorThird()"/>元</label>
+          <br /><br />
+          <span id="errorThird"></span>
+        </label>
+      </div>
+        <img ng-src="{{payment3.pictureurl}}"  width="300px;" height="300px;" ng-model="payment3" />
+      <button type="button" class="btn btn-success" style="margin-top: 22%;" id="downloadCertificationThird" ng-click="downloadCertification(payment3.pictureurl);" name="downloadCertificationThird">下载</button>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<div>
+  <div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">总货款:</label>
+      <input disabled type="text" id="totalM" ng-model="order.totalmoney"/>元
+    </div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">已付货款:</label>
+      <input disabled type="text" id="paidMoney" ng-model="order.paidmoney"/>元
+    </div>
+  </div>
+
+  <div >
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">待付尾款:</label>
+      <input disabled type="text" id="remainMoney" ng-model="order.waitmoney"/>元
+    </div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">节余款:</label>
+      <input disabled type="text" ng-model="complexMoney" ng-show="order.paidmoney<=order.totalmoney" value="0" id="complexMoney"/>
+      <input disabled type="text" ng-model="order.savemoney" id="leaveMoney" ng-show="order.paidmoney>order.totalmoney" />元
+
+    </div>
+  </div>
+  <div class="col-xs-offset-10 col-md-offset-10" ng-hide="order.status == 'WaitVerify'">
+    <input type="button" ng-click="back()" class="btn btn-cancel col-xs-4 col-md-4" value="返回">
+  </div>
+</div>
+<div ng-show="order.status == 'WaitVerify'">
+  <div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label">本次付款金额:</label>
+      <!--<label class="col-md-8 control-label attr-color" id="currentMoney" ng-model="currentMoney"></label>-->
+      <input disabled type="text" id="currentMoney" ng-model="currentMoney"/>元
+    </div>
+  <div class="col-xs-6 col-md-6 div-margin">
+    <label class="col-xs-4 col-md-4 control-label">审核结果:</label>
+    <label class="col-xs-8 col-md-8 control-label attr-color" id="checkStatus" ng-show="order.status=='WaitVerify'" ng-model="checkStatus"></label>
+    <label class="col-xs-8 col-md-8 control-label attr-color" ng-show="order.status!='WaitVerify'">{{order.status}}</label>
+  </div>
+</div>
+  <div>
+    <div class="col-xs-6 col-md-6 div-margin" ng-show="order.status!='WaitVerify'">
+      <label class="col-xs-4 col-md-4 control-label">备注:</label>
+      <label class="col-xs-8 col-md-8 control-label attr-color">{{order.remarks}}</label>
+      <label class="col-xs-8 col-md-8 control-label attr-color" ng-show="order.remarks==null">无</label>
+    </div>
+    <div class="col-xs-6 col-md-6 div-margin">
+      <label class="col-xs-4 col-md-4 control-label"></label>
+    </div>
+</div>
+  <div class="col-xs-12 col-md-12">
+    <div class="col-xs-6 col-md-6 div-margin" ng-show="order.status == 'WaitVerify'">
+      <label class="col-xs-4 col-md-4 control-label">备注:</label>
+      <textarea class="form-control" rows="3" style="background: #fafafa;" placeholder="审核未通过时，请填写不通过具体原因" id="comment" cols="50"></textarea>
+    </div>
+  </div>
+  <div class="col-xs-4 col-md-4 col-md-offset-1 div-margin">
+    <span id="errorInfo"></span>
+  </div>
+  <div>
+  <div class="col-xs-4 col-md-offset-2 col-md-4">
+    <div class="col-xs-6 col-md-6" ng-show="order.status=='WaitVerify'">
+      <button ng-click="checkCertification(order.id)" class="btn btn-primary btn-block" id="finance-order-wait-check">确定</button>
+    </div>
+    <div class="col-xs-6 col-md-6">
+      <button type="button" ng-click="back()" class="btn btn-primary btn-block" value="返回">返回</button>
+    </div>
+  </div>
+</div>
+  <div class="modal fade img-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal_wrapper">
+  <div class="modal-dialog">
+    <div class="modal-content img_content">
+      <img id="showPic" style="width: 600px; overflow: auto;" />
+    </div>
+  </div>
+  </div>
+  </div>
+
+  <input type="hidden" id="id01" ng-model="id01" />
+  <input type="hidden" id="id02" ng-model="id02" />
+  <input type="hidden" id="id03" ng-model="id03" />
+</div>
+

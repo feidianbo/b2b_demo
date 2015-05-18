@@ -1,0 +1,86 @@
+<div class="clearfix">
+    <h2>文章列表</h2>
+    <span id="directoryPath" style="font-size: 16px;">
+      <a href="#/article/list" id="rootPath">/根目录</a>
+      <span ng-repeat="item in parents">
+        <a href="#/article/list?pid={{item.id}}">/{{item.title}}</a>
+      </span>
+    </span>
+  <label id="info" style="margin-left: 20%;"></label>
+</div>
+<br>
+<div class="box">
+    <form class="form-inline">
+        <div class="form-group">
+            <label class="sr-only" for="keyword-input"></label>
+            <input type="text" class="form-control" id="keyword-input" placeholder="关键字" name="content" ng-model="content" >
+        </div>
+        <button type="submit" style="margin-left:3%;" class="btn btn-default" ng-click="searchArticle()">搜索</button>
+        <button type="submit" style="margin-left:2em;" class="btn btn-default" ng-click="bulkDelete()">批量删除</button>
+      <a href="#/article/addArticle?pid={{data.parents[0]?data.parents[0].id:0}}" class="btn btn-default" style="float:right;">添加文章</a>
+    </form>
+</div>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>选择</th>
+        <th>编号</th>
+        <th>标题</th>
+        <th>作者</th>
+        <th>固顶级别</th>
+        <th>创建时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <td colspan="7" style="text-align:right">
+            <pagination total-items="data.count" ng-model="data.page" ng-change="pageTo(data.page)" max-size="20" boundary-links="true"></pagination>
+        </td>
+    </tr>
+    </tfoot>
+    <tbody>
+      <tr ng-repeat="item in data.list">
+        <td><input type="checkbox" ng-model="todelete[item.id]"></td>
+        <td>{{$index+1}}</td>
+        <td>{{item.title}}</td>
+        <td>{{item.author}}</td>
+        <td><input type="text" id="sequence" ng-blur="changeLevel(item)" ng-model="item.sequence" style="width: 36px;"/></td>
+        <td>{{item.lastupdatetime}}</td>
+        <td>
+          <a href="#/article/editArticle?id={{item.id}}">修改</a>
+          <a href="javascript:void(0);"  ng-click="deleteConfirm(item.id)">删除</a>
+          <a href="#/article/addArticle?pid={{item.id}}"  ng-hide="item.haschild">添加子文章</a>
+          <a href="#/article/list?pid={{item.id}}" ng-show="item.haschild">管理子文章</a></td>
+      </tr>
+    </tbody>
+</table>
+
+<div class="clearfix">
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="deleteConfirmDialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          删除提示
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要删除吗？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="deleteArticle()">
+          确认删除
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+

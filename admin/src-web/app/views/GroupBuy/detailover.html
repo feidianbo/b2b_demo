@@ -1,0 +1,202 @@
+<style type="text/css">
+  .div-margin{
+    margin-bottom: 2%;
+  }
+  .attr-color{
+    color:#317ee6;
+  }
+
+</style>
+
+<div class="row">
+  <div class="col-md-12 div-margin">
+    <label class="col-md-1 control-label">团购编号:</label>
+    <label class="col-md-11 control-label attr-color">{{groupbuy.groupbuysupplycode}}</label>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">酒类:</label>
+    <label class="col-md-8 control-label attr-color">{{groupbuy.coaltype}}</label>
+  </div>
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">酒精度数:</label>
+    <label class="col-md-8 control-label attr-color">{{groupbuy.NCV}}kcal/kg</label>
+  </div>
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">酒类指标1:</label>
+    <label class="col-md-8 control-label attr-color" ng-show="groupbuy.ADS!= null">{{groupbuy.ADS}}%</label>
+    <label class="col-md-8 control-label attr-color" ng-show="groupbuy.ADS == null">--</label>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">含糖量:</label>
+    <label class="col-md-8 control-label attr-color">{{groupbuy.RS}}%</label>
+  </div>
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">酒类指标4:</label>
+    <label class="col-md-8 control-label attr-color">{{groupbuy.TM}}%</label>
+  </div>
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">酒类指标5:</label>
+    <label class="col-md-8 control-label attr-color" ng-show="groupbuy.IM != null">{{groupbuy.IM}}%</label>
+    <label class="col-md-8 control-label attr-color" ng-show="groupbuy.IM == null">--</label>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-md-4 div-margin">
+    <label class="col-md-5 control-label">酒类指标2:</label>
+    <label class="col-md-7 control-label attr-color">{{groupbuy.ADV}}%</label>
+  </div>
+  <div class="col-md-4 div-margin">
+    <label class="col-md-5 control-label">酒类指标3:</label>
+    <label class="col-md-7 control-label attr-color" ng-show="groupbuy.RV != null">{{groupbuy.RV}}%</label>
+    <label class="col-md-7 control-label attr-color" ng-show="groupbuy.RV == null">--</label>
+  </div>
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">酒类指标7:</label>
+    <label class="col-md-8 control-label attr-color" ng-show="groupbuy.AFT != null">{{groupbuy.AFT}}℃</label>
+    <label class="col-md-8 control-label attr-color" ng-show="groupbuy.AFT == null">--</label>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label" >酒类指标6:</label>
+    <label class="col-md-8 control-label attr-color" ng-show="groupbuy.ASH != null">{{groupbuy.ASH}}%</label>
+    <label class="col-md-8 control-label attr-color" ng-show="groupbuy.ASH == null">--</label>
+  </div>
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label" >酒类指标8:</label>
+    <label class="col-md-8 control-label attr-color" ng-show="groupbuy.HGI != null">{{groupbuy.HGI}}%</label>
+    <label class="col-md-8 control-label attr-color" ng-show="groupbuy.HGI == null">--</label>
+  </div>
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">交货地点:</label>
+    <label class="col-md-8 control-label attr-color" ng-show="groupbuy.port != '其它'">{{groupbuy.deliveryprovince}}{{groupbuy.port}}</label>
+    <label class="col-md-8 control-label attr-color" ng-show="groupbuy.port == '其它'">{{groupbuy.deliveryprovince}}{{groupbuy.deliveryplace}}</label>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">交货方式:</label>
+    <label class="col-md-8 control-label attr-color">{{groupbuy.deliverymode}}</label>
+  </div>
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">供应数量:</label>
+    <label class="col-md-8 control-label attr-color">{{groupbuy.supplyamount}}</label>
+  </div>
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">堆位:</label>
+    <label class="col-md-8 control-label attr-color">{{groupbuy.storageplace}}</label>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">检测机构:</label>
+    <label class="control-label attr-color" ng-show="groupbuy.inspectionagency != '其它'">{{groupbuy.inspectionagency}}</label>
+    <label class="control-label attr-color" ng-show="groupbuy.inspectionagency == '其它'">{{groupbuy.otherorg}}</label>
+  </div>
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">交货时间:</label>
+    <label class="control-label attr-color">{{groupbuy.deliverydatestart}}--{{groupbuy.deliverydateend}}</label>
+  </div>
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">团购价:</label>
+    <label class="col-md-8 control-label attr-color">{{groupbuy.groupbuyprice}}</label>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 div-margin">
+    <label class="col-md-2 control-label">团购时间:</label>
+    <label class="col-md-8 control-label attr-color">{{groupbuy.groupbuybegindate}}--{{groupbuy.groupbuyenddate}}</label>
+  </div>
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">市场价:</label>
+    <label class="col-md-8 control-label attr-color">{{groupbuy.marketprice}}元/瓶</label>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">起订量:</label>
+    <label class="col-md-8 control-label attr-color">{{groupbuy.minimumamount}}瓶</label>
+  </div>
+  <div class="col-md-4 div-margin">
+    <label class="col-md-4 control-label">已购量:</label>
+    <label class="col-md-8 control-label attr-color">{{groupbuy.selledamount}}瓶</label>
+  </div>
+</div>
+
+<div>
+  <div class="col-md-12 div-margin">
+    <label class="col-md-2 control-label">团购规则:</label>
+    <label class="col-md-10 control-label attr-color">{{groupbuy.comment}}</label>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 div-margin">
+    <label class="col-md-2 control-label">团购图片:</label>
+    <label class="col-md-3 control-label attr-color">
+      <img ng-src="{{groupbuy.photopath}}" width="300px;" height="200px;"/>
+    </label>
+    <label class="col-md-4 control-label attr-color">
+      <input type="button" class="btn btn-primary"  style="margin-left: 30px;" id="downloadBtn"  value="下载图片" ng-click="downloadPic(groupbuy.photopath)">
+    </label>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-2" style="margin-left:650px;margin-top:50px;">
+    <input type="hidden" id="providerinfoid">
+    <input type="button" ng-click="back()" class="btn btn-primary btn-block" value="返回">
+  </div>
+</div>
+
+<div class="row">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>团购订单</th>
+      <th>团购瓶数</th>
+      <th>公司名称</th>
+      <th>提货时间</th>
+      <th>团购资格</th>
+      <th>资格操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in groupbuyorder.list">
+      <td>{{item.groupbuyordercode}}</td>
+      <td>{{item.volume}}</td>
+      <td>{{item.companyname}}</td>
+      <td>{{item.deliverydatestart}}--{{item.deliverydateend}}</td>
+      <td>{{item.qualificationcode}}</td>
+      <td><a href="javascript:void(0);" ng-click="canUse(item.groupbuyordercode,item.qualificationcode)">可用</a>&nbsp;&nbsp;&nbsp;
+        <a href="javascript:void(0);" ng-click="cannotUse(item.groupbuyordercode,item.qualificationcode)">不可用</a>
+      </td>
+    </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="10" style="text-align:right">
+          <pagination total-items="groupbuyorder.count" ng-model="groupbuyorder.page" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  <div>
+    <span style="margin-left: 50px;font-size: 18px;">团购总瓶数:{{totalamount}}瓶</span>
+    <span style="margin-left: 150px;font-size: 18px;">剩余瓶数:{{surplusamount}}瓶</span>
+  </div>
+</div>

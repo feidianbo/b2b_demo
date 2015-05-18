@@ -1,0 +1,234 @@
+    <div class="clearfix">
+      <h2>客户列表</h2>
+    </div>
+    <div class="alert alert-danger" role="alert" id="alert" style="display: none">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <button class="close" id="closeBtn" ng-click="closeAlert()">×</button>
+      <span></span>
+    </div>
+    <div ng-show="type == 'wait'">
+    <div class="box">
+      <form class="form-inline">
+        <div class="form-group">
+          <label class="sr-only" for="wait-input"></label>
+          <input type="text" class="form-control" id="wait-input" style="width:300px;" placeholder="手机号/公司名/公司法人" name="securephone" ng-model="securephone" >
+        </div>
+        <button type="submit" class="btn btn-primary" ng-click="searchWaitInfo()">搜索</button>
+      </form>
+    </div>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>编号</th>
+        <th>手机</th>
+        <th>昵称</th>
+        <th>注册时间</th>
+        <th>启用</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <td colspan="10" style="text-align:right">
+            <pagination total-items="wait.count" ng-model="wait.page" ng-change="pageToWait()" max-size="20" boundary-links="true"></pagination>
+          </td>
+        </tr>
+      </tfoot>
+      <tbody>
+        <tr ng-repeat="item in wait.list">
+          <td>{{$index+1}}</td>
+          <td>{{item.securephone}}</td>
+          <td>{{item.nickname}}</td>
+          <td>{{item.registertime}}</td>
+          <td>{{item.isactive? '是':'否'}}</td>
+          <td>
+            <div class="btn-group" dropdown is-open="status.isopen">
+                <a href="#/user/view?securephone={{item.securephone}}&id={{item.id}}&status=wait">查看</a>
+            </div>
+          </td>
+        </tr>
+        <tr ng-show="wait.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center;color:red;'>没有搜索到您想要的客户信息,您可以输入关键字进行搜索。</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div ng-show="type == 'pass'">
+      <div class="box">
+        <form class="form-inline">
+          <div class="form-group">
+            <label class="sr-only" for="pass-input"></label>
+            <input type="text" class="form-control" id="pass-input" style="width: 300px;" placeholder="手机号/公司名/公司法人" name="securephone" ng-model="securephone" >
+          </div>
+          <div class="form-group">
+            <label class="control-label" style="margin-left:20px;">日期选择:</label>
+            <div class="input-group date" id="date1">
+              <input class="form-control" type="text"  style="width:130px;" readonly="true"  id="createtime1" ng-model="createtime1"  placeholder="请选择时间">
+              <span class="input-group-addon" ng-click="clearDate1()"><i class="glyphicon glyphicon-remove"></i></span>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> </span>
+            </div>
+            <div class="input-group date" style="margin-left:30px;" id="date2" >
+              <input class="form-control" type="text" style="width:130px;"  data-date-format="YYYY-MM-DD" readonly="true" id="createtime2" ng-model="createtime2"    placeholder="请选择时间">
+              <span class="input-group-addon" ng-click="clearDate2()"><i class="glyphicon glyphicon-remove"></i></span>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> </span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" ng-click="searchPassInfo()">搜索</button>
+          <button type="submit" class="btn btn-primary" ng-click="exportExcel()">导出</button>
+        </form>
+      </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>编号</th>
+          <th>手机</th>
+          <th>昵称</th>
+          <th>注册时间</th>
+          <th>启用</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <td colspan="10" style="text-align:right">
+            <pagination total-items="pass.count" ng-model="pass.page" ng-change="pageToPass()" max-size="20" boundary-links="true"></pagination>
+          </td>
+        </tr>
+      </tfoot>
+      <tbody>
+        <tr ng-repeat="item in pass.list">
+          <td>{{$index+1}}</td>
+          <td>{{item.securephone}}</td>
+          <td>{{item.nickname}}</td>
+          <td>{{item.registertime}}</td>
+          <td>{{item.isactive? '是':'否'}}</td>
+          <td>
+            <div class="btn-group" dropdown is-open="status.isopen">
+              <a href="#/user/view?securephone={{item.securephone}}&id={{item.id}}&status=pass">查看</a>
+            </div>
+          </td>
+        </tr>
+        <tr ng-show="pass.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center;color:red;'>没有搜索到您想要的客户信息,您可以输入关键字进行搜索。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+    <div ng-show="type == 'fail'">
+    <div class="box">
+        <form class="form-inline">
+          <div class="form-group">
+            <label class="sr-only" for="fail-input"></label>
+            <input type="text" class="form-control" id="fail-input" style="width: 300px;" placeholder="手机号/公司名/公司法人" name="securephone" ng-model="securephone" >
+          </div>
+          <div class="form-group">
+            <label class="control-label" style="margin-left:20px;">日期选择:</label>
+            <div class="input-group date" id="date3">
+              <input class="form-control" type="text"  style="width:130px;" readonly="true"   id="createtime3" ng-model="createtime1"   placeholder="请选择时间">
+              <span class="input-group-addon" ng-click="clearDate1()"><i class="glyphicon glyphicon-remove"></i></span>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> </span>
+            </div>
+            <div class="input-group date" style="margin-left:30px;" id="date4" >
+              <input class="form-control" type="text" style="width:130px;"  data-date-format="YYYY-MM-DD" readonly="true"  id="createtime4" ng-model="createtime2"  placeholder="请选择时间">
+              <span class="input-group-addon" ng-click="clearDate2()"><i class="glyphicon glyphicon-remove"></i></span>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> </span>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" ng-click="searchFailInfo()">搜索</button>
+          <button type="submit" class="btn btn-primary" ng-click="exportExcel()">导出</button>
+        </form>
+      </div>
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>编号</th>
+            <th>手机</th>
+            <th>昵称</th>
+            <th>注册时间</th>
+            <th>启用</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <td colspan="10" style="text-align:right">
+              <pagination total-items="fail.count" ng-model="fail.page" ng-change="pageToFail()" max-size="20" boundary-links="true"></pagination>
+            </td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr ng-repeat="item in fail.list">
+            <td>{{$index+1}}</td>
+            <td>{{item.securephone}}</td>
+            <td>{{item.nickname}}</td>
+            <td>{{item.registertime}}</td>
+            <td>{{item.isactive? '是':'否'}}</td>
+            <td>
+              <div class="btn-group" dropdown is-open="status.isopen">
+                <a href="#/user/view?securephone={{item.securephone}}&id={{item.id}}&status=fail">查看</a>
+              </div>
+            </td>
+          </tr>
+          <tr ng-show="fail.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center;color:red;'>没有搜索到您想要的客户信息,您可以输入关键字进行搜索。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div ng-show="type == 'infos'">
+      <div class="box">
+        <form class="form-inline">
+          <div class="form-group">
+            <label class="sr-only" for="improve-input"></label>
+            <input type="text" class="form-control" style="width: 300px;" id="improve-input" placeholder="手机号/公司名/公司法人" name="securephone" ng-model="securephone" >
+          </div>
+          <div class="form-group">
+            <label class="control-label" style="margin-left:20px;">日期选择:</label>
+            <div class="input-group date" id="date5">
+              <input class="form-control" type="text"  style="width:130px;" readonly="true"   id="createtime5" ng-model="createtime1"  placeholder="请选择时间">
+              <span class="input-group-addon" ng-click="clearDate1()"><i class="glyphicon glyphicon-remove"></i></span>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> </span>
+            </div>
+            <div class="input-group date" style="margin-left:30px;" id="date6" >
+              <input class="form-control" type="text" style="width:130px;"  data-date-format="YYYY-MM-DD" readonly="true"  id="createtime6" ng-model="createtime2"  placeholder="请选择时间">
+              <span class="input-group-addon" ng-click="clearDate2()"><i class="glyphicon glyphicon-remove"></i></span>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> </span>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" ng-click="searchImproveInfo()">搜索</button>
+          <button type="submit" class="btn btn-primary" ng-click="exportExcel()">导出</button>
+        </form>
+      </div>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>编号</th>
+          <th>手机</th>
+          <th>昵称</th>
+          <th>注册时间</th>
+          <th>启用</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+          <td colspan="10" style="text-align:right">
+            <pagination total-items="infos.count" ng-model="infos.page" ng-change="pageToImproveInfo()" max-size="20" boundary-links="true"></pagination>
+          </td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <tr ng-repeat="item in infos.list">
+          <td>{{$index+1}}</td>
+          <td>{{item.securephone}}</td>
+          <td>{{item.nickname}}</td>
+          <td>{{item.registertime}}</td>
+          <td>{{item.isactive? '是':'否'}}</td>
+          <td>
+            <div class="btn-group" dropdown is-open="status.isopen">
+              <a href="#/user/view?securephone={{item.securephone}}&id={{item.id}}&status=infos">查看</a>
+            </div>
+          </td>
+        </tr>
+        <tr ng-show="infos.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center;color:red;'>没有搜索到您想要的客户信息,您可以输入关键字进行搜索。</td></tr>
+        </tbody>
+      </table>
+    </div>
+

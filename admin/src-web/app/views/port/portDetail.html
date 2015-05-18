@@ -1,0 +1,74 @@
+<div class="clearfix">
+  <h2>港口-交易员</h2>
+</div>
+<div class="alert alert-success" role="alert" id="alert" style="display: none">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <button class="close" id="closeBtn" ng-click="closeAlert()">×</button>
+  <span></span>
+</div>
+<div class="container">
+  <!--<h4>港口名称:{{port.name}}</h4>-->
+  <!--<span>XX网所有交易员</span>-->
+  <!--<span style="margin-left:200px;">当前港口所有交易员</span>-->
+  <form class="form-horizontal" id="dealerPortForm" role="form">
+    <div class="form-group" style="padding-left: 80px;">
+      <div class="col-xs-offset-5 col-xs-2"><h4>港口名称:{{port.name}}</h4></div>
+    </div>
+    <div class="form-group" style="padding-left: 20px;">
+      <label class="col-xs-offset-3 col-xs-2 control-label" >XX网所有交易员</label>
+      <label class="col-xs-offset-2 col-xs-2 control-label" >当前港口所有交易员</label>
+    </div>
+    <div class="form-group">
+      <div class="col-xs-offset-3 col-xs-3">
+        <select id="allDealerSel" class="form-control" multiple="multiple" style="min-height: 150px;" >
+          <option ng-repeat="item in allDealer"   value="{{item.id}}">{{item.dealername}}---{{item.dealerphone}}</option>
+        </select>
+      </div>
+      <div class="col-xs-1" style="text-align: center;padding-top: 30px;">
+        <input type="button" class="btn btn-primary" ng-click="addDealer()" value=">>">
+        <input style="margin-top: 20px;" type="button" class="btn btn-primary" ng-click="deleteDealer()" value="<<">
+      </div>
+      <div class="col-xs-3">
+        <select id="currentPortDealerSel" multiple="multiple" class="form-control" name="portInDealer" style="min-height: 150px;">
+          <option ng-repeat="item in currentDealer"   value="{{item.id}}">{{item.dealername}}---{{item.dealerphone}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group" style="  padding-left: 120px;margin-top: 30px;">
+      <div class="col-xs-offset-4 col-xs-2">
+        <input type="button" value="保存" class="btn btn-info btn-block" ng-click="saveDealer(port.id)">
+      </div>
+      <div class="col-xs-2"><input type="button" value="返回" class="btn btn-info btn-block" onclick="history.go(-1)"></div>
+    </div>
+    <!--<select id="allDealerSel" class="form-control" multiple="multiple"  style="width:200px; heigth:500px;">-->
+    <!--<option ng-repeat="item in allDealer"   value="{{item.id}}">{{item.dealername}}</option>-->
+    <!--</select>-->
+    <!--<input type="button" class="btn btn-primary" ng-click="addDealer()" value=">>">-->
+    <!--<input type="button" class="btn btn-primary" ng-click="deleteDealer()" value="<<">-->
+    <!--<select id="currentPortDealerSel" multiple="multiple" name="portInDealer" style="width:200px; heigth:500px;">-->
+    <!--<option ng-repeat="item in currentDealer"   value="{{item.id}}">{{item.dealername}}</option>-->
+    <!--</select>-->
+    <!--<br/>-->
+    <!--<input type="button" value="保存" class="btn btn-info" ng-click="saveDealer(port.id)">-->
+    <!--<input type="button" value="返回" class="btn btn-info" onclick="history.go(-1)">-->
+  </form>
+</div>
+<div class="modal" id="portPrompt" data-backdrop="false">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:600px;height:250px; font-size: 16px;">
+      <div class="modal-header">
+        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">提示框</h4>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-4 col-md-offset-4">
+        <span id="contentInfo"></span>
+        </div>
+      </div>
+      <div class="col-md-4 col-md-offset-4" style="top:10px;">
+        <button type="button" class=" btn btn-primary" ng-click="confirmBtn()">确认完成</button>
+      </div>
+    </div>
+  </div>
+</div>

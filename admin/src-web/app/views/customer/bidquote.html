@@ -1,0 +1,39 @@
+<div class="clearfix">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>编号</th>
+        <th>用户</th>
+        <th>报价编号</th>
+        <th>申供数量</th>
+        <th>申供价格</th>
+        <th>时间</th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <td colspan="10" style="text-align:right">
+          <pagination total-items="totalCount" ng-model="pageNum" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+        </td>
+      </tr>
+      </tfoot>
+      <tbody>
+      <tr ng-repeat="item in quotelist">
+        <td>{{$index+1}}</td>
+        <td>{{item.username}}</td>
+        <td>{{item.id}}</td>
+        <td>{{item.supplyton}}</td>
+        <td>{{item.quote}}</td>
+        <td>{{item.lastupdatetime}}</td>
+      </tr>
+      <tr ng-show="totalCount == 0"><td colspan='6' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到已中标报价信息。</td></tr>
+      </tbody>
+    </table>
+    <div class="col-md-offset-11">
+        <input type="button" onclick="history.go('-1')" class="btn btn-primary" value="返回">
+    </div>
+    </div>
+
+
+
+

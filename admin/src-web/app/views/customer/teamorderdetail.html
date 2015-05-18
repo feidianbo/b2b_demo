@@ -1,0 +1,99 @@
+<div class="clearfix">
+  <h3>团购订单详细</h3>
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">团购订单编号:</div>
+    <div class="col-md-4" style="color:#317ee6;">{{teamorder.groupbuysupplycode}}</div>
+  </div>
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">团购资质编号:</div>
+    <div class="col-md-4" style="color:#317ee6;">{{qualificationcode}}</div>
+  </div>
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">美酒种类:</div>
+    <div class="col-md-8" style="color:#317ee6;">{{teamorder.coaltype}}</div>
+  </div>
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">内水分:</div>
+    <div class="col-md-8" style="color:#317ee6;">{{teamorder.IM}}%</div>
+  </div>
+
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">全水分:</div>
+    <div class="col-md-8" style="color:#317ee6;">{{teamorder.TM}}%</div>
+  </div>
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">酒精度数:</div>
+    <div class="col-md-8" style="color:#317ee6;">{{teamorder.NCV}}kcal/kg</div>
+  </div>
+
+
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">酒类指标7:</div>
+    <div class="col-md-8" style="color:#317ee6;">{{teamorder.AFT}}℃</div>
+  </div>
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">酒类指标1:</div>
+    <div class="col-md-8" style="color:#317ee6;">{{teamorder.ADS}}%</div>
+  </div>
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">酒类指标8:</div>
+    <div class="col-md-8" style="color:#317ee6;">{{teamorder.HGI}}%</div>
+  </div>
+
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">酒类指标2:</div>
+    <div class="col-md-8" style="color:#317ee6;">{{teamorder.ADV}}%</div>
+  </div>
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">酒类指标3:</div>
+    <div class="col-md-8" style="color:#317ee6;">{{teamorder.RV}}%</div>
+  </div>
+
+
+  <div class="col-md-6" style="line-height:60px;">
+      <div class="col-md-4">交货地点:</div>
+      <div ng-show="teamorder.port!='其它'" class="col-md-8" style="color:#317ee6;">{{teamorder.deliveryprovince}}{{teamorder.port}}</div>
+      <div ng-show="teamorder.port=='其它'" class="col-md-8" style="color:#317ee6;">{{teamorder.deliveryprovince}}{{teamorder.deliveryplace}}</div>
+    </div>
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">交货方式:</div>
+    <div class="col-md-8" style="color:#317ee6;">{{teamorder.deliverymode}}</div>
+  </div>
+    <div class="col-md-6" style="line-height:60px;">
+      <div class="col-md-4">团购数量:</div>
+      <div class="col-md-8" style="color:#317ee6;">{{volume}}瓶</div>
+    </div>
+
+    <div class="col-md-6" style="line-height:60px;">
+      <div class="col-md-4">交货时间:</div>
+      <div class="col-md-8" style="color:#317ee6;">{{teamorder.deliverytime}}</div>
+    </div>
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">已销售量:</div>
+    <div class="col-md-8" style="color:#317ee6;">{{teamorder.selledamount}}瓶</div>
+  </div>
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">检验机构:</div>
+    <div class="col-md-8" style="color:#317ee6;">{{teamorder.inspectionagency}}</div>
+  </div>
+  <div class="col-md-6" style="line-height:60px;">
+    <div class="col-md-4">可销售库存:</div>
+    <div class="col-md-8" style="color:#317ee6;">{{teamorder.surplusamount}}瓶</div>
+  </div>
+<div class="col-md-6" style="line-height:60px;">
+  <div class="col-md-4">团购价:</div>
+  <div class="col-md-8" style="color:#317ee6;">{{teamorder.groupbuyprice}}元</div>
+</div>
+
+    <!--<div class="col-md-2 col-md-offset-2" style="clear:both">-->
+      <!--<input type="button"  class="btn btn-primary btn-block" ng-click="lookconstract()" value="查看履约合同">-->
+    <!--</div>-->
+    <div class="col-md-2 col-md-offset-4" style="clear: left;">
+      <input type="button" onclick="javascript:history.go(-1)" class="btn btn-block" value="返回">
+    </div>
+
+</div>
+
+
+
+

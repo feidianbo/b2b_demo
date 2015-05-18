@@ -1,0 +1,39 @@
+<div class="clearfix">
+  <h2>团购支付凭证审核列表<span id="theme"></span></h2>
+  <label id="info" style="margin-left: 20%;"></label>
+</div>
+<br>
+<!--<div class="box">
+  <form class="form-inline">
+    <button type="submit" style="margin-left:3%;" class="btn btn-default" ng-click="addGroupBuy()">发布团购</button>
+  </form>
+</div>-->
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>客户名称</th>
+    <th>手机</th>
+    <th>上传支付保证金凭证时间</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td colspan="10" style="text-align:right">
+      <pagination total-items="payment.count" ng-model="payment.page" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+    </td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <tr ng-repeat="item in payment.list">
+    <td>{{item.username}}</td>
+    <td>{{item.userphone}}</td>
+    <td>{{item.createtime}}</td>
+    <td>
+      <a href="#/groupbuy/payment?qualificationcode={{item.qualificationcode}}">查看</a>
+    </td>
+  </tr>
+  <tr ng-show="payment.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的信息。</td></tr>
+  </tbody>
+</table>
+

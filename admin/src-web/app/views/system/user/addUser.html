@@ -1,0 +1,172 @@
+<div class="clearfix">
+  <h2>用户列表</h2>
+  <label id="info" style="margin-left: 20%;"></label>
+</div>
+<br>
+<div class="box">
+  <form class="form-inline">
+    <button type="submit" style="margin-left:3%;" class="btn btn-default" ng-click="addUser()">添加用户</button>
+  </form>
+</div>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>序号</th>
+    <th>用户名</th>
+    <th>姓名</th>
+    <th>角色</th>
+    <th>工号</th>
+    <th>手机号</th>
+    <th>状态</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td colspan="10" style="text-align:right">
+      <pagination total-items="admin.count" ng-model="admin.page" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+    </td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <tr ng-repeat="item in admin.list">
+    <td>{{$index+1}}</td>
+    <td>{{item.username}}</td>
+    <td>{{item.name}}</td>
+    <td><span ng-repeat="role in item.roles">{{role.rolename}}&nbsp;&nbsp;&nbsp;</span></td>
+    <td>{{item.jobnum}}</td>
+    <td>{{item.phone}}</td>
+    <td ng-show="{{item.isactive == 1}}">启用</td>
+    <td ng-show="{{item.isactive == 0}}">禁用</td>
+    <td>
+      <a href="javascript:void(0);" style="margin-left:2%;" ng-show="{{item.isactive == 1}}" ng-click="changeStatus(item.id,0)">禁用</a>
+      <a href="javascript:void(0);" style="margin-left:2%;" ng-show="{{item.isactive == 0}}" ng-click="changeStatus(item.id,1)">启用</a>
+      <a href="javascript:void(0);" ng-click="configUserRole(item.id,item.username)">配置用户角色</a>
+      <a href="javascript:void(0);" ng-click="initPassword(item.id)">重置密码</a>
+    </td>
+  </tr>
+  <tr ng-show="admin.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的信息。</td></tr>
+  </tbody>
+</table>
+
+<!-- 添加用户-->
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="addUserDialog">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:650px;height:450px;">
+      <div class="modal-header">
+        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">添加用户</h4>
+      </div>
+
+      <form class="form-horizontal" id="addUserForm"  style="margin-top:30px;">
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>用户名:</label>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control" maxlength="30" style="width:180px;" placeholder="请输入用户名" type="text" id="username" name="username">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>姓名:</label>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control" maxlength="20" style="width:180px;" placeholder="请输入姓名" type="text" id="name" name="name">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label">手机:</label>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control" maxlength="30" style="width:180px;" placeholder="请输入手机号码" type="text" id="phone" name="phone" >
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>配置用户角色:</label>
+            <div class="col-xs-6 col-md-6">
+            <span ng-repeat="item in roleList">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="roleIds"  value="{{item.id}}"> {{item.rolename}}
+              </label>
+            </span>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-12" style="top:10px;">
+          <button type="button" class="col-xs-3 btn btn-primary col-md-offset-2 col-md-4" ng-click="addUserClick()">
+            确认添加
+          </button>
+          <button type="button" class="col-xs-offset-2 btn btn-default col-md-offset-2" data-dismiss="modal">
+            取消
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+  <!-- 重置密码确认-->
+<input type="hidden" id="id">
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false"  id="initPwdConfirmDialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          重置密码确认
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要重置此用户密码?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="initPasswordClick()">
+          确认
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- 配置用户角色-->
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="configUserRoleDialog">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:650px;height:450px;">
+      <div class="modal-header">
+        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">配置角色</h4>
+      </div>
+
+      <form class="form-horizontal" id="configUserRoleForm"  style="margin-top:30px;">
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>用户名:</label>
+          <div class="col-xs-4 col-md-4">
+            <input class="form-control" maxlength="30" style="width:180px;" disabled placeholder="请输入用户名" type="text" ng-model="username">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-4 col-md-4 control-label"><span class="required">*</span>配置用户角色:</label>
+          <div class="col-xs-6 col-md-6">
+            <span ng-repeat="item in roleList">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="userRoles"  value="{{item.id}}">{{item.rolename}}
+              </label>
+            </span>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-12" style="top:10px;">
+          <button type="button" class="col-xs-3 btn btn-primary col-md-offset-2 col-md-4" ng-click="configUserRoleConfirm()">
+            确认添加
+          </button>
+          <button type="button" class="col-xs-offset-2 btn btn-default col-md-offset-2" data-dismiss="modal">
+            取消
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

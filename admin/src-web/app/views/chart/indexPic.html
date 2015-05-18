@@ -1,0 +1,161 @@
+
+  <div class="clear-level">
+    <div class="container">
+        <div id="body-head">
+          <div style="border-left:4px solid red;"><h5>&nbsp;&nbsp;首页图片&nbsp;&nbsp;&nbsp;请上传2000x440规格的图片</h5></div>
+          <hr>
+        </div>
+
+        <!--banner1--banner5 -->
+      <!--保存路径(隐藏),点击确定提交-->
+      <!--<form id="form-picPath">-->
+      <form id="form-picPath" style="display: none;">
+        <!--banner1-->
+        <input name="indexPicList[0].name" value="banner1">
+        <input id="path-banner_1" name="indexPicList[0].path">
+        <input name="indexPicList[0].sequence" id="sequence_1">
+        <input name="indexPicList[0].limitnum" id="limitnum_1">
+        <!--banner1-->
+        <input name="indexPicList[1].name" value="banner2">
+        <input id="path-banner_2" name="indexPicList[1].path">
+        <input name="indexPicList[1].sequence" id="sequence_2">
+        <input name="indexPicList[1].limitnum" id="limitnum_2">
+
+        <input name="indexPicList[2].name" value="banner3">
+        <input id="path-banner_3" name="indexPicList[2].path">
+        <input name="indexPicList[2].sequence" id="sequence_3">
+        <input name="indexPicList[2].limitnum" id="limitnum_3">
+
+        <input name="indexPicList[3].name" value="banner4">
+        <input id="path-banner_4" name="indexPicList[3].path">
+        <input name="indexPicList[3].sequence" id="sequence_4">
+        <input name="indexPicList[3].limitnum" id="limitnum_4">
+
+        <input name="indexPicList[4].name" value="banner5">
+        <input id="path-banner_5" name="indexPicList[4].path">
+        <input name="indexPicList[4].sequence" id="sequence_5">
+        <input name="indexPicList[4].limitnum" id="limitnum_5">
+      </form>
+      <!--保存路径 -->
+
+      <div class="row">
+        <div class="col-md-1">banner1</div>
+        <div class="col-md-6">
+          <img src="" style="width:550px;height:121px;" id="picSavePath_1"/>
+        </div>
+        <div class="col-md-5">
+          <form id="form-banner_1" action="/chart/changeIndexPic" method="post" enctype="multipart/form-data"  style="display: none;">
+            <input type="file" id="picFilePath_1" name="file"><br>
+            <input type="hidden" name="picName" value="banner1">
+            <input type="button" class="btn btn-primary" style="margin-top: 15px;" value="上传图片" ng-click="uploadPic(1)">
+            <span id="typeError_1"></span>
+          </form>
+          <div id="changeAndSequence_1">
+            <input type="button" class="btn btn-primary" ng-click="changePic(1)" value="更换图片" id="changeBtn_1">
+            <span style="margin-left:30px;"><span style="color:red;">*</span>顺序(1-5):<input type="text" maxlength="1" style="width:50px;" id="sequence-input_1"></span>
+            <span id="sequenceError_1"></span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:30px;">
+        <div class="col-md-1">banner2</div>
+        <div class="col-md-6">
+          <img src="" style="width:550px;height:121px;" id="picSavePath_2"/>
+        </div>
+        <div class="col-md-5">
+          <form id="form-banner_2" action="/chart/changeIndexPic" method="post" enctype="multipart/form-data"  style="display: none;">
+            <input type="file" id="picFilePath_2" name="file"><br>
+            <input type="hidden" name="picName" value="banner2">
+            <input type="button" class="btn btn-primary" style="margin-top: 15px;" value="上传图片" ng-click="uploadPic(2)">
+            <span id="typeError_2"></span>
+          </form>
+          <div id="changeAndSequence_2">
+            <input type="button" class="btn btn-primary" ng-click="changePic(2)" value="更换图片" id="changeBtn_2">
+            <span style="margin-left:30px;"><span style="color:red;">*</span>顺序(1-5):<input type="text" maxlength="1" style="width:50px;" id="sequence-input_2"></span>
+            <span id="sequenceError_2"></span>
+          </div>
+
+          </div>
+      </div>
+
+      <div class="row" style="margin-top:30px;">
+        <div class="col-md-1">banner3</div>
+        <div class="col-md-6">
+          <img src="" style="width:550px;height:121px;" id="picSavePath_3"/>
+        </div>
+        <div class="col-md-5">
+          <form id="form-banner_3" action="/chart/changeIndexPic" method="post" enctype="multipart/form-data"  style="display: none;">
+            <input type="file" id="picFilePath_3" name="file"><br>
+            <input type="hidden" name="picName" value="banner3">
+            <input type="button" class="btn btn-primary" style="margin-top: 15px;" value="上传图片" ng-click="uploadPic(3)">
+            <span id="typeError_3"></span>
+          </form>
+
+          <div id="changeAndSequence_3">
+            <input type="button" class="btn btn-primary" ng-click="changePic(3)" value="更换图片" id="changeBtn_3">
+            <span style="margin-left:30px;"><span style="color:red;">*</span>顺序(1-5):<input type="text" maxlength="1" style="width:50px;" id="sequence-input_3"></span>
+            <span id="sequenceError_3"></span>
+          </div>
+
+          </div>
+      </div>
+
+      <div class="row" style="margin-top:30px;">
+        <div class="col-md-1">banner4</div>
+        <div class="col-md-6">
+          <img src="" style="width:550px;height:121px;" id="picSavePath_4"/>
+        </div>
+        <div class="col-md-5">
+          <form id="form-banner_4" action="/chart/changeIndexPic" method="post" enctype="multipart/form-data"  style="display: none;">
+            <input type="file" id="picFilePath_4" name="file"><br>
+            <input type="hidden" name="picName" value="banner4">
+            <input type="button" class="btn btn-primary" style="margin-top: 15px;" value="上传图片" ng-click="uploadPic(4)">
+            <span id="typeError_4"></span>
+          </form>
+          <div id="changeAndSequence_4">
+            <input type="button" class="btn btn-primary" ng-click="changePic(4)" value="更换图片" id="changeBtn_4">
+            <span style="margin-left:30px;"><span style="color:red;">*</span>顺序(1-5):<input type="text" maxlength="1" style="width:50px;" id="sequence-input_4"></span>
+            <span id="sequenceError_4"></span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:30px;">
+        <div class="col-md-1">banner5</div>
+        <div class="col-md-6">
+          <img src="" style="width:550px;height:121px;" id="picSavePath_5"/>
+        </div>
+        <div class="col-md-5">
+          <form id="form-banner_5" action="/chart/changeIndexPic" method="post" enctype="multipart/form-data"  style="display: none;">
+            <input type="file" id="picFilePath_5" name="file"><br>
+            <input type="hidden" name="picName" value="banner5">
+            <input type="button" class="btn btn-primary" style="margin-top: 15px;" value="上传图片" ng-click="uploadPic(5)">
+            <span id="typeError_5"></span>
+          </form>
+          <div id="changeAndSequence_5">
+            <input type="button" class="btn btn-primary" ng-click="changePic(5)" value="更换图片" id="changeBtn_5">
+            <span style="margin-left:30px;"><span style="color:red;">*</span>顺序(1-5):<input type="text" maxlength="1" style="width:50px;" id="sequence-input_5"></span>
+            <span id="sequenceError_5"></span>
+          </div>
+
+          </div>
+      </div>
+
+      <!--banner1--banner5 -->
+      <div style="margin-left:30px;margin-top:30px;">
+        <span style="color:red;">*</span>显示数量(1-5):<input type="text" style="width:50px;" maxlength="1" id="limitnum-input">
+       <span style="color:red;"> 注:显示数量会按图片的顺序来选用图片</span>
+        <input type="button" class="btn btn-primary" value="确定" ng-click="saveIndexPic()" style="width:150px;margin-left:50px;">
+        <br><span id="sequenceAndLimitnumError"></span>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+

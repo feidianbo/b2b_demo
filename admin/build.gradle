@@ -1,0 +1,82 @@
+buildscript {
+    ext {
+        springBootVersion = '1.1.8.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        maven{
+            url "http://repo.spring.io/snapshot"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath 'org.springframework:springloaded:1.2.2.BUILD-SNAPSHOT'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/")
+    }
+}
+
+bootRepackage {
+    mainClass = 'demo.admin.Application'
+}
+
+jar {
+    baseName = 'admin'
+    version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    flatDir{
+        dirs '../libs'
+    }
+    mavenCentral()
+}
+
+
+dependencies {
+    compile project(':core')
+    compile("org.springframework.boot:spring-boot-starter-web"){
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    compile("org.springframework.boot:spring-boot-starter-jetty")
+    compile("org.springframework.boot:spring-boot-starter-mobile")
+    compile("org.springframework.boot:spring-boot-starter-freemarker")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    //汉字转拼音 lxj 2015-01-21
+    compile("com.belerweb:pinyin4j:2.5.0")
+    //md5 lxj 2015-01-21
+    compile("commons-codec:commons-codec:1.9");
+    //poi 2015-01-26
+    compile("org.apache.poi:poi:3.8");
+}
+
+eclipse {
+    classpath {
+         containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+         containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7'
+    }
+}
+
+task bootStop() {
+    def port = "8081"
+    //def command = "curl -X POST localhost:$port/shutdown"
+    //def proc = command.execute()
+    //proc.waitFor()
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2.1'
+}

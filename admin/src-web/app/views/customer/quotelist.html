@@ -1,0 +1,45 @@
+<div class="clearfix">
+  <h3>报价信息列表</h3>
+  <a href="javascript:void(0)" ng-click="searchInQuote()">报价中</a>
+  <a href="javascript:void(0)" ng-click="searchCompare()">比价中</a>
+  <a href="javascript:void(0)" ng-click="searchSuccess()">已中标</a>
+  <a href="javascript:void(0)" ng-click="searchFail()">未中标</a>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>序号</th>
+        <th>报价编号</th>
+        <th>需求编号</th>
+        <th>报价时间</th>
+        <th>申供数量</th>
+        <th>申供价格</th>
+        <th>状态</th>
+        <th>交易员</th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <td colspan="10" style="text-align:right">
+          <pagination total-items="totalCount" ng-model="pageNum" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+        </td>
+      </tr>
+      </tfoot>
+      <tbody>
+      <tr ng-repeat="item in quotelist">
+        <td>{{$index+1}}</td>
+        <td>{{item.id}}</td>
+        <td>{{item.demandcode}}</td>
+        <td>{{item.lastupdatetime}}</td>
+        <td>{{item.supplyton}}</td>
+        <td>{{item.quote}}</td>
+        <td>{{item.status}}</td>
+        <td>{{item.tradername}}</td>
+      </tr>
+      <tr ng-show="totalCount == 0"><td colspan='8' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的报价信息。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+

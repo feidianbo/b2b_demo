@@ -1,0 +1,141 @@
+<div class="clearfix">
+  <h2>撮合交易-供应信息列表</h2>
+  <label id="info" style="margin-left: 20%;"></label>
+</div>
+<div class="box" style="margin-top:-20px;">
+  <form class="form-inline" ng-submit="processForm()">
+    <div class="form-group">
+      <label class="">产品编号:</label>
+      <input type="text" class="form-control input-sm" ng-model="formData.pid"  style="width:80px;" placeholder="">
+    </div>
+    <div class="form-group">
+      <label>类型:</label>
+      <select class="form-control input-sm" ng-model="formData.seller" style="width:80px;" ng-options="val as val for val in ['自营','非自营']">
+        <option value="">全部</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>酒类:</label>
+      <select class="form-control input-sm" style="width:80px;" ng-model="formData.pname">
+        <option value="">全部</option>
+        <option ng-repeat="item in cocaltypeList" value="{{item.name}}">{{item.name}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>交货方式:</label>
+      <select class="form-control input-sm" ng-model="formData.deliverymode" style="width:80px;">
+        <option value="">全部</option>
+        <option ng-repeat="item in deliveryModes" value="{{item.name}}">{{item.name}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <div class="col-xs-12 col-md-12">
+        <label class="control-label">区域:</label>
+        <select class="form-control" ng-model="formData.deliveryregion"  ng-Change="changeRegion()" ng-options="item.name for item in deliveryRegions">
+          <option value="">全部</option>
+        </select>
+        <label class="control-label">省份:</label>
+        <select class="form-control" ng-model="formData.deliveryprovince" ng-Change="changeProvince()" ng-options="item.name for item in deliveryProvinceslist">
+          <option value="">全部</option>
+        </select>
+        <label class="control-label">港口:</label>
+        <select class="form-control"  ng-model="formData.deliveryplace" ng-options="item.name for item in deliveryPortList">
+          <option value="">全部</option>
+        </select>
+      </div>
+    </div>
+    <div style="height:20px;"></div>
+    <div class="form-group">
+      <label>价格:</label>
+      <input type="number" class="form-control input-sm" ng-model="formData.ykj" style="width:80px";  placeholder=""/>
+    </div>
+    <div class="form-group">
+      <label>热值:</label>
+      <input type="number" class="form-control input-sm" ng-model="formData.NCV" style="width:80px";  placeholder=""/>
+    </div>
+    <div class="form-group">
+      <label>含糖量:</label>
+      <input type="number" class="form-control input-sm" ng-model="formData.RS"  style="width:80px;" placeholder="">
+    </div>
+    <div class="form-group">
+      <label class="">酒类指标2:</label>
+      <input type="number" class="form-control input-sm" ng-model="formData.ADV"  style="width:80px;" placeholder="">
+    </div>
+    <div class="form-group">
+      <label>全水:</label>
+      <input type="number" class="form-control input-sm" ng-model="formData.TM"  style="width:80px;" placeholder="">
+    </div>
+    <button type="submit" style="margin-left:10%;" class="btn btn-default" >搜索</button>
+  </form>
+</div>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>产品编号</th>
+    <th>类型</th>
+    <th>酒类</th>
+    <th>剩余库存量(瓶)</th>
+    <th>已销售量(瓶)</th>
+    <th>价格形式</th>
+    <th>价格(元/瓶)</th>
+    <th>交货地</th>
+    <th>交货时间</th>
+    <th>交货方式</th>
+    <th>酒精度数</th>
+    <th>酒类指标1</th>
+    <th>含糖量</th>
+    <th>内水</th>
+    <th>全水</th>
+    <th>酒类指标2</th>
+    <th>酒类指标3</th>
+    <th>酒类指标6</th>
+    <th>酒类指标7</th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td colspan="19" style="text-align:right">
+      <pagination total-items="totalCount" ng-model="pageNum" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+    </td>
+  </tr>
+  </tfoot>
+  <tbody>
+
+  <tr ng-repeat="item in sellinfolist">
+    <td>{{item.pid}}</td>
+    <td ng-show="item.seller=='自营'">自营</td>
+    <td ng-show="item.seller!='自营'">非自营</td>
+    <td>{{item.pname}}</td>
+    <td>{{item.availquantity}}</td>
+    <td>{{item.soldquantity}}</td>
+    <!--价格形式-->
+    <td ng-show="{{item.ykj>0}}">一口价</td>
+    <td ng-show="{{item.jtjlast>0}}">阶梯价</td>
+    <!--阶梯价-->
+    <td ng-show="{{item.ykj>0}}">{{item.ykj}}</td>
+    <td ng-show="{{item.jtjlast>0}}">{{item.jtjlast}}</td>
+
+    <td ng-hide="item.deliveryplace=='其他'">{{item.deliveryplace}}</td>
+    <td ng-show="item.deliveryplace=='其他'">{{item.otherharbour}}</td>
+    <td>{{item.deliverytime1}}<span ng-show="{{item.deliverytime2!=null}}"> 至 {{item.deliverytime2}}</span></td>
+    <td>{{item.deliverymode}}</td>
+
+    <!--煤炭属性-->
+    <td>{{item.NCV}}</td>
+    <td>{{item.ADS}}</td>
+    <td>{{item.RS}}</td>
+    <td>{{item.IM}}</td>
+    <td>{{item.TM}}</td>
+    <td>{{item.ADV}}</td>
+    <td>{{item.RV}}</td>
+    <td>{{item.ASH}}</td>
+    <td>{{item.AFT}}</td>
+  </tr>
+
+  <tr ng-show="totalCount == 0"><td colspan='16' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的撮合交易信息。</td></tr>
+  </tbody>
+</table>
+
+
+
+

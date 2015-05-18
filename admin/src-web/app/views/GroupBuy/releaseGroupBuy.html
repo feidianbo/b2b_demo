@@ -1,0 +1,346 @@
+<style type="text/css">
+  .required{
+    color: #ff0000;
+    margin-right: 6px;
+    vertical-align: middle;
+    font-size: large;
+  }
+</style>
+<div class="clear-level">
+  <div class="container">
+    <div id="body-head">
+      <div style="border-left:4px solid red;"><h5>&nbsp;&nbsp;发布团购信息</h5></div>
+      <hr>
+    </div>
+    <div>
+      <form class="form-horizontal" id="groupbuy_form">
+        <input type="hidden" id="providerinfoid" name="providerinfoid" ng-model="GroupBuySupply.providerinfoid">
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>酒类:</label>
+          <div class="col-xs-7 col-md-7">
+            <div class="col-xs-6 col-md-6">
+              <select class="form-control" ng-model="GroupBuySupply.coaltype" name="coaltype">
+                <option value="">-- 请选择 --</option>
+                 <option value="动力煤">红酒类</option>
+                <option value="喷吹煤">白酒类</option>
+                <option value="焦煤">果酒类</option>
+                <option value="无烟煤">鸡尾酒</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>酒精度数:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" id="NCV" placeholder="请输入3000-7000之间的值" name="NCV" ng-model="GroupBuySupply.NCV">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">kcal/kg</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label">酒类指标1:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" id="ADS" name="ADS" ng-model="GroupBuySupply.ADS" placeholder="请输入0-10之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">%</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>含糖量:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" id="RS" ng-model="GroupBuySupply.RS" name="RS" placeholder="请输入0-10之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">%</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>酒类指标4:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control"  type="text" id="TM" name="TM" ng-model="GroupBuySupply.TM" placeholder="请输入0-50之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">%</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label">酒类指标5:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" id="IM" name="IM" ng-model="GroupBuySupply.IM" placeholder="请输入0-50之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">%</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>酒类指标2:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" name="ADV" ng-model="GroupBuySupply.ADV" placeholder="请输入0-50之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">%</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label">酒类指标3:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" name="RV" ng-model="GroupBuySupply.RV" placeholder="请输入0-50之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">%</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label">酒类指标7:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" name="AFT" ng-model="GroupBuySupply.AFT" placeholder="请输入900-1600之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">℃</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label">酒类指标6:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text"  name="ASH" ng-model="GroupBuySupply.ASH" placeholder="请输入0-50之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label">%</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label">酒类指标8:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-7 col-md-7">
+              <input class="form-control" type="text" name="HGI"  ng-model="GroupBuySupply.HGI" placeholder="请输入0-100之间的值">
+            </div>
+            <div class="col-xs-5 col-md-5">
+              <label class="control-label"></label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>交货方式:</label>
+          <div class="col-xs-7 col-md-7">
+            <div class="col-xs-4 col-md-4">
+              <select class="form-control" id="deliverymode" ng-model="GroupBuySupply.deliverymode" name="deliverymode">
+                <option value="">-- 请选择 --</option>
+                <option value="场地自提">场地自提</option>
+                <option value="港口平仓">港口平仓</option>
+                <option value="到岸仓底">到岸仓底</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>交货地点:</label>
+          <div class="col-xs-7 col-md-7">
+            <div class="col-xs-3 col-md-3">
+              <select class="form-control" id="deliverydistrict" ng-model="GroupBuySupply.deliverydistrict" name="deliverydistrict">
+                <option value="">-- 请选择 --</option>
+                <option value="华北地区">华北地区</option>
+                <option value="华东地区">华东地区</option>
+                <option value="华中地区">华中地区</option>
+                <option value="华南地区">华南地区</option>
+              </select>
+            </div>
+            <div class="col-xs-3 col-md-3">
+              <select class="form-control" id="deliveryprovince" ng-model="GroupBuySupply.deliveryprovince" name="deliveryprovince">
+                <option value="">-- 请选择 --</option>
+                <option ng-repeat="item in deliveryproviences" value="{{item.name}}">{{item.name}}</option>
+              </select>
+            </div>
+            <div class="col-xs-3 col-md-3">
+              <select class="form-control" id="port" ng-model="GroupBuySupply.port" name="port">
+                <option value="" >-- 请选择 --</option>
+                <option ng-repeat="item in deliveryplaces" value="{{item.name}}">{{item.name}}</option>
+              </select>
+            </div>
+            <div class="col-xs-3 col-md-3">
+              <div id ="otherplaceDisplay" style="display: none;">
+                <input type="text" class="form-control" id="deliveryplace" name="deliveryplace" ng-model="GroupBuySupply.deliveryplace" maxlength="50">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2 col-md-2">
+            <span id="otherplaceError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>交货时间:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-5 col-md-5" id="datetimepicker1">
+              <div class="input-group date">
+                <input type="text" class="form-control" data-date-format="YYYY-MM-DD" readonly name="deliverydatestart" id="deliverydatestart" ng-model="GroupBuySupply.deliverydatestart" readonly placeholder="请填写交货时间">
+                  <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </span>
+              </div>
+            </div>
+            <label class="col-xs-2 col-md-2" style="height:34px;line-height: 34px;">至</label>
+            <div class="col-xs-5 col-md-5" id="datetimepicker2">
+              <div class="input-group date">
+                <input type="text" class="form-control" data-date-format="YYYY-MM-DD" readonly="readonly" name="deliverydateend" id="deliverydateend" ng-model="GroupBuySupply.deliverydateend" placeholder="请填写交货时间">
+                  <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </span>
+              </div>
+            </div>
+          </div>
+          <span id="errorInfo" style="height:34px;line-height: 34px;"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>供货数量:</label>
+          <div class="col-xs-3 col-md-3">
+            <div class="col-xs-10 col-md-10">
+              <input class="form-control" type="text" id="supplyamount" name="supplyamount" ng-model="GroupBuySupply.supplyamount" placeholder="请填写供货瓶数">
+            </div>
+            <label class="col-xs-2 col-md-2 control-label">瓶</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>堆位:</label>
+          <div class="col-xs-3 col-md-3">
+            <div class="col-xs-10 col-md-10">
+              <input class="form-control" type="text" maxlength="100" id="storageplace" name="storageplace" ng-model="GroupBuySupply.storageplace" placeholder="请填写堆位">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>检验机构:</label>
+          <div class="col-xs-7 col-md-7">
+            <div class="col-xs-6 col-md-6">
+              <select class="form-control" id="inspectionagency" name="inspectionagency" ng-model="GroupBuySupply.inspectionagency" placeholder="请选择检验机构">
+                <option value="">-- 请选择 --</option>
+                <option value="无">无</option>
+                <option ng-repeat="item in inspectorgs" value="{{item.name}}">{{item.name}}</option>
+              </select>
+            </div>
+            <div class="col-xs-4 col-md-4">
+              <div class="input-group date" style="display: none;" id="otherorgDisplay">
+                <input type="text" class="form-control" id="otherorg" ng-model="GroupBuySupply.otherorg" maxlength="50" name="otherorg">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-2 col-md-2">
+            <span id="otherorgError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>团购价:</label>
+          <div class="col-xs-3 col-md-3">
+            <div class="col-xs-9 col-md-9">
+              <input class="form-control" type="text" id="groupbuyprice" name="groupbuyprice" ng-model="GroupBuySupply.groupbuyprice" placeholder="请填写团购价">
+            </div>
+            <label class="col-xs-3 col-md-3 control-label">元/瓶</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>团购时间:</label>
+          <div class="col-xs-6 col-md-6">
+            <div class="col-xs-5 col-md-5" id="datetimepicker4">
+              <div class="input-group date">
+                <input type="text" class="form-control" readonly  name="groupbuybegindate" id="groupbuybegindate" ng-model="GroupBuySupply.groupbuybegindate" readonly placeholder="请填写团购时间">
+                  <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </span>
+              </div>
+            </div>
+            <label class="col-xs-2 col-md-2" style="height:34px;line-height: 34px;">至</label>
+            <div class="col-xs-5 col-md-5" id="datetimepicker5">
+              <div class="input-group date">
+                <input type="text" class="form-control" readonly="readonly" id="groupbuyenddate" name="groupbuyenddate" ng-model="GroupBuySupply.groupbuyenddate" placeholder="请填写团购时间">
+                  <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </span>
+              </div>
+            </div>
+          </div>
+          <span id="groupbuyErrorInfo" style="height:34px;line-height: 34px;"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>市场价:</label>
+          <div class="col-xs-3 col-md-3">
+            <div class="col-xs-9 col-md-9">
+              <input class="form-control" type="text" id="marketprice" name="marketprice" ng-model="GroupBuySupply.marketprice" placeholder="请填写市场价">
+            </div>
+            <label class="col-xs-3 col-md-3 control-label">元/瓶</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>起订量:</label>
+          <div class="col-xs-3 col-md-3">
+            <div class="col-xs-10 col-md-10">
+              <input class="form-control" type="text" id="minimumamount" name="minimumamount" ng-model="GroupBuySupply.minimumamount" placeholder="请填写起订量">
+            </div>
+            <label class="col-xs-2 col-md-2 control-label">瓶</label>
+          </div>
+          <div class="col-xs-2 col-md-2">
+            <span id="minError" style="color: red; height: 34px; line-height: 34px;"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-xs-2 col-md-2 control-label"><span class="required">*</span>团购规则:</label>
+          <div class="col-xs-10 col-md-10">
+            <textarea cols="4" rows="4" maxlength="400" style="width:700px;height:200px;" id="comment" name="comment" ng-model="GroupBuySupply.comment" placeholder="请填写团购规则"></textarea>
+          </div>
+        </div>
+        <input type="hidden" id="photopath" name="photopath"/>
+      </form>
+      <div class="form-group">
+        <label class="col-xs-2 col-sm-2 control-label"><span class="required">*</span>团购图片:</label>
+        <div class="col-xs-4 col-sm-4">
+          <img ng-src="" width="350px;" id="picSavePath"/>
+        </div>
+        <form  id="form-groupbuyPic" action="/groupBuy/saveGroupBuyPic" method="post" enctype="multipart/form-data">
+
+          <input type="file" id="picFilePath" name="file" style="float:left;">
+          <input type="button" class="btn btn-primary" id="uploadClick" style="margin-top: 15px;" value="上传图片" ng-click="uploadPic()">
+        </form>
+
+        <input style="display: none;" type="button" class="col-xs-offset-2 btn btn-primary col-md-offset-2" id="changeClick"  ng-click="changePic()" value="更换图片">
+        <div class="col-xs-3 col-md-3">
+          <span id="picFilePathInfo" class="index-color" ></span>
+        </div>
+      </div>
+  </div>
+</div>
+  <div class="form-group" style="margin-top: 3%;">
+    <div class="col-xs-2 col-sm-offset-2 col-md-2">
+      <!--<input type="hidden" id="photopathVal"/>-->
+      <button type="button" ng-click="confirmGroupBuy()" class="btn btn-primary btn-block">确认发布</button>
+    </div>
+    <div class="col-xs-1 col-md-1">
+      <button type="button" ng-click="cancelGroupBuy()" class="btn btn-block">取消</button>
+    </div>
+  </div>
+</div>

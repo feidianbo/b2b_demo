@@ -1,0 +1,271 @@
+<div class="clearfix">
+  <h2>交易员列表</h2>
+  <label id="info" style="margin-left: 20%;"></label>
+</div>
+<div class="alert alert-success" role="alert" id="alert" style="display: none">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <button class="close" id="closeBtn" ng-click="closeAlert()">×</button>
+  <span></span>
+</div>
+<div class="box" style="margin-top:-20px;">
+  <form class="form-inline">
+    <div class="form-group">
+      <div class="col-xs-12 col-md-12">
+        <label class="control-label">区域:</label>
+        <select class="form-control" id="deliveryRegion" name="deliveryRegion" ng-model="deliveryRegion">
+          <option value="0">全部</option>
+          <option ng-repeat="item in deliveryRegions" ng-selected="{{deliveryRegion}}=={{item.id}}"   value="{{item.id}}">{{item.name}}</option>
+        </select>
+        <label class="control-label">省份:</label>
+        <select class="form-control" id="deliveryProvince" name="deliveryProvince" ng-model="deliveryProvince">
+          <option value="0">全部</option>
+          <option ng-repeat="item in deliveryProvinces" ng-selected="{{deliveryProvince}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+        </select>
+        <label class="control-label">港口:</label>
+        <select class="form-control" id="deliveryHarbour" name="deliveryHarbour" ng-model="deliveryHarbour">
+          <option value="0">全部</option>
+          <option ng-repeat="item in deliveryHarbours" ng-selected="{{deliveryHarbour}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" style="margin-left:10%;" class="btn btn-default " ng-click="searchDealer()">搜索</button>
+    <button href="javascript:void(0);" ng-click="addDealer()" style="margin-left:20%;" class="btn btn-default btn-primary btn-lg">添加交易员</button>
+  </form>
+</div>
+<div>
+  <div class="tabbable">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>编号</th>
+          <th>姓名</th>
+          <th>联系电话</th>
+          <th>所管理港口</th>
+          <th>开始工作时间</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <td colspan="10" style="text-align:right">
+            <pagination total-items="dealerList.count" ng-model="dealerList.page" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+          </td>
+        </tr>
+      </tfoot>
+      <tbody>
+      <tr ng-repeat="item in dealerList.list" >
+        <td>{{$index+1}}</td>
+        <td>{{item.dealername}}</td>
+        <td>{{item.dealerphone}}</td>
+        <td><span ng-repeat="port in item.ports">{{port.name}}&nbsp;&nbsp;&nbsp;</span></td>
+        <td>{{item.createtime}}</td>
+        <td>
+          <a href="javascript:void(0);" ng-show="item.status == '在职'"   ng-click="forbiddenDealer(item.id, item.ports,item.dealername,item.dealerphone)" style="margin-left:2%;">禁用</a>
+          <a href="javascript:void(0);" ng-show="item.status == '已离职'" ng-click="deleteDealer(item.id, item.deliveryregion, item.deliveryprovince, item.deliveryplace, item.dealername, item.dealerphone)" style="margin-left:2%;">删除</a>
+          <a href="javascript:void(0);" ng-show="item.status == '在职'" ng-click="updateDealer(item)" style="margin-left:2%;">编辑</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <input type="hidden" id="idtext" name="idtext" ng-model="idtext" value="{{item.id}}">
+
+  <div class="modal" id="ForbiddenDealerDialog" data-backdrop="false">
+    <div class="modal-dialog">
+      <div class="modal-content" style="width:600px;height:250px;">
+        <form role="form" name="myForm" novalidate>
+        <div class="modal-header">
+          <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">禁用交易员</h4>
+        </div>
+        <div class="form-inline" style="margin-top:10px;">
+          <div class="form-inline" style="margin-top:10px;">
+            <div class="col-xs-12 col-md-12">
+              <label class="control-label" style="width:80px; margin-left: 10px;">姓名:</label>
+              <input type="text" class="form-control" style="width:120px;" id="forbiddenDealerName" required ng-model="forbiddenDealerName" name="forbiddenDealerName" readonly />
+              <label class="control-label" style="width:50px; margin-left: 20px;">电话:</label>
+              <input type="text" class="form-control" required style="width:150px;" id="forbiddenDealerPhone" ng-model="forbiddenDealerPhone" name="forbiddenDealerPhone" readonly />
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-12" style="top:10px;">
+          <span id="forbiddenErrorInfo" class="col-md-offset-2"></span>
+        </div>
+        <div class="col-xs-12 col-md-12" style="top:10px;">
+          <button type="button" class="col-xs-3 col-xs-offset-2 btn btn-primary col-md-3" ng-click="forbiddenDealerClick()">
+            确认禁用
+          </button>
+          <button type="button" class="col-xs-offset-2 btn btn-default" data-dismiss="modal">
+            取消
+          </button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="DeleteDealerDialog" data-backdrop="false">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:600px;height:250px;">
+      <form role="form" name="myForm" novalidate>
+        <div class="modal-header">
+          <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">删除交易员</h4>
+        </div>
+        <div class="form-inline" style="margin-top:10px;">
+          <div class="form-inline" style="margin-top:10px;">
+            <div class="col-xs-12 col-md-12">
+              <label class="control-label" style="width:80px; margin-left: 10px;">姓名:</label>
+              <input type="text" class="form-control" style="width:120px;" id="deleteDealerName" required ng-model="forbiddenDealerName" name="forbiddenDealerName" readonly />
+              <label class="control-label" style="width:50px; margin-left: 20px;">电话:</label>
+              <input type="text" class="form-control" required style="width:150px;" id="deleteDealerPhone" ng-model="forbiddenDealerPhone" name="forbiddenDealerPhone" readonly />
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-12" style="top:10px;">
+          <span id="deleteErrorInfo" class="col-md-offset-2"></span>
+        </div>
+        <div class="col-xs-12 col-md-12" style="top:10px;">
+          <button type="button" class="col-xs-3 col-xs-offset-2 btn btn-primary col-md-3" ng-click="deleteDealerClick()">
+            确认删除
+          </button>
+          <button type="button" class="col-xs-offset-2 btn btn-default" data-dismiss="modal">
+            取消
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<!--添加交易员-->
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="AddDealerDialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">添加交易员</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form" id="addDealerForm">
+                <div class="form-group">
+                    <label  class="control-label col-md-3">选择区域:</label>
+                    <div class="col-md-5">
+                    <select class="form-control" id="addDeliveryRegion" name="addDeliveryRegion">
+                      <option value="0">请选择</option>
+                      <option ng-repeat="item in addDeliveryRegions" value="{{item.id}}">{{item.name}}</option>
+                    </select>
+                      </div>
+                  </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3">所属省份:</label>
+                  <div class="col-md-5">
+                  <select class="form-control"  id="addDeliveryProvince" name="addDeliveryProvince">
+                    <option value="0">请选择</option>
+                    <option ng-repeat="item in addDeliveryProvinces" value="{{item.id}}">{{item.name}}</option>
+                  </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3">配置港口:</label>
+                  <div class="col-md-5">
+                    <select class="form-control" multiple="multiple" name="addDeliveryPlace" ng-model="dealerObj.ports" ng-options="item.name for item in addDeliveryHarbours">
+
+                    </select>
+                  </div>
+                </div>
+          <div class="form-group">
+              <label class="control-label col-md-3">姓名:</label>
+               <div class="col-md-5">
+              <input type="text" class="form-control" name="addDealerName" id="addDealerName" ng-model="dealerObj.dealername" />
+              </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3" >电话:</label>
+            <div class="col-md-5">
+            <input type="text" class="form-control"  name="addDealerPhone" id="addDealerPhone" ng-model="dealerObj.dealerphone" />
+              </div>
+          </div>
+          <div class="form-group">
+            <button type="button" class="col-xs-3 btn btn-primary col-md-offset-2 col-md-4" ng-click="addDealerClick()">
+              确认添加
+            </button>
+            <button type="button" class="col-xs-offset-2 btn btn-default col-md-offset-2"  ng-click="cancelAddDealer()" data-dismiss="modal">
+              取消
+            </button>
+            </div>
+        </form>
+      </div>
+</div>
+</div>
+</div>
+<!---修改交易员---->
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="updateDealerDialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">修改交易员</h4>
+      </div>
+      <input type="hidden" id="dealerphone">
+      <div class="modal-body">
+        <form class="form-horizontal" role="form" id="updateDealerForm">
+          <div class="form-group">
+            <label class="control-label col-md-3">姓名:</label>
+            <div class="col-md-5">
+              <input type="text" class="form-control" readonly  ng-model="dealer.dealername" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3">配置港口:</label>
+            <div class="col-md-7">
+              <span ng-repeat="item in allPorts">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="portCheckbox"  value="{{item.id}}">{{item.name}}
+              </label>
+            </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3">电话:</label>
+            <div class="col-md-5">
+              <input type="text" class="form-control"  id="updateDealerphone" name="addDealerPhone" ng-model="dealer.dealerphone"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="button" class="col-xs-3 btn btn-primary col-md-offset-2 col-md-4" ng-click="updateDealerClick()">
+              确认修改
+            </button>
+            <button type="button" class="col-xs-offset-2 btn btn-default col-md-offset-2" ng-click="cancelUpdateDealer()" data-dismiss="modal">
+              取消
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="repeatDealerDialog" data-backdrop="false">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:600px;height:250px; font-size: 16px;">
+      <div class="modal-header">
+        <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">提示框</h4>
+      </div>
+      <div class="modal-body">
+        <span id="dealerString" ></span>
+      </div>
+      <div class="col-xs-12 col-md-12" style="top:10px;">
+        <button type="button" class="col-xs-3 btn btn-primary col-md-offset-2 col-md-4" ng-click="confirmAddDealer()">
+          确认替换
+        </button>
+        <button type="button" class="col-xs-offset-2 btn btn-default col-md-offset-2" ng-click="cancelAddDealer();">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

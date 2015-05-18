@@ -1,0 +1,78 @@
+<div class="clearfix">
+  <h2>委托人工销售</h2>
+  <label id="info" style="margin-left: 20%;"></label>
+  </div>
+<div class="alert alert-danger" role="alert" id="alert" style="display: none">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <button class="close" id="closeBtn" ng-click="closeAlert()">×</button>
+  <span></span>
+</div>
+<div class="box" style="margin-top:-20px;">
+  <form class="form-inline">
+    <div class="form-group">
+      <label class="control-label">区域:</label>
+      <select class="form-control" ng-model="deliveryregion"  ng-Change="changeRegion()" ng-options="item.name for item in deliveryRegions">
+        <option value="">全部</option>
+      </select>
+      <label class="control-label">省份:</label>
+      <select class="form-control" ng-model="deliveryprovince" ng-Change="changeProvince()" ng-options="item.name for item in deliveryProvinceslist">
+        <option value="">全部</option>
+      </select>
+      <label class="control-label">港口:</label>
+      <select class="form-control"  ng-model="deliveryport" ng-options="item.name for item in deliveryPortList">
+        <option value="">全部</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="control-label" style="margin-left:20px;">日期选择:</label>
+      <div class="input-group date" id="date1">
+        <input class="form-control" type="text"  style="width:130px;" readonly="true"   id="deliveryStartDate"   placeholder="请选择时间">
+        <span class="input-group-addon" ng-click="clearDate1()"><i class="glyphicon glyphicon-remove"></i></span>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> </span>
+      </div>
+      <div class="input-group date" style="margin-left:30px;" id="date2" >
+        <input class="form-control" type="text" style="width:130px;"  data-date-format="YYYY-MM-DD" readonly="true"  id="deliveryEndDate"  placeholder="请选择时间">
+        <span class="input-group-addon" ng-click="clearDate2()"><i class="glyphicon glyphicon-remove"></i></span>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i> </span>
+      </div>
+    </div>
+    <div class="form-group" style="margn-left:10px;">
+      <button type="submit"  class="btn btn-primary" ng-click="searchmanuasell()">搜索</button>
+      <button type="submit" class="btn btn-primary" ng-click="exportExcel()">导出</button>
+    </div>
+  </form>
+</div>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>序号</th>
+        <th>人工销售编号</th>
+        <th>交货地点</th>
+        <th>供应数量</th>
+        <th>交货时间</th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <td colspan="10" style="text-align:right">
+          <pagination total-items="totalCount" ng-model="pageNum" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+        </td>
+      </tr>
+      </tfoot>
+      <tbody>
+      <tr ng-repeat="item in manualselllist">
+        <td>{{$index+1}}</td>
+        <td><a href="#/customer/manualsellDetail?id={{item.manualsellId}}">{{item.manualsellId}}</a></td>
+        <td ng-show="item.deliveryAddr!='其它'">{{item.deliveryProvince}}{{item.deliveryAddr}}</td>
+        <td ng-show="item.deliveryAddr=='其它'">{{item.deliveryProvince}}{{item.deliveryOtherPlace}}</td>
+        <td>{{item.demandAmount}}</td>
+        <td>{{item.deliveryStartDate}}</td>
+      </tr>
+      <tr ng-show="totalCount == 0"><td colspan='6' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的委托人工销售信息。</td></tr>
+      </tbody>
+    </table>
+
+
+
+
+

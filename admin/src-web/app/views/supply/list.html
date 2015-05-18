@@ -1,0 +1,117 @@
+<div class="clearfix">
+  <h2>供应信息列表</h2>
+  <label id="info" style="margin-left: 20%;"></label>
+</div>
+<div class="alert alert-success" role="alert" id="alert" style="display: none">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <button class="close" id="closeBtn" ng-click="closeAlert()">×</button>
+  <span></span>
+</div>
+<!--供应信息-->
+  <div class="box" style="margin-top:-20px;">
+    <form class="form-inline">
+      <div class="form-group">
+        <div class="col-xs-12 col-md-12">
+          <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon1">产品编号</span>
+            <input type="text" class="form-control" id="productNo" ng-model="productNo" placeholder="编号查询..." aria-describedby="sizing-addon1">
+          </div>
+          <label class="control-label">区域:</label>
+          <select class="form-control" id="deliveryRegion" name="deliveryRegion" ng-model="deliveryRegion">
+            <option value="0">全部</option>
+            <option ng-repeat="item in deliveryRegions" ng-selected="{{deliveryRegion}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+          </select>
+          <label class="control-label">省份:</label>
+          <select class="form-control" id="deliveryProvince" ng-model="deliveryProvince" name="deliveryProvince">
+            <option value="0">全部</option>
+            <option ng-repeat="item in deliveryProvinces" ng-selected="{{deliveryProvince}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+          </select>
+          <label class="control-label">港口:</label>
+          <select class="form-control" id="deliveryHarbour" ng-model="deliveryHarbour" name="deliveryHarbour">
+            <option value="0">全部</option>
+            <option ng-repeat="item in deliveryHarbours" ng-selected="{{deliveryHarbour}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-default " ng-click="searchSupply()">搜索</button>
+    </form>
+  </div>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>编号</th>
+      <th>公司名</th>
+      <th>产品编号</th>
+      <th>供应数量(瓶)</th>
+      <th>交货地址</th>
+      <th>交货时间</th>
+      <th>发布时间</th>
+      <th>状态</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td colspan="10" style="text-align:right">
+        <pagination total-items="sellInfo.count" ng-model="sellInfo.page" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+      </td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <tr ng-repeat="item in sellInfo.list">
+      <td>{{$index+1}}</td>
+      <td>{{item.seller}}</td>
+      <td>{{item.pid}}</td>
+      <td>{{item.supplyquantity}}</td>
+      <td ng-show="item.deliveryplace !='其它'">{{item.deliveryprovince}}{{item.deliveryplace}}</td>
+      <td ng-show="item.deliveryplace =='其它'">{{item.deliveryprovince}}{{item.otherharbour}}</td>
+      <td>{{item.deliverytime1}} 至 {{item.deliverytime2}}</td>
+      <td>{{item.createtime}}</td>
+      <td>
+        <span ng-show="item.status == 'VerifyPass'">审核通过</span>
+        <span ng-show="item.status == 'WaitVerify'">待审核</span>
+        <span ng-show="item.status == 'VerifyNotPass'">审核未通过</span>
+      </td>
+      <td>
+        <a href="#/supply/detail?id={{item.id}}&type={{item.status}}"  style="margin-left:2%;">查看</a>
+        <a ng-show="item.status == 'VerifyPass'" href="javascript:void(0);" ng-click="cancelSupply(item.id, item.version)" style="margin-left:2%;" name="supply-pass-cancel">取消供应</a>
+      </td>
+    </tr>
+    <tr ng-show="sellInfo.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的供应信息。</td></tr>
+    </tbody>
+  </table>
+
+  <input type="hidden" id="supplyId" />
+  <input type="hidden" id="version" />
+
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="cancelConfirmDialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          取消供应确认
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要取消该供应吗？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="canceledSupplyConfirm()">
+          确认
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+

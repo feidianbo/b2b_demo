@@ -1,0 +1,67 @@
+<div class="clearfix">
+    <h3>订单列表</h3>
+    <a href="javascript:void(0)" ng-click="searchUnsign()">待签合同</a>
+    <a href="javascript:void(0)" ng-click="searchUnpay()">待支付</a>
+    <a href="javascript:void(0)" ng-click="searchPayAll()">已支付全部货款</a>
+    <a href="javascript:void(0)" ng-click="searchPaybalance()">待支付尾款</a>
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>序号</th>
+            <th>订单编号</th>
+            <th>下单时间</th>
+            <th>数量</th>
+            <th>金额</th>
+        <!--<th>是否签订电子合同</th>-->
+        <th>支付进度(已支付)</th>
+        <th>支付进度(未支付)</th>
+        <th>订单状态</th>
+        <th>交易员</th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <td colspan="10" style="text-align:right">
+          <pagination total-items="totalCount" ng-model="pageNum" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+        </td>
+      </tr>
+      </tfoot>
+      <tbody>
+      <tr ng-repeat="item in orderlist">
+        <td>{{$index+1}}</td>
+        <td>{{item.orderid}}</td>
+        <td>{{item.createtime}}</td>
+        <td>{{item.amount}}</td>
+        <td>{{item.totalmoney}}</td>
+        <!--<td ng-show="item.seller=='自营'">已签订</td>-->
+        <!--<td ng-show="item.seller!='自营'">未签订</td>-->
+        <td>已支付{{item.paidmoney}}元</td>
+        <td>剩余{{item.waitmoney}}元未支付</td>
+        <td ng-show="item.status=='WaitVerify'">待签合同</td>
+        <td ng-show="item.status=='WaitPayment'">待支付</td>
+        <td ng-show="item.status=='PayTheWhole'">已支付全部货款</td>
+        <td ng-show="item.status=='WaitBalancePayment'">待支付尾款</td>
+        <td ng-show="item.status=='Canceled'">已取消</td>
+        <td ng-show="item.status=='Deleted'">已删除</td>
+        <td ng-show="item.status=='Completed'">已完成</td>
+        <td ng-show="item.status=='ReturnGoods'">退货中</td>
+        <td ng-show="item.status=='MakeMatch'">撮合中</td>
+        <td ng-show="item.status=='VerifyPass'">审核通过</td>
+        <td ng-show="item.status=='VerifyNotPass'">审核未通过</td>
+        <td ng-show="item.status=='WaitSignContract'">待签合同</td>
+
+        <td ng-show="item.status=='PayCashDeposit'">付10%保证金</td>
+        <td ng-show="item.status=='ReturnCompleted'">退货完成</td>
+        <td ng-show="item.status=='WaitSignContract'">待签合同</td>
+        <td ng-show="item.status=='WaitConfirmed'">待确认</td>
+
+        <!--<td>{{item.status}}</td>-->
+        <td>{{item.dealername}}</td>
+      </tr>
+      <tr ng-show="totalCount == 0"><td colspan='10' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的订单信息。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+

@@ -1,0 +1,45 @@
+<div class="clearfix">
+  <h2>团购资质列表</h2>
+  <a href="javascript:void(0)" ng-click="searchverifyIn()">审核中</a>
+  <a href="javascript:void(0)" ng-click="searchActive()">已激活</a>
+  <a href="javascript:void(0)" ng-click="searchBind()">已绑定</a>
+  <label id="info" style="margin-left: 20%;"></label>
+</div>
+  </div>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>团购资格编号</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <td colspan="10" style="text-align:right">
+          <pagination total-items="totalCount" ng-model="pageNum" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+        </td>
+      </tr>
+      </tfoot>
+      <tbody>
+      <tr ng-repeat="item in qualificationlist">
+        <td>{{item.qualificationcode}}</td>
+        <td ng-show="item.status=='QUALIFY_APPLY'">审核中</td>
+        <td ng-show="item.status=='QUALIFY_ACTIVE'">已激活</td>
+        <td ng-show="item.status=='QUALIFY_INPROCESS'">已绑定</td>
+        <td ng-show="item.status=='QUALIFY_FINISH'">已结束</td>
+        <td ng-show="item.status=='QUALIFY_CANCEL'">资质作废</td>
+        <td ng-show="item.status=='QUALIFY_GIVEUP'">申请放弃</td>
+        <td ng-show="item.status=='QUALIFY_GIVEUPED'">放弃中</td>
+        <td ng-show="item.status=='QUALIFY_REJECT'">审核拒绝</td>
+        <td ng-show="item.status=='QUALIFY_NOT_ENOUGH'">审核失败</td>
+        <td><a href="/customer/depositContract?qualificationcode={{item.qualificationcode}}&userid={{item.userid}}">查看团购保证金</a></td>
+      </tr>
+      <tr ng-show="totalCount == 0"><td colspan='6' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的团购保证金数据</td></tr>
+      </tbody>
+    </table>
+
+
+
+
+

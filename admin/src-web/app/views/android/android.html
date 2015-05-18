@@ -1,0 +1,44 @@
+<div class="clearfix">
+  <h2>Android手机app版本更新&nbsp;&nbsp;.apk</h2>
+  <label id="info" style="margin-left: 20%;"></label>
+</div>
+
+<div>
+
+  <div>
+      <div>
+        <div class="row" style="margin-left:3px;font-size: 16px;">
+          <span>当前版本:{{version}}</span>
+          <input id="changeBtn" type="button" class="btn btn-primary" ng-click="changeAPK()" value="升级版本" style="margin-left:100px;">
+        </div>
+
+        <div id="uploadAPK" style="display: none;margin-top:30px;">
+            <form id="form-apk" action="/android/uploadApp" method="post" enctype="multipart/form-data">
+              <input type="file" id="filePath" name="file">
+              <input type="button" class="btn btn-primary"  value="上传文件" ng-click="uploadAPK()">
+              <span id="typeError"></span>
+            </form>
+
+          <div class="row" style="padding-left:20px;display:none;font-size:16px;color:red;" id="tipMsg">
+            文件上传成功!请填写版本号
+          </div>
+
+          <div class="row" style="margin-top:30px;">
+            <span class="col-md-1" style="padding-top:5px;font-size: 16px;">新版本:</span>
+            <div class="col-md-2">
+               <input type="hidden" id="uploadPath">
+              <input class="form-control" id="newVersion">
+            </div>
+            <span class="col-md-2" style="padding-top:5px;font-size: 16px;">;{{today}}</span>
+          </div>
+
+          <div style="margin-top:30px;">
+            <button class="btn btn-default btn-primary" ng-click="releaseAPK()" style="width:150px;">确定</button>
+              <span id="errorMsg" style="margin-left:30px;line-height: 30px;color:red;"></span>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+

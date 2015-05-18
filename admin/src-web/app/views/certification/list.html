@@ -1,0 +1,63 @@
+<div class="clearfix">
+  <h2>支付凭证列表</h2>
+  <label id="info" style="margin-left: 20%;"></label>
+</div>
+<br>
+  <div class="box" style="margin-top:-20px;">
+    <form class="form-inline">
+      <div class="form-group">
+        <label for="wait-input">订单编号：</label>
+        <input type="text" class="form-control" id="wait-input" placeholder="请输入订单编号查询"  name="content" ng-model="content" >
+      </div>
+      <div class="form-group" style="margin-left:2%;">
+        <label for="pid">产品名称：</label>
+        <input type="text" class="form-control" id="pid" placeholder="请输入产品名称查询" name="pid" ng-model="pid" >
+      </div>
+      <button type="submit" style="margin-left:3%;" class="btn btn-default" ng-click="searchMall()">搜索</button>
+    </form>
+  </div>
+  <table class="table table-hover">
+  <thead>
+    <tr>
+      <th>编号</th>
+      <th>订单编号</th>
+      <th>产品名称</th>
+      <th>订单生成时间</th>
+      <th>总货款（元）</th>
+      <th>交易员电话</th>
+      <th>状态</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td colspan="10" style="text-align:right">
+        <pagination total-items="orderList.count" ng-model="orderList.page" ng-change="pageTo()" max-size="50" boundary-links="true" placeholder="请输入订单编号查询" ></pagination>
+      </td>
+    </tr>
+  </tfoot>
+  <tbody>
+    <tr ng-repeat="item in orderList.list">
+      <td>{{$index+1}}</td>
+      <td>{{item.orderid}}</td>
+      <td>{{item.pid}}</td>
+      <td>{{item.createtime}}</td>
+      <td>{{item.totalmoney}}</td>
+      <td>{{item.dealerphone}}</td>
+      <td>
+        <span ng-show="item.status == 'WaitVerify'">待审核</span>
+        <span ng-show="item.status == 'VerifyPass'">审核通过</span>
+        <span ng-show="item.status == 'WaitBalancePayment'">待付尾款</span>
+        <span ng-show="item.status == 'VerifyNotPass'">审核未通过</span>
+      </td>
+      <td>
+        <a href="#/certificate/detail?id={{item.id}}" style="margin-left:2%;">查看</a>
+      </td>
+    </tr>
+    <tr ng-show="orderList.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center;color:red;'>没有搜索到您想要的订单,您可以按照订单编号搜索。</td></tr>
+  </tbody>
+  </table>
+
+
+
+

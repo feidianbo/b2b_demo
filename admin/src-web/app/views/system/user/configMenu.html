@@ -1,0 +1,65 @@
+<style type="text/css">
+</style>
+
+<div id="body-head">
+    <div style="border-left:4px solid red;"><h5>&nbsp;&nbsp;配置菜单和操作权限</h5></div>
+    <hr>
+  </div>
+
+  <input type="hidden" id="roleid">
+    <!--主体部分 -->
+    <div id="configMenu">
+      <form class="form-horizontal" id="menuauth-form">
+         <div ng-repeat="pitem in parentMenusList">
+        <ul style="list-style: none;">
+            <li>
+              <div class="row">
+                <div class="col-md-2">
+                <label class="checkbox">
+                    <input type="checkbox" value="{{pitem.id}}" name="menuid">{{pitem.menuname}}
+                  </label>
+                </div>
+
+                <div ng-repeat="oitem in operateauthList">
+                  <div class="col-md-1" ng-if="oitem.menuid == pitem.id">
+                    <label class="checkbox inline">
+                      <input type="checkbox" value="{{oitem.operatecode}}" name="operatecode" >{{oitem.operatename}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <ul style="list-style: none;padding-left: 40px;" class="child-menus">
+                <li ng-repeat="citem in childMenusList">
+                  <div class="row" ng-if="citem.parentid == pitem.id">
+                      <div class="col-md-2" >
+                        <label class="checkbox">
+                          <input type="checkbox" value="{{citem.id}}" name="menuid">{{citem.menuname}}:
+                        </label>
+                      </div>
+
+                      <div ng-repeat="oitem in operateauthList">
+                          <div class="col-md-1" ng-if="oitem.menuid == citem.id">
+                            <label class="checkbox inline">
+                              <input type="checkbox" value="{{oitem.operatecode}}" name="operatecode">{{oitem.operatename}}
+                            </label>
+                          </div>
+                      </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+        </ul>
+      </div>
+      </form>
+      <div class="form-group" style="margin-top: 3%;">
+        <div class="col-sm-offset-2 col-md-2">
+          <button type="button" ng-click="confirmConfigMenu()" class="btn btn-primary btn-block">确认配置</button>
+        </div>
+        <div class="col-md-1">
+          <button type="button" ng-click="cancelConfigMenu()" class="btn btn-block">取消</button>
+        </div>
+      </div>
+    </div>
+

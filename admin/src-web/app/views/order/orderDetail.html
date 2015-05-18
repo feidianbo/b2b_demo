@@ -1,0 +1,120 @@
+<style type="text/css">
+  .div-margin{
+    margin-bottom: 2%;
+  }
+  .attr-color{
+    color:#317ee6;
+  }
+  div img,div input{ vertical-align:middle}
+</style>
+<div class="clear-level">
+  <div class="container">
+    <div class="row clearfix">
+      <div id="body-head">
+        <div style="border-left:4px solid red;"><h5>&nbsp;&nbsp;订单详细信息</h5></div>
+        <hr>
+      </div>
+      <div class="cols">
+        <div class="col-xs-12 col-md-12 div-margin">
+          <div class="col-xs-6 col-md-6">
+            <label class="col-xs-4 col-md-4 control-label">订单编号:</label>
+            <span ng-show="order.orderid!=null" class="col-xs-8 col-md-8 control-label attr-color">{{order.orderid}}</span>
+            <span ng-show="order.orderid==null" class="col-xs-8 col-md-8 control-label attr-color">--</span>
+          </div>
+        </div>
+        <h5 style="color:red;margin-bottom: 2%;">请仔细核对以下信息:</h5>
+        <div class="cols">
+          <div class="col-xs-12 col-md-12 div-margin">
+            <div class="col-xs-6 col-md-6">
+              <label class="col-xs-4 col-md-4 control-label">产品编号:</label>
+              <span ng-show="order.pid!=null" class="col-xs-8 col-md-8 control-label attr-color">{{order.pid}}</span>
+              <span ng-show="order.pid==null" class="col-xs-8 col-md-8 control-label attr-color">--</span>
+            </div>
+            <div class="col-xs-6 col-md-6">
+              <label class="col-xs-4 col-md-4 control-label">订单类型:</label>
+              <span ng-show="order.ordertype=='MallOrder'" class="col-xs-8 col-md-8 control-label attr-color">自营单</span>
+              <span ng-show="order.ordertype=='OtherOrder'" class="col-xs-8 col-md-8 control-label attr-color">撮合单</span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-12 div-margin">
+            <div class="col-xs-6 col-md-6">
+              <label class="col-xs-4 col-md-4 control-label">卖家:</label>
+              <span ng-show="order.seller!=null && order.seller!='自营'" class="col-xs-8 col-md-8 control-label attr-color">{{order.seller}}-{{seller.nickname}}-{{seller.securephone}}</span>
+              <span ng-show="order.seller!=null && order.seller=='自营'" class="col-xs-8 col-md-8 control-label attr-color">XX网</span>
+              <span ng-show="order.seller==null" class="col-xs-8 col-md-8 control-label attr-color">--</span>
+            </div>
+            <div class="col-xs-6 col-md-6">
+              <label class="col-xs-4 col-md-4 control-label">买家:</label>
+              <span  ng-show="buyCompany.name!=null || buyer.nickname!=null || buyer.securephone!=null" class="col-xs-8 col-md-8 control-label attr-color">{{buyCompany.name}}-{{buyer.nickname}}-{{buyer.securephone}}</span>
+              <span ng-show="buyCompany.name==null && buyer.nickname==null && buyer.securephone==null" class="col-xs-8 col-md-8 control-label attr-color">--</span>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-12 div-margin">
+            <div class="col-xs-6 col-md-6">
+              <label class="col-xs-4 col-md-4 control-label">交易员:</label>
+              <span ng-show="order.dealername!=null && order.dealerphone!=null" class="col-xs-8 col-md-8 control-label attr-color">{{order.dealername}}-{{order.dealerphone}}</span>
+              <span ng-show="order.dealername==null && order.dealerphone==null" class="col-xs-8 col-md-8 control-label attr-color">--</span>
+            </div>
+            <div class="col-xs-6 col-md-6">
+              <label class="col-xs-4 col-md-4 control-label">&nbsp;</label>
+              <span ng-show="order.dealername!=null && order.dealerphone!=null" class="col-xs-8 col-md-8 control-label attr-color">&nbsp;</span>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-12 div-margin">
+            <div class="col-xs-6 col-md-6">
+              <label class="col-xs-4 col-md-4 control-label">价格:</label>
+              <span  ng-show="order.price!=null" class="col-xs-8 col-md-8 control-label attr-color">{{order.price}}元</span>
+              <span ng-show="order.price==null" class="col-xs-8 col-md-8 control-label attr-color">--</span>
+            </div>
+            <div class="col-xs-6 col-md-6">
+              <label class="col-xs-4 col-md-4 control-label">数量:</label>
+              <span ng-show="order.amount!=null" class="col-xs-8 col-md-8 control-label attr-color">{{order.amount}}瓶</span>
+              <span ng-show="order.amount==null" class="col-xs-8 col-md-8 control-label attr-color">--</span>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-12 div-margin">
+            <div class="col-xs-6 col-md-6">
+              <label class="col-xs-4 col-md-4 control-label">付款金额:</label>
+              <span  ng-show="order.totalmoney!=null" class="col-xs-8 col-md-8 control-label attr-color">{{order.totalmoney}}元</span>
+              <span ng-show="order.totalmoney==null" class="col-xs-8 col-md-8 control-label attr-color">--</span>
+            </div>
+            <div class="col-xs-6 col-md-6">
+              <label class="col-xs-4 col-md-4 control-label">下单时间:</label>
+              <span ng-show="order.createtime!=null" class="col-xs-8 col-md-8 control-label attr-color">{{order.createtime}}</span>
+              <span ng-show="order.createtime==null" class="col-xs-8 col-md-8 control-label attr-color">--</span>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-12 div-margin">
+            <div class="col-xs-6 col-md-6">
+              <label class="col-xs-4 col-md-4 control-label">订单状态:</label>
+              <span ng-show="order.status=='WaitVerify'" class="col-xs-8 col-md-8 control-label attr-color">待审核</span>
+              <span ng-show="order.status=='WaitSignContract'" class="col-xs-8 col-md-8 control-label attr-color">待签合同</span>
+              <span ng-show="order.status=='WaitPayment'" class="col-xs-8 col-md-8 control-label attr-color">待付款</span>
+              <span ng-show="order.status=='VerifyPass'" class="col-xs-8 col-md-8 control-label attr-color">审核通过</span>
+              <span ng-show="order.status=='WaitBalancePayment'" class="col-xs-8 col-md-8 control-label attr-color">待付尾款</span>
+              <span ng-show="order.status=='VerifyNotPass'" class="col-xs-8 col-md-8 control-label attr-color">审核未通过</span>
+              <span ng-show="order.status=='MakeMatch'" class="col-xs-8 col-md-8 control-label attr-color">撮合中</span>
+              <span ng-show="order.status=='ReturnGoods'" class="col-xs-8 col-md-8 control-label attr-color">退货中</span>
+              <span ng-show="order.status=='Completed'" class="col-xs-8 col-md-8 control-label attr-color">已完成</span>
+              <span ng-show="order.status=='ReturnCompleted'" class="col-xs-8 col-md-8 control-label attr-color">退货完成</span>
+              <span ng-show="order.status=='Canceled'" class="col-xs-8 col-md-8 control-label attr-color">已取消</span>
+              <span ng-show="order.status=='Deleted'" class="col-xs-8 col-md-8 control-label attr-color">已删除（客户）</span>
+            </div>
+            <div class="col-xs-6 col-md-6">
+              <label class="col-xs-4 col-md-4 control-label">&nbsp;</label>
+              <span ng-show="order.dealername!=null && order.dealerphone!=null" class="col-xs-8 col-md-8 control-label attr-color">&nbsp;</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-xs-offset-9 col-md-offset-9">
+        <button ng-click="back()" class="btn btn-cancel col-xs-3 col-md-3" value="返回">返回</button>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>

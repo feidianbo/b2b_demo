@@ -1,0 +1,117 @@
+<div class="clearfix">
+  <h2>撮合交易-需求信息列表</h2>
+  <label id="info" style="margin-left: 20%;"></label>
+</div>
+<div class="box" style="margin-top:-20px;">
+  <form class="form-inline" ng-submit="processForm()">
+    <div class="form-group">
+      <label class="">需求编号:</label>
+      <input type="text" class="form-control input-sm" ng-model="formData.demandcode"  style="width:80px;" placeholder="">
+    </div>
+    <div class="form-group">
+      <label>酒类:</label>
+      <select class="form-control input-sm" style="width:80px;" ng-model="formData.coaltype">
+        <option value="">全部</option>
+        <option ng-repeat="item in cocaltypeList" value="{{item.name}}">{{item.name}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>提货方式:</label>
+      <select class="form-control input-sm" ng-model="formData.deliverymode" style="width:80px;">
+        <option value="">全部</option>
+        <option ng-repeat="item in deliveryModes" value="{{item.name}}">{{item.name}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <div class="col-xs-12 col-md-12">
+        <label class="control-label">区域:</label>
+        <select class="form-control" ng-model="formData.deliverydistrict"  ng-Change="changeRegion()" ng-options="item.name for item in deliveryRegions">
+          <option value="">全部</option>
+        </select>
+        <label class="control-label">省份:</label>
+        <select class="form-control" ng-model="formData.deliveryprovince" ng-Change="changeProvince()" ng-options="item.name for item in deliveryProvinceslist">
+          <option value="">全部</option>
+        </select>
+        <label class="control-label">港口:</label>
+        <select class="form-control"  ng-model="formData.deliveryplace" ng-options="item.name for item in deliveryPortList">
+          <option value="">全部</option>
+        </select>
+      </div>
+    </div>
+    <div style="height:20px;"></div>
+    <div class="form-group">
+      <label>热值:</label>
+      <input type="number" class="form-control input-sm" ng-model="formData.NCV" style="width:80px";  placeholder=""/>
+    </div>
+    <div class="form-group">
+      <label>含糖量:</label>
+      <input type="number" class="form-control input-sm" ng-model="formData.RS"  style="width:80px;" placeholder="">
+    </div>
+    <div class="form-group">
+      <label class="">酒类指标2:</label>
+      <input type="number" class="form-control input-sm" ng-model="formData.ADV"  style="width:80px;" placeholder="">
+    </div>
+    <div class="form-group">
+      <label>全水:</label>
+      <input type="number" class="form-control input-sm" ng-model="formData.TM"  style="width:80px;" placeholder="">
+    </div>
+    <button type="submit" style="margin-left:10%;" class="btn btn-default" >搜索</button>
+  </form>
+</div>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>编号</th>
+    <th>酒类</th>
+    <th>需求数量(瓶)</th>
+    <th>已匹配数量(瓶)</th>
+    <th>提货地点</th>
+    <th>交货方式</th>
+    <th>提货时间</th>
+    <th>酒精度数</th>
+    <th>酒类指标1</th>
+    <th>含糖量</th>
+    <th>内水</th>
+    <th>全水</th>
+    <th>酒类指标2</th>
+    <th>酒类指标3</th>
+    <th>酒类指标6</th>
+    <th>酒类指标7</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="item in demandlist">
+    <td>{{item.demandcode}}</td>
+    <td>{{item.coaltype}}</td>
+    <td>{{item.demandamount}}</td>
+    <td>{{item.purchasednum}}</td>
+    <td ng-hide="item.deliveryplace=='其它'">{{item.deliveryplace}}</td>
+    <td ng-show="item.deliveryplace=='其它'">{{item.otherplace}}</td>
+    <td>{{item.deliverymode}}</td>
+    <td>{{item.deliverydatestart}}<span ng-show="{{item.deliverydateend!=null}}"> 至 {{item.deliverydateend}}</span></td>
+    <!--煤炭属性-->
+    <td>{{item.NCV}}</td>
+    <td>{{item.ADS}}</td>
+    <td>{{item.RS}}</td>
+    <td>{{item.IM}}</td>
+    <td>{{item.TM}}</td>
+    <td>{{item.ADV}}</td>
+    <td>{{item.RV}}</td>
+    <td>{{item.ASH}}</td>
+    <td>{{item.AFT}}</td>
+  </tr>
+  <tr ng-show="totalCount == 0"><td colspan='15' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的撮合交易信息。</td></tr>
+  </tbody>
+
+  <tfoot>
+  <tr>
+    <td colspan="10" style="text-align:right">
+      <pagination total-items="totalCount" ng-model="pageNum" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+    </td>
+  </tr>
+  </tfoot>
+</table>
+
+
+
+

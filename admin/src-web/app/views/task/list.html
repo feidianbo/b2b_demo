@@ -1,0 +1,51 @@
+<div class="clearfix">
+  <h2>定时任务列表</h2>
+  <label id="info" style="margin-left: 20%;"></label>
+</div>
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false"  id="startTasksConfirmDialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          启动确认
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要手动执行定时任务？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="startTimeTasks()">
+          确认
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+<div class="box">
+  <form class="form-inline">
+    <button type="submit" style="margin-left:3%;" class="btn btn-default" ng-click="confirmStart()">手动执行定时任务</button>
+  </form>
+</div>
+
+<div style="margin-left: 2%;margin-top: 2%;font-size: 18px;">
+  <span>定时任务:每天1点执行</span><br>
+  <span>1.需求表:demands---检查修改到昨天报价截止的需求记录改为报价结束</span><br>
+  <span>2.需求表:demands---将超过7天的记录状态改为删除</span><br>
+  <span>3.我的需求表:mydemands---过了报价截止时间后,交易状态改为匹配中</span><br>
+  <span>4.我的需求表:mydemands---提货截止时间到后,将匹配中的记录改为交易结束</span><br>
+  <span>5.报价表:quotes---将到了报价截止日期的记录改为比价中</span><br>
+  <span>6.报价表:quotes---将过了提货时间截止仍没有中标的改为未中标</span><br>
+  <span>7.团购定时任务:处理团购成功或团购失败的状态</span>
+</div>
+
+
+
+

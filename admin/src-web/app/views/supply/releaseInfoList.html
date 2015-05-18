@@ -1,0 +1,157 @@
+
+<div class="clearfix">
+  <h2>商城产品列表</h2>
+  <label id="info" style="margin-left: 20%;"></label>
+</div>
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="recommendConfirmDialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          推荐确认
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要推荐该产品吗？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="recommendConfirm()">
+          确认推荐
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" id="putOffShelfConfirmDialog" role="dialog">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          下架确认
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要下架该产品吗？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="putOffShelf()">
+          确认下架
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" data-backdrop="false" aria-labelledby="myModalLabel" aria-hidden="true" id="cancelRecommendDialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          推荐取消
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要取消推荐该产品吗？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="recommendConfirm()">
+          取消推荐
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          关闭
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="box" style="margin-top:-20px;">
+  <form class="form-inline" id="searchForm">
+    <div class="form-group">
+      <div class="col-xs-12 col-md-12">
+        <div class="input-group">
+          <span class="input-group-addon" id="sizing-addon1">产品编号</span>
+          <input type="text" class="form-control" id="productNo" ng-model="productNo" placeholder="编号查询..." aria-describedby="sizing-addon1">
+        </div>
+        <label class="control-label" style="padding-left: 10px;">区域:</label>
+        <select class="form-control" id="deliveryRegion" name="deliveryRegion" ng-model="deliveryRegion">
+          <option value="0" selected="selected">全部</option>
+          <option ng-repeat="item in deliveryRegions" ng-selected="{{deliveryRegion}}=={{item.id}}"   value="{{item.id}}">{{item.name}}</option>
+        </select>
+        <label class="control-label">省份:</label>
+        <select class="form-control" id="deliveryProvince" name="deliveryProvince" ng-model="deliveryProvince">
+          <option value="0" selected="selected">全部</option>
+          <option ng-repeat="item in deliveryProvinces" ng-selected="{{deliveryProvince}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+        </select>
+        <label class="control-label">港口:</label>
+        <select class="form-control" name="deliveryHarbour" ng-model="deliveryHarbour">
+          <option value="0" selected="selected">全部</option>
+          <option ng-repeat="item in deliveryHarbours" ng-selected="{{deliveryHarbour}}=={{item.id}}" value="{{item.id}}">{{item.name}}</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-default" style="margin-left: 5%;" ng-click="searchMall()">搜索</button>
+    <a href="#/release/addSupply" role="button" style="margin-left: 10%;" class="btn btn-default btn-primary btn-lg" id="release-new-goods">发布新产品</a>
+  </form>
+</div>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>编号</th>
+    <th>产品编号</th>
+    <th>供应数量(瓶)</th>
+    <th>交货地址</th>
+    <th>交货时间</th>
+    <th>发布时间</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td colspan="10" style="text-align:right">
+      <pagination total-items="mallList.count" ng-model="mallList.page" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+    </td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <tr ng-repeat="item in mallList.list">
+    <td>{{$index+1}}</td>
+    <td>{{item.pid}}</td>
+    <td>{{item.supplyquantity}}</td>
+    <td ng-show="item.deliveryplace !='其它'">{{item.deliveryprovince}}{{item.deliveryplace}}</td>
+    <td ng-show="item.deliveryplace =='其它'">{{item.deliveryprovince}}{{item.otherharbour}}</td>
+    <td>{{item.deliverytime1}} 至 {{item.deliverytime2}}</td>
+    <td>{{item.createtime}}</td>
+    <td>
+      <a href="#/supply/detail?id={{item.id}}&type=VerifyPass" style="margin-left:2%;">查看</a>&nbsp;
+      <span ng-show="item.status=='VerifyPass' && item.producttype!='Recommend'">
+        <a href="javascript:void(0);" ng-click="recommendProduct(item.id)" style="margin-left: 2%;" name="mall-goods-recommend">推荐</a>
+      </span>
+      <span ng-show="item.status=='VerifyPass' && item.producttype=='Recommend'">
+        <a href="javascript:void(0);" ng-click="cancelRecommend(item.id)" style="margin-left: 2%;" name="mall-goods-recommend">取消推荐</a>
+      </span>
+      <span ng-show="item.status=='VerifyPass'">
+        <a href="javascript:void(0);" ng-click="putOffShelves(item.id)" style="margin-left:2%;" name="mall-goods-shelloff">下架</a>
+      </span>
+    </td>
+  </tr>
+  <tr ng-show="sellList.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的产品。</td></tr>
+  </tbody>
+</table>
+
+
+<input type="hidden" id="idtext" name="idtext" ng-model="idtext" value="{{item.id}}" />
+<input type="hidden" id="recommend" name="recommend" ng-model="recommend" value="{{item.producttype}}" />

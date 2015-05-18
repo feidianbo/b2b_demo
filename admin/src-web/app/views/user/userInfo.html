@@ -1,0 +1,345 @@
+<style type="text/css">
+  .modal{
+    width: 100%;
+    position: fixed;
+    text-align: center;
+    margin: 0px auto;
+    top: 0px; left: 0px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 1050;
+  }
+  .modal_wrapper{
+    display: table;
+    overflow: auto;
+    overflow-y: scroll;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+    text-align: center;
+    margin: 0px auto; }
+  .modal-dialog{
+    margin-top: 0px;
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0px 20px;
+  }
+</style>
+<div>
+    <div class="container">
+        <div class="form-horizontal">
+        <div class="row">
+             <div class="col-xs-8 col-md-8">
+                 <h2 style="margin-left:4%">客户详情</h2>
+                 <hr>
+                     <div class="tabbable" id="tabs-913503" style="margin-left:10%;">
+                         <ul class="nav nav-tabs">
+                             <li class="active"><a href="#panel-594152" data-toggle="tab">基本信息</a></li>
+                             <li class=""><a href="#panel-97885" data-toggle="tab">企业详情</a></li>
+                           <li class=""><a href="#panel-groupbuy" data-toggle="tab" id="groupbuy">团购资格</a></li>
+                         </ul>
+                         <div class="tab-content">
+                             <div class="tab-pane active" id="panel-594152">
+                                 <div class="form-group" style="margin-top:5%;">
+                                     <label for="input-username" class="col-xs-2 col-sm-2 control-label">客户名</label>
+                                     <div class="col-xs-4 col-sm-4">
+                                         <input type="text" class="form-control" id="input-username" ng-model="user.securephone" disabled/>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-xs-2 col-sm-2 control-label">昵称</label>
+                                     <div class="col-xs-4 col-sm-4">
+                                         <input type="text" class="form-control" id="input-password" ng-model="user.nickname" disabled />
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-xs-2 col-sm-2 control-label">注册时间</label>
+                                     <div class="col-xs-4 col-sm-4">
+                                         <input type="text" class="form-control"  ng-model="user.registertime" disabled />
+                                     </div>
+                                 </div>
+                             </div>
+                             <div class="tab-pane" id="panel-97885">
+                                 <div class="form-group" style="margin-top:5%;">
+                                     <label class="col-xs-2 col-sm-2 control-label">公司名称</label>
+                                     <div class="col-xs-4 col-sm-4">
+                                         <input type="text" class="form-control" maxlength="40" required ng-model="company.name" id="comName"/>
+                                     </div>
+                                   <label class="col-xs-2 col-sm-2 control-label">法人</label>
+                                   <div class="col-xs-4 col-sm-4">
+                                     <input type="text" class="form-control" maxlength="20" required  id="personName" ng-model="company.legalpersonname"/>
+                                   </div>
+                                 </div>
+                               <div class="form-group">
+                                 <label class="col-xs-2 col-sm-2 control-label">公司地址</label>
+                                 <div class="col-xs-10 col-sm-10">
+                                   <textarea rows="3" cols="77" required id="address" maxlength="100" ng-model="company.address"></textarea>
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label class="col-xs-2 col-sm-2 control-label">开户银行</label>
+                                 <div class="col-xs-4 col-sm-4">
+                                   <input type="text" class="form-control" maxlength="20" required  id="bank" ng-model="company.openingbank"/>
+                                 </div>
+                                 <label class="col-xs-2 col-sm-2 control-label">开户行账号</label>
+                                 <div class="col-xs-4 col-sm-4">
+                                   <input type="text" class="form-control" ng-blur="checkAccount()" ng-focus="clearAccountInfo()" maxlength="30" minlength="10" required  id="account" ng-model="company.account"/>
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label class="col-xs-2 col-sm-2 control-label">纳税人识别号</label>
+                                 <div class="col-xs-4 col-sm-4">
+                                   <input type="text" class="form-control" maxlength="22" required  id="identificationnumword" ng-model="company.identificationnumword" />
+                                 </div>
+                                 <label class="col-xs-2 col-sm-2 control-label">邮政编码</label>
+                                 <div class="col-xs-4 col-sm-4">
+                                   <input type="text" class="form-control" maxlength="6" ng-focus="clearZipcodeInfo()" ng-blur="checkZipcode()" required id="zipcode" ng-model="company.zipcode" />
+                                 </div>
+                               </div>
+                               <div><span id="error"></span></div>
+                               <br/>
+                                 <div class="form-group">
+                                   <label class="col-xs-2 col-sm-2 control-label">营业执照</label>
+                                   <div class="col-xs-6 col-sm-6">
+                                     <form  id="form-businessLicense" target="form-businessLicense" action="/saveCompanyPic" method="post" enctype="multipart/form-data">
+                                       <input type="hidden" id="businessLic" value="{{company.businesslicense}}"/>
+                                       <input type="file" id="businessLicense" name="file">
+                                       <span id="businessLicenseInfo" class="index-color" style="display: inline-block;" ></span>
+                                       <button type="button" class="btn btn-primary" id="businessLicenseClick" name="businessLicenseClick" value="上传图片">上传图片</button>
+                                     </form>
+                                     <button type="button" class="col-xs-offset-2 btn btn-primary col-md-offset-2" style="margin-left: 200px;" id="btn_businessLicense"  ng-click="changeBusinessLicense()" name="btn_businessLicense" value="更换图片">更换图片</button>
+                                     <iframe ng-src="{{company.businesslicense}}" name="form-businessLicense" width="600px;" height="500px;" id="picForBusinessLicense"/>
+                                     <div ng-show="user.verifystatus!='待完善信息'">
+                                       <input type="button" class="btn btn-success" id="downloadBusinesslicense" ng-click="downloadCertification(company.businesslicense);" value="下载" ng-show="company.businesslicense != ''">
+                                     </div>
+                                   </div>
+                                 </div>
+                                 <br/>
+                                 <div class="form-group">
+                                 <label class="col-xs-2 col-sm-2 control-label">税务登记证</label>
+                                 <div class="col-xs-6 col-sm-6">
+                                   <form  id="form-identificationNumber" target="form-identificationNumber" action="/saveCompanyPic" method="post" enctype="multipart/form-data">
+                                     <input type="hidden" id="identityNumber" value="{{company.identificationnumber}} "/>
+                                     <input type="file" id="identificationNumber" name="file">
+                                     <span id="identificationNumberInfo" class="index-color" style="display: inline-block;"></span>
+                                     <button type="button" class="btn btn-primary"  id="identificationNumberClick" name="identificationNumberClick" value="上传图片">上传图片</button>
+                                   </form>
+                                   <button class="col-xs-offset-2 btn btn-primary col-md-offset-2" ng-click="changeIdentificationNumber()" style="margin-left: 200px;" id="btn_identificationNumber" name="btn_identificationNumber" value="更换图片">更换图片</button>
+                                   <iframe ng-src="{{company.identificationnumber}}" name="form-identificationNumber" width="600px;" height="500px;" id="picForIdentificationNumber"/>
+                                   <div ng-show="user.verifystatus != '待完善信息'">
+                                     <input type="button" class="btn btn-success" id="downloadIdentificationNumber" ng-click="downloadCertification(company.identificationnumber);" value="下载" ng-show="company.identificationnumber != ''">
+                                   </div>
+                                 </div>
+                                 </div>
+                                 <br/>
+                               <div class="form-group">
+                                 <label class="col-xs-2 col-sm-2 control-label">开户许可证</label>
+                                 <div class="col-xs-6 col-sm-6">
+                                   <form  id="form-openingLicense" target="form-openingLicense" action="/saveCompanyPic" method="post" enctype="multipart/form-data">
+                                     <input type="hidden" id="openLicense" value="{{company.openinglicense}}" />
+                                     <input type="file" id="openingLicense" name="file">
+                                     <span id="openingLicenseInfo" class="index-color" style="display: inline-block;" ></span>
+                                     <button type="button" class="btn btn-primary" id="openingLicenseClick" name="openingLicenseClick" value="上传图片">上传图片</button>
+                                   </form>
+                                   <button type="button" class="col-xs-offset-2 btn btn-primary col-md-offset-2" style="margin-left: 200px;"  ng-click="changeOpeningLicense()" id="btn_openingLicense" name="btn_openingLicense" value="更换图片">更换图片</button>
+                                   <iframe ng-src="{{company.openinglicense}}" name="form-openingLicense" width="600px;" height="500px;" id="picForOpeningLicense"/>
+                                   <div ng-show="user.verifystatus != '待完善信息'">
+                                     <input type="button" class="btn btn-success" id="downloadOpeningLicense" ng-click="downloadCertification(company.openinglicense);" value="下载" ng-show="company.openinglicense != '' ">
+                                   </div>
+                                 </div>
+                               </div>
+                               <br/>
+                               <div class="form-group">
+                                 <label for="input-password" class="col-xs-2 col-sm-2 control-label" >组织机构代码</label>
+                                 <div class="col-xs-6 col-sm-6">
+                                   <form  id="form-organizationCode" target="form-organizationCode" action="/saveCompanyPic" method="post" enctype="multipart/form-data">
+                                     <input type="hidden"  id="orgCode" value="{{company.organizationcode}}" />
+                                     <input type="file" id="organizationCode" name="file">
+                                     <span id="organizationCodeInfo" class="index-color" style="display: inline-block;" ></span>
+                                     <button type="button" class="btn btn-primary" id="organizationCodeClick" name="organizationCodeClick" value="上传图片">上传图片</button>
+                                   </form>
+                                   <button type="button" class="col-xs-offset-2 btn btn-primary col-md-offset-2" style="margin-left: 200px;"  ng-click="changeOrganizationCode()" id="btn_organizationCode" name="btn_organizationCode" value="更换图片">更换图片</button>
+                                   <iframe ng-src="{{company.organizationcode}}" name="form-organizationCode" width="600px;" height="500px;" id="picForOrganizationCode"/>
+                                   <div ng-show="user.verifystatus != '待完善信息'">
+                                     <input type="button" class="btn btn-success" id="downloadOrganizationCode" ng-click="downloadCertification(company.organizationcode);" value="下载" ng-show="company.organizationcode != ''">
+                                   </div>
+                                 </div>
+                               </div>
+                               <br />
+                               <div class="form-group">
+                                 <label class="col-xs-2 col-sm-2 control-label">企业开票信息</label>
+                                 <div class="col-xs-6 col-sm-6">
+                                   <form  id="form-companyInformation" target="form-companyInformation" action="/saveCompanyPic" method="post" enctype="multipart/form-data" style="display: block;">
+                                     <input type="hidden" id="invoicinginformation" value="{{company.invoicinginformation}}" />
+                                     <input type="file" id="companyInformation" name="file" />
+                                     <span id="companyInformationInfo" class="index-color" style="display: inline-block;" ></span>
+                                     <button type="button" class="btn btn-primary" id="companyInformationClick" name="companyInformationClick" value="上传图片">上传图片</button>
+                                   </form>
+                                   <button class="col-xs-offset-2 btn btn-primary col-md-offset-2" style="margin-left: 200px;" ng-click="changeCompanyInformation()" id="btn_companyInformation" name="btn_companyInformation" value="更换图片">更换图片</button>
+                                   <iframe ng-src="{{company.invoicinginformation}}" name="form-companyInformation" width="600px;" height="500px;" id="picForCompanyInformation" />
+                                   <div ng-show="user.verifystatus!='待完善信息'">
+                                     <input type="button" class="btn btn-success" id="downloadCompanyInformation" ng-click="downloadCertification(company.invoicinginformation);" value="下载" ng-show="company.invoicinginformation != ''">
+                                   </div>
+                                 </div>
+                               </div>
+                               <br />
+                               <div class="form-group">
+                                 <label class="col-xs-2 col-sm-2 control-label">经营许可证</label>
+                                 <div class="col-xs-6 col-sm-6">
+                                   <form  id="form-operatingLicense" target="form-operatingLicense" action="/saveCompanyPic" method="post" enctype="multipart/form-data">
+                                     <input type="hidden" id="operationLicense" value="{{company.operatinglicense}}" />
+                                     <input type="file" id="operatingLicense" name="file">
+                                     <span id="operatingLicenseInfo" class="index-color" style="display: inline-block;" ></span>
+                                     <button type="button" class="btn btn-primary" id="operatingLicenseClick" name="operatingLicenseClick" value="上传图片">上传图片</button>
+                                   </form>
+                                   <button type="button" class="col-xs-offset-2 btn btn-primary col-md-offset-2" style="margin-left: 200px;" ng-click="changeOperatingLicense()" id="btn_operatingLicense" name="btn_operatingLicense" value="更换图片">更换图片</button>
+                                   <iframe ng-src="{{company.operatinglicense}}" name="form-operatingLicense" width="600px;" height="500px;" id="picForOperatingLicense"/>
+                                   <div ng-show="user.verifystatus != '待完善信息'">
+                                     <input type="button" class="btn btn-success" id="downloadOperatingLicense" ng-click="downloadCertification(company.operatinglicense);" value="下载" ng-show="company.operatinglicense !=''">
+                                   </div>
+                                 </div>
+                               </div>
+                               <br/>
+
+                             </div>
+                           <div class="tab-pane" id="panel-groupbuy">
+                             <div style="padding-top:20px;">申请放弃中</div>
+                             <table class="table table-hover" style="margin-top:10px;">
+                               <thead>
+                               <tr>
+                                 <th>团购资格编号</th>
+                                 <th>状态</th>
+                                 <th>操作</th>
+                               </tr>
+                               </thead>
+                               <tfoot>
+                               <tr>
+                                 <td colspan="10" style="text-align:right">
+                                   <pagination total-items="groupbuy.count" ng-model="groupbuy.page" ng-change="pageToGroupBuy()" max-size="20" boundary-links="true"></pagination>
+                                 </td>
+                               </tr>
+                               </tfoot>
+                               <tbody>
+                               <tr ng-repeat="item in groupbuy.list">
+                                 <td>{{item.qualificationcode}}</td>
+                                 <td>申请放弃中</td>
+                                 <td><a href="javascript:void(0);" ng-click="giveUp(item.qualificationcode)">放弃</a></td>
+                               </tr>
+                               <tr ng-show="groupbuy.count == 0"><td colspan='9' style=' font-size: 18px;text-align: center; color:red;'>没有搜索到您想要的信息。</td></tr>
+                               </tbody>
+                             </table>
+                           </div>
+
+                         </div>
+                     </div>
+             </div>
+             <div class="col-xs-4 col-md-4">
+                  <h2>操作</h2>
+                  <hr>
+                   <label style="margin-left:28px; ">公司信息状态:</label>
+                   <input type="text" ng-model="user.verifystatus" id="verifystatus" readOnly style="border:0px; color:red;"/>
+                   <br /><span style="color:red; " id="info"></span>
+                   <textarea rows="5" cols="40" id="reason" style="margin-left:28px; " placeholder="审核不通过原因"></textarea>
+                   <div class="form-group">
+                     <div class="col-xs-offset-2 col-sm-offset-2">
+                       <button class="btn btn-primary" style="width:80px;margin-top:13%" ng-click="checkPass()" id="btn_passCheck">审核通过</button>
+                       &nbsp;&nbsp;
+                       <button class="btn btn-primary" style="width:95px;margin-top:13%" ng-click="checkReject()" id="btn_rejectCheck">审核不通过</button>
+                     </div>
+                   </div>
+                  <div class="form-group">
+                      <div class="col-xs-offset-2 col-sm-offset-2">
+                        <button class="btn btn-primary" style="width:65%;margin-top:8%" ng-click="setStatus()" id="btn_status" text="禁用此客户"/>
+                      </div>
+                  </div>
+                  <br>
+                  <div class="form-group">
+                      <div class="col-xs-offset-2 col-sm-offset-2">
+                          <button type="submit" class="btn btn-primary" style="width:65%;" id="btn_reset"  ng-click="resetPassword()">重置密码</button>
+                          <span id="resetInfo" style="margin-left:5%"></span>
+                      </div>
+                  </div>
+                  <span><h4  style="margin-left:13%;">注:重置后，随机密码发送到客户手机上</h4></span>
+                  <div>
+                    <button type="button" class="col-xs-offset-2 btn btn-primary col-md-offset-2" ng-click="saveCompInfo()" id="user-improve-save">保存信息</button>
+                  </div>
+             </div>
+        </div>
+        </div>
+    </div>
+</div>
+<input type="hidden"  id="companyId"/>
+<input type="hidden"  id="user-isactive"/>
+<input type="hidden" id="userid" name="userid" ng-model="user.id">
+<input type="hidden" id="companyStatus" value="{{user.verifystatus}}">
+<div class="clearfix">
+  <h2>审核记录</h2>
+</div>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th>编号</th>
+    <th>申请日期</th>
+    <th>审核日期</th>
+    <th>审核人</th>
+    <th>状态</th>
+    <th>备注</th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td colspan="10" style="text-align:right">
+      <pagination total-items="checkList.count" ng-model="checkList.page" ng-change="pageTo()" max-size="20" boundary-links="true"></pagination>
+    </td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <tr ng-repeat="item in checkList">
+    <td>{{$index+1}}</td>
+    <td>{{item.applytime}}</td>
+    <td>{{item.verifytime}}</td>
+    <td>{{item.verifyman}}</td>
+    <td>{{item.status}}</td>
+    <td>{{item.remarks}}</td>
+  </tr>
+  </tbody>
+</table>
+
+<!--放弃团购资格提示框-->
+<input type="hidden" id="customerid"/>
+<input type="hidden" id="qualificationcode">
+<div class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false"  id="giveUpConfirmDialog" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          放弃确认
+        </h4>
+      </div>
+      <div class="modal-body">
+        您确定要放弃此用户的团购资格?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="giveUpClick()">
+          确认
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          取消
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade img-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal_wrapper">
+    <div class="modal-dialog">
+      <div class="modal-content img_content">
+        <img id="imgBig" width="600px;" height="402px;"/>
+      </div>
+    </div>
+  </div>
+</div>
