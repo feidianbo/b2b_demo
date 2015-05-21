@@ -10,12 +10,12 @@
     <script src="${static('/bower_components/html5shiv/dist/html5shiv.min.js')}"></script>
     <script src="${static('/bower_components/respond/dest/respond.min.js')}"></script>
     <![endif]-->
-    
+
     <@block name="head">
     </@block>
     <@block name="cs">
     </@block>
-    
+
 </head>
 <body>
 <div class="wrap">
@@ -265,8 +265,8 @@
                 </li>
                 <li><a class="${menuclass('/index')}" href="/" style="font-size: 18px; width: 105px;" >首页</a></li>
                 <li><a class="${menuclass('/mall')}" href="/mall" style="font-size: 18px;width: 105px;">XX商城</a></li>
-                <li><a class="${menuclass('/buy')}" href="/buy" style="font-size: 18px;width: 105px;">我要买</a></li>
-                <li><a class="${menuclass('/sell')}" href="/sell" style="font-size: 18px;width: 105px;">我要卖</a></li>
+                <li><a class="${menuclass('/buy')}" href="/buy" style="font-size: 18px;width: 105px;">集市</a></li><!--DEO@20150518-->
+                <li><a class="${menuclass('/sell')}" href="/sell" style="font-size: 18px;width: 105px;">采购报价</a></li><!--DEO@20150518-->
                 <li id="finance"><a class="${menuclass('/finance')}" href="/finance/financing"  style="font-size: 18px;width: 105px;">金融<span class="caret"></span></a>
                     <div style="display: none;position: absolute;z-index: 10;" id="finance_children">
                         <ul style="list-style: none; padding-left: 0px;">
@@ -380,8 +380,8 @@
     <div class="clear-level">
         <div class="container" style="padding-top: 20px; line-height: 23px;">
             <div style="padding-left: 45px;">
-                
-               
+
+
                <#-- <div class="row footerColor">
                     <div class="col-xs-offset-1 col-xs-2">
                         <ul style="padding-left: 0px;">
@@ -426,7 +426,7 @@
             <div class="clear-level"></div>
             <div class="row">
                 <div>
-                    
+
                 </div>
             </div>
         </div>

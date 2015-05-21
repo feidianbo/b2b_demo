@@ -42,6 +42,12 @@ public class Company implements Serializable {
     @NotNull
     private String zipcode;               //邮编
     @NotNull
+    private String province;              //公司所在省份
+    @NotNull
+    private String city;                  //公司所在城市
+    @NotNull
+    private String mainvariety;           //主营品种
+    @NotNull
     private String openinglicense;        //开户许可证
     private String invoicinginformation;  //企业开票信息
 
@@ -207,9 +213,7 @@ public class Company implements Serializable {
         return identificationnumber;
     }
 
-    public void setIdentificationnumber(String identificationnumber) {
-        this.identificationnumber = identificationnumber;
-    }
+    public void setIdentificationnumber(String identificationnumber) { this.identificationnumber = identificationnumber; }
 
     public String getOrganizationcode() {
         return organizationcode;
@@ -223,9 +227,7 @@ public class Company implements Serializable {
         return operatinglicense;
     }
 
-    public void setOperatinglicense(String operatinglicense) {
-        this.operatinglicense = operatinglicense;
-    }
+    public void setOperatinglicense(String operatinglicense) { this.operatinglicense = operatinglicense; }
 
 	public int getUserid() {
 		return userid;
@@ -287,9 +289,7 @@ public class Company implements Serializable {
         return identificationnumword;
     }
 
-    public void setIdentificationnumword(String identificationnumword) {
-        this.identificationnumword = identificationnumword;
-    }
+    public void setIdentificationnumword(String identificationnumword) { this.identificationnumword = identificationnumword; }
 
     public String getZipcode() {
         return zipcode;
@@ -298,6 +298,18 @@ public class Company implements Serializable {
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
+
+    public String getProvince() { return province; }
+
+    public void setProvince(String province) { this.province = province; }
+
+    public String getCity() { return city; }
+
+    public void setCity(String city) { this.city = city; }
+
+    public String getMainvariety() { return mainvariety; }
+
+    public void setMainvariety(String mainvariety) { this.mainvariety = mainvariety; }
 
     public String getOpeninglicense() {
         return openinglicense;
@@ -311,7 +323,5 @@ public class Company implements Serializable {
         return invoicinginformation;
     }
 
-    public void setInvoicinginformation(String invoicinginformation) {
-        this.invoicinginformation = invoicinginformation;
-    }
+    public void setInvoicinginformation(String invoicinginformation) { this.invoicinginformation = invoicinginformation; }
 }

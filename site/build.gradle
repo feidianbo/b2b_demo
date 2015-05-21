@@ -42,7 +42,7 @@ repositories {
     flatDir{
         dirs '../libs'
     }
-    //mavenLocal()
+//    mavenLocal()
     mavenCentral()
 }
 

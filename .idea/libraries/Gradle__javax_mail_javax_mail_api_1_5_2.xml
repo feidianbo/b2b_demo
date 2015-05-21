@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: javax.mail:javax.mail-api:1.5.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.mail/javax.mail-api/1.5.2/5313d5b0dc708366de7f241de46ee17f17b92143/javax.mail-api-1.5.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.mail/javax.mail-api/1.5.2/391608d66e79f9f99aba74618b132976f9c7ee64/javax.mail-api-1.5.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

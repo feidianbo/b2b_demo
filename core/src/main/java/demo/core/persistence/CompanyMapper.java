@@ -19,10 +19,10 @@ public interface CompanyMapper {
     //插入公司信息
     @Insert("insert into companies(name,address,phone,fax,legalperson,businesslicense,identificationnumber," +
             "organizationcode,operatinglicense,userid,legalpersonname,account,openingbank, traderphone," +
-            "identificationnumword,zipcode,openinglicense,invoicinginformation) values(" +
+            "identificationnumword,zipcode,province,city,mainvariety,openinglicense,invoicinginformation) values(" +
             "#{name},#{address},#{phone},#{fax},#{legalperson},#{businesslicense},#{identificationnumber}," +
             "#{organizationcode},#{operatinglicense},#{userid},#{legalpersonname},#{account}," +
-            "#{openingbank},#{traderphone},#{identificationnumword},#{zipcode},#{openinglicense}," +
+            "#{openingbank},#{traderphone},#{identificationnumword},#{zipcode},#{province},#{city},#{mainvariety},#{openinglicense}," +
             "#{invoicinginformation})")
     public int addCompany(Company company);
 
@@ -45,7 +45,7 @@ public interface CompanyMapper {
             "identificationnumber=#{identificationnumber},organizationcode=#{organizationcode}," +
             "operatinglicense=#{operatinglicense},legalpersonname=#{legalpersonname}," +
             "account=#{account},openingbank=#{openingbank},traderphone=#{traderphone}," +
-            "identificationnumword=#{identificationnumword},zipcode=#{zipcode}, " +
+            "identificationnumword=#{identificationnumword},zipcode=#{zipcode},province=#{province},city=#{city},mainvariety=#{mainvariety}, " +
             "openinglicense=#{openinglicense}, invoicinginformation=#{invoicinginformation}" +
             " where userid=#{userid}")
     public void modifyCompany(Company company);

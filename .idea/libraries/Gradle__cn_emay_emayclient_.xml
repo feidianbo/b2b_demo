@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: cn.emay:emayclient:">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/emayclient.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

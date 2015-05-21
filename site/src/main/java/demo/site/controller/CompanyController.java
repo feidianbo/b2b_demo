@@ -46,42 +46,55 @@ public class CompanyController extends JsonController {
     //保存或修改公司信息
     @RequestMapping(value = "/account/saveCompany", method = RequestMethod.POST)
     @ResponseBody
-    public String saveCompany(@RequestParam("name") String name,@RequestParam("address") String address,
-                              @RequestParam("phone") String phone,@RequestParam("fax") String fax,
-                              @RequestParam("businesslicense") String businesslicense,
-                              @RequestParam("identificationnumber") String identificationnumber,
-                              @RequestParam("organizationcode") String organizationcode,
-                              @RequestParam("operatinglicense") String operatinglicense,
+    public String saveCompany(@RequestParam("name") String name,
+                              @RequestParam("address") String address,
+                              @RequestParam("phone") String phone,
+                              @RequestParam("fax") String fax,
                               @RequestParam("legalpersonname") String legalpersonname,
-                              @RequestParam("account") String account,
                               @RequestParam("openingbank") String openingbank,
+                              @RequestParam("account") String account,
                               @RequestParam("identificationnumword") String identificationnumword,
                               @RequestParam("zipcode") String zipcode,
-                              @RequestParam("openinglicense")String openinglicense,
-                              @RequestParam("invoicinginformation")String invoicinginformation){
+                              @RequestParam("province") String province,
+                              @RequestParam("city") String city,
+                              @RequestParam("mainvariety") String mainvariety,
+                              @RequestParam("businesslicense") String businesslicense,
+                              // @RequestParam("invoicinginformation")String invoicinginformation
+                              // @RequestParam("identificationnumber") String identificationnumber,
+                              // @RequestParam("organizationcode") String organizationcode,
+                              // @RequestParam("openinglicense")String openinglicense,
+                              @RequestParam("operatinglicense") String operatinglicense
+
+    ) {
         Company company = new Company();
         company.setName(name);
         company.setAddress(address);
         company.setPhone(phone);
         company.setFax(fax);
-        company.setBusinesslicense(businesslicense);
-        company.setIdentificationnumber(identificationnumber);
-        company.setOrganizationcode(organizationcode);
-        company.setOperatinglicense(operatinglicense);
         company.setLegalpersonname(legalpersonname);
-        company.setAccount(account);
         company.setOpeningbank(openingbank);
+        company.setAccount(account);
         company.setIdentificationnumword(identificationnumword);
         company.setZipcode(zipcode);
-        company.setOpeninglicense(openinglicense);
-        company.setInvoicinginformation(invoicinginformation);
-        company.setUserid(session.getUser().getId());
+        company.setProvince(province);
+        company.setCity(city);
+        company.setMainvariety(mainvariety);
+        company.setBusinesslicense(businesslicense);
+//        company.setIdentificationnumber(identificationnumber);
+//        company.setOrganizationcode(organizationcode);
+//        company.setOpeninglicense(openinglicense);
+//        company.setInvoicinginformation(invoicinginformation);
+        company.setOperatinglicense(operatinglicense);
 
-        if (companyMapper.countCompany(session.getUser().getId()) == 0){
+        company.setUserid(session.getUser().getId());
+        System.out.println(company);
+
+        if (companyMapper.countCompany(session.getUser().getId()) == 0) {
             companyMapper.addCompany(company);
-        } else{
+        } else {
             companyMapper.modifyCompany(company);
         }
+
         companyMapper.addCompVerify(new CompanyVerify("待审核", LocalDateTime.now(), companyMapper.getIdByUserid(session.getUser().getId()), session.getUser().getId()));
         companyMapper.setCompanyStatus("待审核", null, companyMapper.getIdByUserid(session.getUser().getId()));
         userMapper.setUserVerifyStatus("待审核", session.getUser().getId());
@@ -91,7 +104,7 @@ public class CompanyController extends JsonController {
     //返回公司对象信息
     @RequestMapping(value = "/account/getCompany", method = RequestMethod.POST)
     @ResponseBody
-    public Company getCompany(){
+    public Company getCompany() {
         return companyMapper.getCompanyByUserid(session.getUser().getId());
     }
 
@@ -99,10 +112,10 @@ public class CompanyController extends JsonController {
     @RequestMapping(value = "/account/saveCompanyPic", method = RequestMethod.POST)
     @ResponseBody
     public Object saveCompanyPic(@RequestParam("file") MultipartFile file,
-                                 HttpServletResponse response) throws Exception{
+                                 HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<>();
         boolean success = false;
-        if(file.getSize() / 1000 / 1000 <= 10) {
+        if (file.getSize() / 1000 / 1000 <= 10) {
             response.setContentType("text/html");
             map.put("filePath", fileService.uploadPicture(file));
             success = true;
@@ -114,12 +127,12 @@ public class CompanyController extends JsonController {
     //验证公司名称是否已存在
     @RequestMapping(value = "/account/checkCompanyname", method = RequestMethod.POST)
     @ResponseBody
-    public String checkCompanyname(@RequestParam("name") String name){
+    public String checkCompanyname(@RequestParam("name") String name) {
         String pass = null;
-        int i = companyMapper.countCompanyIsExist(name,session.getUser().getId());
-        if(i == 0){
+        int i = companyMapper.countCompanyIsExist(name, session.getUser().getId());
+        if (i == 0) {
             pass = "true";
-        }else{
+        } else {
             pass = "false";
         }
         return JSON.toString(pass);

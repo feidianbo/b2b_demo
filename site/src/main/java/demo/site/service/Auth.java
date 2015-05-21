@@ -80,6 +80,8 @@ public class Auth {
                 }
             } else {
                 String verifycode = code.CreateCode();
+                //DEO@20150518
+                //println(verifycode);
                 phonevalidator = new Phonevalidator(LocalDateTime.now().plusMinutes(10), securephone, verifycode, 0, null, 0, ValidateType.register);
                 validMapper.addValid(phonevalidator);
                 session.addPhonevalidator(phonevalidator);
